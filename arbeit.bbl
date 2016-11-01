@@ -1,0 +1,46 @@
+\begin{thebibliography}{}
+
+\bibitem[McGuinness \& van Harmelen, 2005]{OWL}
+McGuinness, D.~L. \& van Harmelen, F. (2005).
+\newblock {OWL} {W}eb {O}ntology {L}anguage.
+
+\bibitem[Mustermann, 2009]{random}
+Mustermann, M. (2009).
+\newblock Something that is not covered by any other annotation may be declared
+  misc - certificates, patents and stuff like that.
+\newblock Currently under review.
+
+\bibitem[Padovitz et~al., 2008]{ECORA}
+Padovitz, A., Loke, S.~W., \& Zaslavsky, A. (2008).
+\newblock The ecora framework: A hybrid architecture for context-oriented
+  pervasive computing.
+\newblock {\em Pervasive Mobile Computing}, 4(2), 182--215.
+
+\bibitem[Tannenbaum \& Steen, 2007]{tannenbaum}
+Tannenbaum, A.~S. \& Steen, M.~V. (2007).
+\newblock {\em {D}istributed {S}ystems - {P}rinciples and {P}aradigms}.
+\newblock New Jersey: Pearson Prentice Hall, 2nd edition edition.
+
+\bibitem[Tuttlies et~al., 2007]{COMITY}
+Tuttlies, V., Schiele, G., \& Becker, C. (2007).
+\newblock {C}{O}{M}{I}{T}{Y} - {C}onflict {A}voidance in {P}ervasive
+  {C}omputing {E}nvironments.
+\newblock In R. Meersman, Z. Tari, \& P. Herrero (Eds.), {\em OTM Workshops
+  (2007)}, number 4806 in Lecture Notes in Computer Science  (pp.\ 763--772).
+  Heidelberg: Springer.
+
+\bibitem[Welscher, 2001a]{habil}
+Welscher, C. (2001a).
+\newblock {I}ndigene {V}ölker im {G}ebiet {T}jumén ({W}estsibirien): {Z}iele,
+  {S}ituation und zielorientierte {A}ktivitäten.
+\newblock Fast eine habil., Institut für Friedenssicherungsrecht und
+  humanitäres Völkerrecht, Ruhr-Universität Bochum.
+
+\bibitem[Welscher, 2001b]{master}
+Welscher, C. (2001b).
+\newblock {I}ndigene {V}ölker im {G}ebiet {T}jumén ({W}estsibirien): {Z}iele,
+  {S}ituation und zielorientierte {A}ktivitäten.
+\newblock Master's thesis, Institut für Friedenssicherungsrecht und
+  humanitäres Völkerrecht, Ruhr-Universität Bochum.
+
+\end{thebibliography}
