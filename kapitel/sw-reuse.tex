@@ -1,0 +1,23 @@
+\chapter{Software Reuse}
+\label{chap:sw-reuse}
+
+Software reuse is a concept that
+
+\section{Citations}
+\label{sec:citations}
+
+The citation style used is called natbib and can be used to create numerical and author-year citations. To create the bibliography the bibliography style natdin is used as a basis for German papers, apalike2 for English ones. The respective .sty-file for natdin is located in the directory literatur. More information can be found on \url{http://merkel.zoneo.net/Latex/natbib.php} or in the directory ``doc''. Adjust the bib styple in the file arbeit.tex to fit your needs. Read the comments, some may help you. 
+
+\subsection{The bib file}
+\label{subsec:theBibFile}
+
+The bibliography file is placed in the directory literatur and is called lit.bib. In the lit.bib file you will find different annotations to be used for different kinds of papers. This effects their representation in the bibliography. Some comments can be found in this file, too.
+
+\subsection{Citations}
+\label{subsec:citations}
+
+Talking about a paper one may want to do a citation in the text using citet as in \citet{COMITY}. Alternatively parenthesis may be useful \citep{tannenbaum}. It is also possible to add more information like the pages of a book one refers to \citep[pp. 222-333]{tannenbaum}. \citet{ECORA}, \citet{random}, \citet{habil} and \citet{master} are in text citations. There is the Web Ontology Language \abbrev{OWL}{Web Ontology Language} \citep{OWL} as an example of an electronic resource.
+
+There are three slightly different bib styles in the directory literatur. First, the native natdin.bst for DIN citations in German. Second, a slightly modified version ''natdinCustomized''. This style has minor changes in punctuation and is therefore not conform to DIN 1505. Third, an English translation of the latter is provided. Choose your bibliographystyle at the end of the root file (arbeit.tex). For English papers, apalike2 looks quite nice.
+
+Several options for citations and the bibliography may be configured in the root file as usepackage parameters for natbib, e.g.\ the type of brackets used. See natnotes.pdf in the directory ``doc'' for more information. Additionally, for very detailed configuration it is possible to use the file ``natbib.cfg'' in the root directory to override predefined parameters.
