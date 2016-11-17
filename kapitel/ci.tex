@@ -1,0 +1,75 @@
+\chapter{Continuous Integration}
+\label{chap:ci}
+
+In this chapter we will explain what Continuous Integration means, describe the process steps, benefits and 
+
+What is Continuous Integration?
+
+It is a software development practice where members of a team integrate their work frequently, usually each person integrates at least daily, thus leading to multiple integrations per day. Each integration is verified by an automates build (including test) to detect integration errors as quickly as possible. Many teams find that his approach leads to significantly reduced integration problems and allows a team to develop cohesive software more rapidly.  \cite{Fowler2006}
+
+\cite{Rejstrom2016}
+The first mention of CI was in 1994 in the context of developing micro processes [Grady, 1994]. The term was adopted by Kent Beck in his definition of Extreme Programming (XP) in 2000 [Beck, 2000]. Martin Fowler, a leading figure in making CI popular and Chief Scientist at ThoughtWorks, a company making CI and CD tools, is a CI/CD evangelist credited with establishing the current definitions of the practices. Fowler defines CI as:\\
+
+It is a software development practice where members of a team integrate their work frequently, usually each person integrates at least daily, thus leading to multiple integrations per day. Each integration is verified by an automates build (including test) to detect integration errors as quickly as possible. Many teams find that his approach leads to significantly reduced integration problems and allows a team to develop cohesive software more rapidly.\cite{Fowler2006}\\
+
+PICTURE FROM page 6\\
+
+CI Workflow:\\
+\\
+\begin{itemize}
+\item Developers check out code into their private workspaces
+\item When done, commit the changes to the repository
+\item The CI server monitors the repository and checks out changes when they occur.
+\item The CI server builds the system and runs unit and integration tests.
+\item The CI server releases deployable artifacts for testing.
+\item The CI server assigns a build label to the version of the code it just built.
+\item The CI server informs the team of the outcome of the build.
+\item In case the build or test failed, the team fixes the issue at the earliest opportunity.
+\item Continue to continually integrate and test throughout the project.
+\end{itemize}
+
+This workflow provides continuous feedback on the quality of the code, ensuring developer attention is kept on the current code change until the change has been verified to work.\\
+\\
+CI Tools:\\
+\\
+CI is largely tool agnostic... Each solution depends on the project, framework in use, skill-set of the stakeholders and other factors. There are however two must-have tools of any CI system: (1) the version control system (VCS) and (2) the CI server.
+
+VCS: Git, Mercurial, SVN 
+Version Control platforms: Github, Gitlab, Bitbucket.
+CI Servers: Jenkins, Hudson, GoCD (OS) - TravisCI, CircleCI, CodeShip, and Team City (commercial).
+
+Choosing the appropriate tools is about finding the balance between price, setup, and configuration efforts, ease-of-use, integration capabilities between the selected tools, framework suitability and maintainability in respect to current code base.
+
+Successful CI practices\\
+\begin{itemize}
+\item Automate the build
+\item Make your build self-testing
+\item Every commit should build on an integration machine
+\item Keep the build fast
+\item Keep the build green
+\item Test in a clone of the production environment
+\item Everyone can see what is happening
+\item Automate deployment
+\end{itemize}
+
+These 8 principles should guide the CI/CD implementation within organizations. The principles have been stablished as best practices through the validation of these concepts through several literature reviews [\cite{Rodriguez2016}; \cite{Mantyla2015}; \cite{Stahl2014}]. They can be viewed almost as a design pattern for adopting CI/CD, offering a generic solution adaptable to most cases.
+
+Challenges in adopting CI/CD\\
+\begin{itemize}
+\item Change resistance
+\item External constraint
+\item QA effort
+\item Legacy code
+\item Complex software
+\item Environment management 
+\item Manual testing
+\end{itemize}
+
+Benefits in adopting CI/CD\\
+\begin{itemize}
+\item Shorter time-to-market
+\item Rapid feedback
+\item Improved software quality
+\item Improved release reliability
+\item Improved developer productivity
+\end{itemize}
