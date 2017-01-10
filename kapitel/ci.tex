@@ -1,21 +1,23 @@
 \chapter{Continuous Integration}
 \label{chap:ci}
 
-In this chapter we will explain what Continuous Integration means, describe the process steps, benefits and 
+In this chapter we will explain what Continuous Integration (CI) means, we will describe the process steps, its benefits and challenges. Finally we will explain how CI can be leveraged in order to improve Software Reuse.
 
-What is Continuous Integration?
+\section{What is Continuous Integration?}
+\label{sec:ci-def}
 
-It is a software development practice where members of a team integrate their work frequently, usually each person integrates at least daily, thus leading to multiple integrations per day. Each integration is verified by an automates build (including test) to detect integration errors as quickly as possible. Many teams find that his approach leads to significantly reduced integration problems and allows a team to develop cohesive software more rapidly.  \cite{Fowler2006}
+The term can be found in the context of micro-processes development in the work of \cite{Booch2007}. Then it was adopted by Kent Beck in his definition of Extreme Programming \citep{Beck1999}. However, it was Martin Fowler who was credited with establishing the current definitions of the practices. Fowler defines CI as following:
 
-\cite{Rejstrom2016}
-The first mention of CI was in 1994 in the context of developing micro processes [Grady, 1994]. The term was adopted by Kent Beck in his definition of Extreme Programming (XP) in 2000 [Beck, 2000]. Martin Fowler, a leading figure in making CI popular and Chief Scientist at ThoughtWorks, a company making CI and CD tools, is a CI/CD evangelist credited with establishing the current definitions of the practices. Fowler defines CI as:\\
+CI is a software development practice where members of a team integrate their work frequently, usually each person integrates at least daily, thus leading to multiple integrations per day. Each integration is verified by an automates build (including test) to detect integration errors as quickly as possible. Many teams has found that this approach leads to significantly reduced integration problems and allows a team to develop cohesive software more rapid\citep{Fowler2006}.
 
-It is a software development practice where members of a team integrate their work frequently, usually each person integrates at least daily, thus leading to multiple integrations per day. Each integration is verified by an automates build (including test) to detect integration errors as quickly as possible. Many teams find that his approach leads to significantly reduced integration problems and allows a team to develop cohesive software more rapidly.\cite{Fowler2006}\\
+Continuous Integration emerges as a solution for the painful moment of software integration. Although the process of integrating software is not a problem for a one-person project, when it increases in complexity it becomes more problematic. For example, in the old days, a software was divided in modules and each of them were developed independently, once they done, those modules were put together in one step at the end of the project. Doing that led to all sorts of software quality problems, which are costly and often lead to project delays \citep{Duvall2007}.
 
-PICTURE FROM page 6\\
+This step of module integration was a tense moment as errors and failures appeared and they were difficult to find and fix at that stage of the development. In this manner, instead of waiting till the end of modules development to integrate, CI proposes to integrate frequently, usually one person should integrate at least once a day.
 
-CI Workflow:\\
-\\
+Therefore we can break up the CI workflow in the following steps \citep{Fowler2006}:
+
+\textbf{CI Workflow:}
+
 \begin{itemize}
 \item Developers check out code into their private workspaces
 \item When done, commit the changes to the repository
@@ -28,22 +30,52 @@ CI Workflow:\\
 \item Continue to continually integrate and test throughout the project.
 \end{itemize}
 
-This workflow provides continuous feedback on the quality of the code, ensuring developer attention is kept on the current code change until the change has been verified to work.\\
-\\
-CI Tools:\\
-\\
-CI is largely tool agnostic... Each solution depends on the project, framework in use, skill-set of the stakeholders and other factors. There are however two must-have tools of any CI system: (1) the version control system (VCS) and (2) the CI server.
+This uncomplicated workflow helps the development team to focus on the current code change till it is verified and validated. Moreover, it provides continuous feedback on the quality of the code.
 
-VCS: Git, Mercurial, SVN 
-Version Control platforms: Github, Gitlab, Bitbucket.
-CI Servers: Jenkins, Hudson, GoCD (OS) - TravisCI, CircleCI, CodeShip, and Team City (commercial).
+\subsection{CI Tools}
 
-Choosing the appropriate tools is about finding the balance between price, setup, and configuration efforts, ease-of-use, integration capabilities between the selected tools, framework suitability and maintainability in respect to current code base.
+Although the CI is tool agnostic, the selection of them depends on the project, framework in use, skill-set of the stakeholders and other factors. There are however two must-have tools of any CI system: (1) the version control system (VCS) and (2) the CI server.
 
-Successful CI practices\\
+The most popular VCS are Git, Mercurial and SVN. On top of them, we can find Version Control Platforms (VCP) such as Github, Gitlab or Bitbucket. In terms of CI servers, we can find Jenkins, Hudson, GoCD as open source projects; TravisCI, CircleCI, CodeShip and Team City as commercial tools.
+
+Therefore choosing the appropriate tools is about finding the balance between price, setup, configuration efforts, ease-of-use, integration capabilities between the selected tools, framework suitability and maintainability in respect to current code base.
+
+\section{Benefits in adopting CI/CD}
+\label{ci-benefits}
+
+Several are the benefits that come with the adoption of Continuous Integration in a software project. In this section we will describe five areas that are improved after CI implementation \citep{Rejstrom2016}. It is important to point out that these benefits come along with other practices such as agile transformation \citep{Laanti2011} and lean software development \citep{Poppendieck2003}.
+
 \begin{itemize}
-\item Automate the build
-\item Make your build self-testing
+\item Shorter time-to-market: Many benefits come with the adoption of frequent releases. With fast and frequent releases is possible to get feedback quickly from customer and market, thus the organization gets better understanding of their needs expectations \citep{Neely2013}. With that is possible to focus on the most relevant features. Another benefit of delivering frequently is waste reduction as features can be deployed as soon as they are done \citep{Leppanen2015}. Furthermore, with frequent releases is possible to experiment with new features easily and with low impact \citep{Neely2013}.
+\item Rapid feedback: With frequent releases is possible to show progress to customers and by that get feedback quickly. With that the development team can focus on important features instead of waste time in features that are not relevant for the customers or the market.
+\item Improved software quality: Researches have reported a decreased in the number of open bugs and production incidents after adopting CI practices \citep{Mantyla2015} and the link between software quality improvement and the heavy reliance on automated test combined with smaller more manageable releases \citep{Leppanen2015}.
+\item Improved release reliability: In the work of \cite{Neely2013} was proved that a working deployment pipeline along with intensive automated testing and fast rollback mechanism possitively affects release reliability and quality. With small and frequent releases fewer things can go wrong in a release according to \cite{Fowler2013}. In fact, reduction in the stress of developers and other stakeholder have been found by adopting CI \citep{Neely2013} \citep{Chen2015}.
+\item Improved developer productivity: By automating deployment process, environment configuration and other non-value adding tasks, significant time saving for developers have been observed \citep{Rodriguez2016}. Also, in the work of \cite{Humble2010} was observed that although the setup cost of a deployment pipeline can be high, after it is setup developers can focus on value adding software development works.
+\end{itemize}
+
+\section{Challenges in adopting CI/CD}
+\label{ci-challenges}
+
+Adopting CI can be very beneficial for a software project as described above, however we can face some challenges that can jeopardize the successful implementation of it. According to the literature, there are seven common challenges in the implementation of a CI:
+
+\begin{itemize}
+\item Change resistance: Transforming the development of a project towards continuous integration practices requires investment and involvement from the entire organization \citep{Rodriguez2016}. Therefore any transformation in how an organization works, will receive a resistance on both a personal level and decision level within the organization.
+\item External constraint: As a software project is part of a context, external constraint may appear. Normally customer preferences and domain imposed restrictions are sources of constraints. For example in highly restricted domains, legal regulations may require extensive testing before new version can be allowed to enter production \citep{Rodriguez2016}.
+\item QA effort: The automated tests suit needs to be exhaustive enough in order to ensure the quality of what is being built. Thus it can lead to increase QA efforts due to difficulties in managing the test automation infrastructure \citep{Rodriguez2016}.
+\item Legacy code: Normally legacy software has not been design for being automatically tested and may cause integration failures which may inhibit the continuous deployment process. The ownership of legacy code might belong to another company or team which shift the testing responsibility and this might delay the deployment process.
+\item Complex software: If the complex if the software project is high, then setting up the CI workflow is more challenging \citep{Leppanen2015}.
+\item Environment management: Keeping all the environments used in development, testing and production sync and similar can be challenging. This is due to the fact that differences in the environment configuration can lead to undetected issues appear in production. Therefore is essential to have a good configuration management that provisions environments automatically \citep{Leppanen2015}.
+\item Manual testing: Although automated tests are very beneficial, some aspects of software need to be manually tested such as security issues, performance and UX/UI. Therefore 	heavy manual testing can impact the overall speed and smoothness of the process \citep{Leppanen2015}.
+\end{itemize}
+
+\section{Successful CI practices}
+\label{ci-successful-pract}
+
+In order to reduce the risks in adopting CI practices, eight principles, based on several literature reviews, were defined in \citep{Rejstrom2016} which should guide the CI implementation within organizations. These principles are generic solutions which can be adapted in most cases.
+
+\begin{itemize}
+\item Automate the build: The task that triggers the whole pipeline is the commit. After each commit, the next step should be build the binaries. The executable that result of the build, should go through the pipeline until it gets validated, verified and deployment ready.
+\item Make your build self-testing: 
 \item Every commit should build on an integration machine
 \item Keep the build fast
 \item Keep the build green
@@ -53,23 +85,3 @@ Successful CI practices\\
 \end{itemize}
 
 These 8 principles should guide the CI/CD implementation within organizations. The principles have been stablished as best practices through the validation of these concepts through several literature reviews [\cite{Rodriguez2016}; \cite{Mantyla2015}; \cite{Stahl2014}]. They can be viewed almost as a design pattern for adopting CI/CD, offering a generic solution adaptable to most cases.
-
-Challenges in adopting CI/CD\\
-\begin{itemize}
-\item Change resistance
-\item External constraint
-\item QA effort
-\item Legacy code
-\item Complex software
-\item Environment management 
-\item Manual testing
-\end{itemize}
-
-Benefits in adopting CI/CD\\
-\begin{itemize}
-\item Shorter time-to-market
-\item Rapid feedback
-\item Improved software quality
-\item Improved release reliability
-\item Improved developer productivity
-\end{itemize}
