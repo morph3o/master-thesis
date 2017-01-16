@@ -117,12 +117,12 @@ Test-driven reuse approach was first introduced in \cite{Hummel2004}. It is a te
 
 \begin{figure}[ht]
 	\centering
-    \includegraphics[width=\textwidth]{grafiken/git-states}
+    \includegraphics[width=\textwidth]{grafiken/test-driven-cycle}
     \caption{The test-driven reuse \textit{cycle} \citep{Hummel2013}}
     \label{fig:test-driven-cycle}
 \end{figure}
 
-In the first step, the user provides a JUnit test cas
+In the first step, the user provides a JUnit test case of the desired component. Then 
 
 \section{Ranking components}
 \subsection{SOCORA}
