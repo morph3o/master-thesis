@@ -72,6 +72,7 @@ Code-search engines are the heart of the new generations of reuse support tools.
 \item NerdyData\footnote{https://nerdydata.com (accessed: 13.01.2017)} It is a search engine for source code. It supports HTML, Javascript and CSS. With this search engine you can retrieve the web pages which are using a specific file. For example if you look up for \textit{font-awesome.min.css} it will retrieve the sites that are using this file.
 \item Spars-J\footnote{http://sel.ist.osaka-u.ac.jp/SPARS/ (accessed: 13.01.2017)} It is a keyword and name matching code search engine on open source XML, Java and JSPs based on component rank and keyword rank algorithm.
 \item ComponentSource\footnote{https://www.componentsource.com/ (accessed: 13.01.2017)} It is a keyword-matching of component descriptions in a marketplace. Here you can find components for different platforms and technologies.
+\item Satsy: It is a source code search engine that implemented semantic search using input/output queries on mutil-path programs with ranking. Based on survey to 30 participants, it retrieved more relevant results than Merobase \citep{Stolee2016}.
 \item Merobase\footnote{http://www.merobase.com/ - Official project deprecated, we use a local implementation} Merobase is a component search engine that uses Lucene \footnote{Apache LuceneTM is a high-performance, full-featured text search engine library written entirely in Java. It is a technology suitable for nearly any application that requires full-text search, especially cross-platform \citep{lucene}.} to index programming language units from various open source repositories (such as Sourceforge, Google Code, or the Apache projects) and the open Web. Merobase, when crawling the code, its analysis software identifies the basic abstraction implemented by a module and stores it in a language agnostic description format. This description includes the abstraction's name, methods names, parameter signatures, among others.
 \end{itemize}
 
@@ -113,16 +114,22 @@ Another technique that was presented in \cite{Hummel2004}, is test-driven search
 \subsection{Test-driven search}
 Simple techniques for component retrieval such as keyword-driven search or signature-driven search may lead to a tons of candidates from which just a small group might be interesting for the user, in spite of the results fulfill the search criteria. This is due to the fact that not all of them fulfill the functional properties of the desire artifact. Here is were test-driven search comes to light. 
 
-Test-driven reuse approach was first introduced in \cite{Hummel2004}. It is a technique that emerges as a solution to the problem of retrieving so many irrelevant component candidates due to large amount of component in a repository. Specifically this technique deals with the usability and retrieval problems we explained before. It relies on test cases written by user, extract the different interfaces defined in the test case, then it makes the search of reuse candidate, then it run the tests and \textit{cleans} the result set of candidates that do not pass the test. Finally it shows the cleaned result set to the user. This is the test-driven reuse cycle which can be seen in the figure \ref{fig:test-driven-cycle}.
+Test-driven reuse approach was first introduced in \cite{Hummel2004}. It is a technique that emerges as a solution to the problem of retrieving so many irrelevant component candidates due to large amount of component in a repository. Specifically this technique deals with the usability and retrieval problems we explained before. It relies on test cases written by user (step a), then it extracts the different interfaces defined in the test case (step b), then it makes the search of reuse candidate (step c). Then it run the tests and \textit{cleans} the result set of candidates that do not pass the tests (step d and e). Finally it shows the cleaned result set to the user (step f). This is the test-driven reuse cycle which can be seen in the figure \ref{fig:test-driven-cycle}.
 
 \begin{figure}[ht]
 	\centering
     \includegraphics[width=\textwidth]{grafiken/test-driven-cycle}
-    \caption{The test-driven reuse \textit{cycle} \citep{Hummel2013}}
+    \caption{The test-driven reuse \textit{cycle} extracted from \citep{Hummel2013}}
     \label{fig:test-driven-cycle}
 \end{figure}
 
-In the first step, the user provides a JUnit test case of the desired component. Then 
+An implementation of this \textit{cycle} is Code Conjurer which can be found in \citep{Hummel2008} and\citep{Hummel2013}. This implementation is an Eclipse plugin that delivers proactively reuse recomendations by silently monitoring the user's work and triggering searches automatically whenever this seems reasonable. This tool supports interface-base searches and test-driven searches. For the latter, the tool has a background agent that monitors the required interface of the JUnit test case (also called, \textit{class under test} (CUT)) written by the developer. When a change in the CUT happens, Code Conjurer sends the JUnit test to Merobase where the interfaces are extracted and used to search for results. Then the candidates retrieved are tested against the test provided and the candidates that do not pass the tests are removed. Finally the candidates are shown to the user in Eclipse.
+
+Another tools that uses test-driven search are S6 \citep{Reiss2009} and CodeGenie \citep{Lemos2007}.
+
+This approach for searching candidates is very promising because of popularity of Agile practices and specifically of Test-Driven development (TDD) \citep{Beck2003}. In TDD developers writes the tests of the desired component before writing a single line of its implementation. Therefore, the chances of finding a component that can be reused instead of writing it from scratch is pretty high.
+
+In spite of the fact that this search method retrieves more relevant resources, it needs improvement in order to be applicable for the daily work of a developer. The amount of time taken from submitting the test case till receive the results is sometimes excessive, this is due to the fact that each candidate needs to be compiled and validated against the test case. Although this problem can be overcome by increasing the resources, it brings extra costs. 
 
 \section{Ranking components}
 \subsection{SOCORA}
