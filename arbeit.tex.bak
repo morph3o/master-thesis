@@ -94,6 +94,8 @@ sort,	%in case of multiple citations sort as in bibliography
 \usepackage{setspace}
 \usepackage{url}          % fuer urls: schreibweise ist z.B. \url{http://www.uni-mannheim.de}
 %\urlstyle{same} % makes urls in the same font as the rest of the text
+\usepackage{xcolor}
+\usepackage{minted}
 
 
 %Automatisch Abkürzungsliste generieren: 2x latex, makeindex myfile.nlo -s nomencl.ist -o myfile.nls, 2x latex
@@ -174,7 +176,7 @@ sort,	%in case of multiple citations sort as in bibliography
 \include{kapitel/sw-reuse}
 \include{kapitel/ci}
 \include{kapitel/simile}
-\include{kapitel/grafiken}
+%\include{kapitel/grafiken}
 \include{kapitel/fazit}
 %\selectlanguage{ngerman} % wenn im Inhaltsverzeichnis Appendix stehen soll, muss Engl gewaehlt sein, fuer Anhang Deutsch
 \appendix

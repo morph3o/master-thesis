@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{} docker pull jenkins
+  Using default tag: latest
+  latest: Pulling from library/jenkins
+
+  \PYG{c+c1}{\PYGZsh{} some irrelevant output was remove}
+  Digest: sha256:5046434030be395ec977c98e11...
+  Status: Downloaded newer image \PYG{k}{for} jenkins:latest
+\end{Verbatim}

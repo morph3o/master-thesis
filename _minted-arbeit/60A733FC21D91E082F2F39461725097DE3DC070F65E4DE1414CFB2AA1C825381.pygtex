@@ -1,0 +1,18 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{} docker run \PYGZhy{}p 8080:8080 \PYGZhy{}p 50000:50000 jenkins
+  \PYG{c+c1}{\PYGZsh{} some irrelevant output was remove}
+  *************************************************************
+
+  Jenkins initial setup is required. An admin user has been
+  created and a password generated.
+  Please use the following password to proceed to installation:
+
+  95199411f1894bfa97e937147c41aa62 \PYG{c+c1}{\PYGZsh{} IMPORTANT, default admin pass}
+
+  This may also be found at: /var/jenkins\PYGZus{}home/secrets/initial.
+
+  *************************************************************
+  \PYG{c+c1}{\PYGZsh{} some irrelevant output was removed}
+  Jan 19, \PYG{l+m}{2017} 8:28:05 AM hudson.model.AsyncPeriodicWork\PYG{n+nv}{\PYGZdl{}1} run
+  INFO: Finished Download metadata. 25,312 ms
+\end{Verbatim}

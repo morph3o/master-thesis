@@ -669,3 +669,10 @@ volume = {116},
 year = {2016}
 }
 
+@misc{Docker,
+title = {{The Docker Platform}},
+url = {https://www.docker.com},
+urldate = {2017-01-19},
+year = {2017},
+author = {Docker Inc.},
+}
