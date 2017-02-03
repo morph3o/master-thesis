@@ -1,9 +1,9 @@
-\chapter{Continuous Integration}
+\section{Continuous Integration}
 \label{chap:ci}
 
 In this chapter we will explain what Continuous Integration (CI) means, we will describe the process steps, its benefits and challenges. Finally we will explain how CI can be leveraged in order to improve Software Reuse.
 
-\section{What is Continuous Integration?}
+\subsection{What is Continuous Integration?}
 \label{sec:ci-def}
 
 The term can be found in the context of micro-processes development in the work of \cite{Booch2007}. Then it was adopted by Kent Beck in his definition of Extreme Programming \citep{Beck1999}. However, it was Martin Fowler who was credited with establishing the current definitions of the practices. Fowler defines CI as following:
@@ -32,7 +32,7 @@ Therefore we can break up the CI workflow in the following steps \citep{Fowler20
 
 This uncomplicated workflow helps the development team to focus on the current code change till it is verified and validated. Moreover, it provides continuous feedback on the quality of the code.
 
-\subsection{CI Tools}
+\subsubsection{CI Tools}
 
 Although the CI is tool agnostic, the selection of them depends on the project, framework in use, skill-set of the stakeholders and other factors. There are however two must-have tools of any CI system: (1) the version control system (VCS) and (2) the CI server.
 
@@ -40,7 +40,7 @@ The most popular VCS are Git, Mercurial and SVN. On top of them, we can find Ver
 
 Therefore choosing the appropriate tools is about finding the balance between price, setup, configuration efforts, ease-of-use, integration capabilities between the selected tools, framework suitability and maintainability in respect to current code base.
 
-\subsubsection{Git}
+\paragraph{Git}
 Within the several different VCSs available, Git is one of the most popular\footnote{https://rhodecode.com/insights/version-control-systems-2016 (accessed: 14.01.2017)}. Git emerges in 2005 as an alternative to BitKeeper\footnote{https://www.bitkeeper.com/ (accessed: 13.01.2017)} after the break of the relationship between the commercial company behind BitKeeper and  the community that developed the Linux kernel \citep{Chacon2009}.
 
 The main difference between Git and the other VCSs is the way it thinks about its data. Other VCSs such as Subversion, CVS, Perforce, and so on, think of the information they keep as a set of files and the changes made to each file over time. On the other hand, Git thinks its data like a set of snapshots of a miniature file system. Therefore, every time a user commits, or save the state of the project, Git basically takes a picture of what all the files look like at that moment and store a reference to that snapshot. In addition, Git has three main states where the files can reside in: committed, modified, and staged. Committed means that the data is stored in the local database. Modified means that the file was modified but it has not been committed yet. And staged means that the modified file has been marked to go into the next commit \citep{Chacon2009}. The figure \ref{fig:git-sates} depicts these three states.
@@ -54,16 +54,16 @@ The main difference between Git and the other VCSs is the way it thinks about it
 
 The git directory is the core of Git as it is where the metadata and object database for a project is stored. The working directory is a single checkout of one version of the project. Finally, the staging area is a file which is generally stored in the Git directory. This file contains information about what will go into the next commit.
 
-\subsubsection{Github}
+\paragraph{Github}
 
 Github\footnote{https://github.com/ (accessed: 13.01.2017)} is a web-based Git repository hosting service, which offers all the functionality of Git and its own features. It provides several collaboration tools such as wikis, bug tracking, feature requests, and task management as well as access control. Its development started in 2007 as a side project of P. J. Hyett and Chris Wanstrath \citep{Weis2014} and it was officially lunch on the 10th of April in 2008. Since then, Github has gain popularity through the community reaching more than 50 million projects hosted nowadays.
 
-\subsubsection{Jenkins}
+\paragraph{Jenkins}
 Jenkins is an open source automation server developed in Java. It was originally founded in 2006 as \textit{Hudson}, however a disputed with Oracle the community behind Hudson decided to change the project name to Jenkins\footnote{http://archive.is/fl45 (accessed: 13.01.2017)}.
 
 Jenkins enables developers to reliable build, test, and deploy their software. Its extensible and plugin-based architecture has permitted to create a tons of plugins to adapt the CI server to a multitude of build, test, and deployment automation workloads. In 2015, Jenkins surpassed 100.000 known installation making it the most widely deployed automation server\footnote{https://jenkins.io/press/ (accessed: 13.01.2017)}. 
 
-\section{Benefits in adopting CI/CD}
+\subsection{Benefits in adopting CI/CD}
 \label{ci-benefits}
 
 Several are the benefits that come with the adoption of Continuous Integration in a software project. In this section we will describe five areas that are improved after CI implementation \citep{Rejstrom2016}. It is important to point out that these benefits come along with other practices such as agile transformation \citep{Laanti2011} and lean software development \citep{Poppendieck2003}.
@@ -76,7 +76,7 @@ Several are the benefits that come with the adoption of Continuous Integration i
 \item Improved developer productivity: By automating deployment process, environment configuration and other non-value adding tasks, significant time saving for developers have been observed \citep{Rodriguez2016}. Also, in the work of \cite{Humble2010} was observed that although the setup cost of a deployment pipeline can be high, after it is setup developers can focus on value adding software development works.
 \end{itemize}
 
-\section{Challenges in adopting CI/CD}
+\subsection{Challenges in adopting CI/CD}
 \label{ci-challenges}
 
 Adopting CI can be very beneficial for a software project as described above, however we can face some challenges that can jeopardize the successful implementation of it. According to the literature, there are seven common challenges in the implementation of a CI:
@@ -91,7 +91,7 @@ Adopting CI can be very beneficial for a software project as described above, ho
 \item Manual testing: Although automated tests are very beneficial, some aspects of software need to be manually tested such as security issues, performance and UX/UI. Therefore 	heavy manual testing can impact the overall speed and smoothness of the process \citep{Leppanen2015}.
 \end{itemize}
 
-\section{Successful CI practices}
+\subsection{Successful CI practices}
 \label{ci-successful-pract}
 
 In order to reduce the risks in adopting CI practices, eight principles, based on several literature reviews, were defined in \citep{Rejstrom2016} which should guide the CI implementation within organizations. These principles are generic solutions which can be adapted in most cases.

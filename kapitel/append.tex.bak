@@ -21,6 +21,78 @@ After downloading the \textit{dmg} image, double-click on it and you will see so
     \label{fig:docker-mac-01}
 \end{figure}
 
+\subsubsection{Docker on Linux}
+In this section we will explain how to install Docker in Linux, specifically in Debian (Jessie). For other distros please refer to Docker documentation\footnote{https://docs.docker.com/engine/installation/linux/ (accessed: 21.01.2017)}.
+
+First of all we need to update the repositories.
+
+\begin{minted}[linenos,
+               numbersep=5pt,
+               frame=lines,
+               framesep=2mm]{bash}
+$ sudo apt-get udpate
+\end{minted}
+
+Then we need to install the packages to allow \textit{apt} to use repositories iver HTTPS.
+
+\begin{minted}[linenos,
+               numbersep=5pt,
+               frame=lines,
+               framesep=2mm]{bash}
+$ sudo apt-get install apt-transport-https \
+                       ca-certificates \
+                       software-properties-common
+\end{minted}
+
+Then we add the official Docker's GPG key.
+
+\begin{minted}[linenos,
+               numbersep=5pt,
+               frame=lines,
+               framesep=2mm]{bash}
+$ curl -fsSL https://yum.dockerproject.org/gpg | sudo apt-key add -
+\end{minted}
+
+Finally we add the stable repository of Docker and update repositories.
+
+\begin{minted}[linenos,
+               numbersep=5pt,
+               frame=lines,
+               framesep=2mm]{bash}
+$ sudo add-apt-repository \
+       "deb https://apt.dockerproject.org/repo/ \
+       debian-$(lsb_release -cs) \
+       main"
+$ sudo apt-get update
+\end{minted}
+
+Once we added the new repositories, we update the repository list.
+
+\begin{minted}[linenos,
+               numbersep=5pt,
+               frame=lines,
+               framesep=2mm]{bash}
+$ sudo apt-get update
+\end{minted}
+
+Then we install docker.
+
+\begin{minted}[linenos,
+               numbersep=5pt,
+               frame=lines,
+               framesep=2mm]{bash}
+$ sudo apt-get -y install docker-engine
+\end{minted}
+
+After the installation is done we can make a little test to be sure that everything was installed correctly. The following command will download a test image and runs it in a container. Once it is running will print an informational message and exits.
+
+\begin{minted}[linenos,
+               numbersep=5pt,
+               frame=lines,
+               framesep=2mm]{bash}
+$ sudo docker run hello-world
+\end{minted}
+
 \subsection{Jenkins in Docker}
 Open a terminal on your mac and enter the following command to download the Jenkins image for Docker.
 
@@ -121,7 +193,7 @@ Then click on \textit{Manage Plugins} (figure \ref{fig:jenkins-plugin-02}).
     \label{fig:jenkins-plugin-02}
 \end{figure}
 
-Then go to \textit{Advanced}, scroll down untill \textit{Upload Plugin} section (figure \ref{fig:jenkins-plugin-03}).
+Then go to \textit{Advanced}, scroll down until \textit{Upload Plugin} section (figure \ref{fig:jenkins-plugin-03}).
 
 \begin{figure}[H]
 	\centering

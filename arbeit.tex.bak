@@ -97,6 +97,15 @@ sort,	%in case of multiple citations sort as in bibliography
 \usepackage{xcolor}
 \usepackage{minted}
 
+\usepackage{titlesec}
+
+\setcounter{secnumdepth}{4}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
 
 %Automatisch Abkürzungsliste generieren: 2x latex, makeindex myfile.nlo -s nomencl.ist -o myfile.nls, 2x latex
 \usepackage{nomencl} % um Abkürzungen aufzunehmen: \abbrev{PDA}{personal digital assistant}
@@ -112,6 +121,7 @@ sort,	%in case of multiple citations sort as in bibliography
 \newpage
 }
 
+\usepackage{enumitem}
 
 
 %Inhaltsverzeichnis
@@ -175,6 +185,8 @@ sort,	%in case of multiple citations sort as in bibliography
 \include{kapitel/introduction}
 \include{kapitel/sw-reuse}
 \include{kapitel/ci}
+\include{kapitel/microservices}
+\include{kapitel/usage-scenario}
 \include{kapitel/simile}
 %\include{kapitel/grafiken}
 \include{kapitel/fazit}

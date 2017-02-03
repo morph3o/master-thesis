@@ -1,6 +1,7 @@
-\chapter{Software Reuse}
-\label{chap:sw-reuse}
+\chapter{Foundations}
 
+\section{Software Reuse}
+\label{chap:sw-reuse}
 Douglas McIlroy \citep{McIlroy1968} envisaged in the 1960s a software system composed of already existent components. Where you basically put different components, that already exist, together in order to form the system is being built. Although the IT industry has tried for many years to improve the speed and reduce cots of software development by reusing components, the McIlroy's vision is still the exception rather than the rule.
 
 Although the definition of software reuse seems trivial, it is possible to find several definitions in the literature. However, most of them are similar to the definition proposed by \cite{Krueger1992}:
@@ -27,7 +28,7 @@ However, reuse traditionally means the reuse of code fragments and components \c
 
 Software reuse emerges as a solution for the so called software development crisis \citep{Kim1992}. Organizations face several problems in software development including increased costs, delayed schedules, unsatisfied requirements, and software professional shortage. Therefore, by reusing software components projects can reduce time-to-market, lower development costs, and increase software quality \cite{Frakes2005}.
 
-\section{Benefits of Software Reuse}
+\subsection{Benefits of Software Reuse}
 Software reuse has not failed to attract the attention of industry due to its alleged benefits. In the industry the need of reduction of redundancies, as well as costs reduction and quality improvements is perceived. Moreover, the vision of fostering innovation and market penetration due to shorter production cycles promised obvious strategic business advantages \citep{Bauer2016}. Research literature has reported benefits from successful adoption of software reuse:
 
 \begin{itemize}
@@ -39,7 +40,7 @@ Software reuse has not failed to attract the attention of industry due to its al
 
 Unfortunately the adoption of suitable reuse strategy is pretty challenging as it takes place in a multifaceted environment and, thus, incorporates aspects ranging from technical to organizational at different level of abstractions \citep{Bauer2016}.
 
-\section{Challenges of Software Reuse}
+\subsection{Challenges of Software Reuse}
 \label{sec:sw-challenges}
 Although software reuse brings many benefits, it has failed to take off. Find the right third-party software component to be reused based on a well-defined specification is one of the most challenging approaches because it requires a clear-cut matching of the potential reuse candidate and the given specification. Although there are several search tools available, most of them are still text-based and it neither reflect nor support the need to match the reuse candidates with the syntactic and semantic characteristics of a specification \citep{Hummel2013}. \cite{Hummel2013}, based on software retrieval literature, identified fours problems for implementing a sustainable reuse repository.
 
@@ -64,7 +65,7 @@ Beside the technical problems described above, organizational challenges and hum
 \item Disincentives: The quality of the reusable component candidates is one of the strongest disincentives. Moreover the criteria applied to measure developers and managers have an impact on their motivation to take part into reuse.
 \end{itemize}
 
-\section{Code-search engines}
+\subsection{Code-search engines}
 Code-search engines are the heart of the new generations of reuse support tools. For example, Code Conjurer \citep{Hummel2008} uses Merobase component search engine, CodeGenie relies on Sourcerer \citep{Lemos2007} or ParseWeb that works over Google Code Search \footnote{Shutdown January, 15 2012 \citep{Horowitz2011}} \citep{Thummalapenta2007}. Next we will describe some code search engines that are still online the time of this work.
 
 \begin{itemize}
@@ -78,7 +79,7 @@ Code-search engines are the heart of the new generations of reuse support tools.
 
 Although Google or Yahoo! are not specialized code search engines, they are able to return more precise results than code search engines\citep{Hummel2007}.
 
-\subsection{Merobase}
+\subsubsection{Merobase}
 \label{subsec:merobase}
 
 Merobase contains special parsers for each supported programming languages (currently it supports Java, C++, and C\#, also it supports WSDL files, binary Java classes from JARs and .NET binaries), which extracts syntactical information, stores it in the index and search for it later. Moreover, it contains a special parser for JUnit which is able to extract the interface of the class under test from test cases.
@@ -91,7 +92,7 @@ The current implementation of Merobase, which will we used in our prototype, has
 
 On the other hand, the current implementation is populated with software components extracted from Maven projects mainly extracted from the Maven Central Repository\footnote{https://repo1.maven.org/maven2/ (accessed: 15.01.2017)}. 
 
-\section{Component retrieval techniques}
+\subsection{Component retrieval techniques}
 As we stated in \ref{sec:sw-challenges}, several problems of software reuse have been already addressed. Now one of the big problems is how to choose the so-called best component. In this section we will talk about the different component retrieval techniques proposed in the literature. Then we will explain further what test-driven component retrieval means.
 
 \cite{Mili1998} divided the component retrieval techniques in six independent groups:
@@ -111,7 +112,7 @@ In the work \cite{Hummel2007} several retrieval techniques were compared. They c
 
 Another technique that was presented in \cite{Hummel2004}, is test-driven search. This technique ruses test cases as a vehicle to retrieve the component candidates that fit better the requirements of the user. It promises to improve the precision of the searches in comparison with other techniques explained before. Below we will explain with further details how this techniques works. 
 
-\subsection{Test-driven search}
+\subsubsection{Test-driven search}
 Simple techniques for component retrieval such as keyword-driven search or signature-driven search may lead to a tons of candidates from which just a small group might be interesting for the user, in spite of the results fulfill the search criteria. This is due to the fact that not all of them fulfill the functional properties of the desire artifact. Here is were test-driven search comes to light. 
 
 Test-driven reuse approach was first introduced in \cite{Hummel2004}. It is a technique that emerges as a solution to the problem of retrieving so many irrelevant component candidates due to large amount of component in a repository. Specifically this technique deals with the usability and retrieval problems we explained before. It relies on test cases written by user (step a), then it extracts the different interfaces defined in the test case (step b), then it makes the search of reuse candidate (step c). Then it run the tests and \textit{cleans} the result set of candidates that do not pass the tests (step d and e). Finally it shows the cleaned result set to the user (step f). This is the test-driven reuse cycle which can be seen in the figure \ref{fig:test-driven-cycle}.
@@ -131,8 +132,8 @@ This approach for searching candidates is very promising because of popularity o
 
 In spite of the fact that this search method retrieves more relevant resources, it needs improvement in order to be applicable for the daily work of a developer. The amount of time taken from submitting the test case till receive the results is sometimes excessive, this is due to the fact that each candidate needs to be compiled and validated against the test case. Although this problem can be overcome by increasing the resources, it brings extra costs. 
 
-\section{Ranking components}
-\subsection{SOCORA}
+\subsection{Ranking components}
+\subsubsection{SOCORA}
 
 The ranking component approach presented in \cite{Kessel2016} works as follow. First, it establishes a partial ordering of candidates using non-dominated sets determined by non-dominated sorting without assuming any preferences of the user. Depending on the priorities assigned to each selected criterion, it then subrank each non-dominated set in a recursive way until all unique priorities and their corresponding subcriteria are applied to the current level of non-dominated sets, eventually resulting in nested subrankings. Note that in each step, when (new)non-dominated sets are determined by non-dominated sorting, the ranks of sets may change according to their partial ordering. In general, partial subranking are deliberately supported since the user is not required to assign specific priorities to all his/her selected criteria. The priorities are defined by simple integer values (highest value represent more priority than a lower value) with a default priority assignment of 1 for each selected criterion. If the user wants to assign a higher or lower priority to a selected criterion, he/she may increase or decrease the priority by 1 or even a larger number. Both unique and equal priority values may be assigned to selected criteria to establish either a partial or strict ordering. For each priority value, all corresponding criteria are selected to subrank each non-dominated set of non-distinguishable candidates. This process starts with the highest priority value and continues in descending order until the smallest priority value is reached \citep{Kessel2016}. The figure \ref{fig:socora-ex} is a schematic illustration of how the component ranking works.
 
@@ -143,7 +144,7 @@ The ranking component approach presented in \cite{Kessel2016} works as follow. F
     \label{fig:socora-ex}
 \end{figure}
 
-\subsubsection{Merobase integration}
+\paragraph{Merobase integration}
 
 The prototype of the ranking component approach is integrated with the component search engine Merobase to retrieve the candidates. The figure \ref{fig:socora-merobase} shows how SOCORA\footnote{SOCORA prototype http://socora.merobase.com (accessed: 13.01.2017)} is integrated with Merobase. 
 

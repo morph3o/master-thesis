@@ -1,0 +1,34 @@
+\section{Microservices}
+
+Microservices is a software architecture is usually linked to Martin Fowler in its article \citep{Fowler2014}. It is an architectural styles that aim to develop applications as a suite of small services independently of each other. Each of this services runs in its process and they communicate with lightweight mechanisms (e.g. HTTP resource API). These services are built around business capabilities and independently deployed by fully automated deployment machinery. Also there is a bare minimum of centralized management of these services, which may be written in different programming languages and use different data storage technologies \citep{Fowler2014}.
+
+This architectural style emerges as a solution to the monolithic style due to its problems. An application built using monolithic architectural style is considered as a single unit with normally three main parts (figure \ref{}): a client-side user interface (i.e. HTML, CSS, JavaScript running on user's machine), a database and a server-side application. The latter is a monolith as it handles HTTP request, execute domain logic, retrieve and update data from the database, and populates and/or select the HTML views sent to the client-side. As it is a single logical executable, any changes made in the system, no matter the size of it, require a build and a deploy of the whole server-side application. It is hard to keep a good modular structure, making it harder to keep changes that must affect one module within that module. Also it is hard to scale as it is necessary to scale the entire application rather than parts of it requiring greater resources. These problems are causing frustrations on people that are using this style, specially nowadays when applications are deployed to the cloud, leading to the microservices architectural style.
+
+\subsection{Characteristics of a Microservice Architecture}
+In the work of Fowler and Lewis \citep{Fowler2014} described a list of common characteristic of applications built using microservice architectural style. It is important to point out that all the applications using this style must confirm every characteristic of this list.
+
+\begin{description}[style=nextline]
+\item[Componentization via Services] \hfill \
+First of all it is important to explain the differences between libraries and services as the primary way of componentizing is by breking down software into services. On the one hand libraries are components that are linked into a application and called using in-memory function calls. On the other hand services are out-of-process components which communicates with a mechanism such as a web service request, or remote procedure call \citep{Fowler2014}.
+
+Splitting a software into services brings benefits such as services as components are independently deployable making it easy for changes, or services have more explicit component interfaces by using explicit remote call mechanisms. 
+\item[Organized around Business Capabilities] \hfill \
+Normally in monolithic applications the development teams are divided by technology layers such as front-end team, server-side team and database team. However when team are divided in this way, even simple changes can lead to a cross-team project taking time and budgetary approval.
+
+In Microservices approach this is taken in a different way by dividing the application into services organized around business capability. Thus services involve all needed for that business area, including user-interface (UI), database, business logic, and any other external collaboration. Therefore each teams are cross-functional, including the full range of skills required for the development of it.
+\item[Products not Projects] \hfill \
+Usually software development follows a project model where the objective is to deliver some piece of software which, when it is done, it is delivered to a maintenance team and the development team is disbanded.
+
+Microservices approach follows the product model instead of project model. In the product model the development team takes full responsibility of the software, in other words it owns the product. This results in day-to-day contact of the developers with the users as they have to take on at least some of the support. Moreover this mentality ties in with the linkage to business capabilities as the focus is on how the software can assist its users to enhance the capabilities instead on put the focus on a list of functionality.
+\item[Smart endpoints and dumb pipes] \hfill \
+Microservices 
+\item[Decentralized Governance] \hfill \
+
+\item[Decentralized Data Management] \hfill \
+
+\item[Infrastructure automation] \hfill \
+
+\item[Design for failure] \hfill \
+
+\item[Evolutionary design] \hfill \
+\end{description}

@@ -1,9 +1,11 @@
-\chapter{Simile}
+\chapter{Simile }
 \label{chap:simile}
 
-In this work we present Simile, which is a tool that leverages the Continuous Integration process in order to recommend similar components that are being developed in a software project. A common use case would look like the following:
+In this work we present Simile, which is a tool that leverages the Continuous Integration process in order to recommend similar components that are being developed in a software project. Following the usage scenario explained previously in section \ref{usage-scenario}, we will describe how our approach works:
 
-First of all we will assume that the development team is using Git as VCS, Jenkins as CI server and Java as main language. Once a member of the team makes a commit and pushes to the remote Git server, simile will be trigger by Jenkins. This tool will receives the repository url where the project is. Then it will clone the repository locally and then it will go through the source code. Simile will extract the different class names and methods of the source code and it will make requests to SOCORA. SOCORA will response with all the components that are similar to the components extracted from the project. Simile will get this response and it will generate a report listing all the similar components to the components that are being developed by the team. This report will be sent to the email of all the members of team so they will know if there is already a component that can be reuse instead of developing it again from scratch.
+Once a member of the team makes a commit and pushes to the remote Git server, our tool will be triggered by Jenkins. This tool will receives the repository URL where the project is being stored. Then it will clone the repository locally and will go through the source code in order to extract the different class names, method signatures and test classes of the source code. Once done it will make requests to SOCORA using the information extracted. SOCORA will response with all the components that are similar to the components extracted from the project. Simile will get this response and it will generate a report listing all the similar components to the components that are being developed by the team. This report will be sent by email to the members of team so they will know if there is already a component that can be reuse instead of developing it from scratch. Figure \ref{} describes the process of our approach.
+
+
 
 The main objective of Simile is to help the team to find similar components so they would be able to reuse them. Thus they would reduce time development and costs through reuse components that are already tested and ready to work.
 
