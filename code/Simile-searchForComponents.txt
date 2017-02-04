@@ -1,0 +1,16 @@
+@Async
+public void searchForComponents(String repo, String branch, String folder) {
+  Cloner cloner = new Cloner(repo, branch, folder);
+
+  cloner.cloneRepository();
+
+  File maintDir = new File(String.format("%s/src/main", folder));
+  JavaClassHandler jch = new JavaClassHandler();
+  new DirectoryExplorer(jch, new JavaClassFilter()).explore(maintDir);
+
+  File testDir = new File(String.format("%s/src/test", folder));
+  JavaClassHandler jch2 = new JavaClassHandler();
+  new DirectoryExplorer(jch2, new JavaClassFilter()).explore(testDir);
+
+  socoraRequester.searchComponent("SocoraRequester(searchComponent(String,String):void;)", SocoraRequester.INTERFACE_DRIVEN_SEARCH);
+}

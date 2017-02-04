@@ -1,0 +1,13 @@
+@RequestMapping(name = "/repository", method = RequestMethod.POST)
+public ResponseEntity<?> setupRepository(
+  @RequestParam(name = "repo") String repo,
+  @RequestParam(name = "branch") String branch,
+  @RequestParam(name = "email") String email) {
+
+  if(validateRequest(repo, email).isPresent()) {
+    return ResponseEntity.badRequest().body(validateRequest(repo, email).get());
+  } else {
+    simile.searchForComponents(repo, branch, Cuid.createCuid());
+    return ResponseEntity.ok(new Message("Repository set successfully", 200));
+  }
+}

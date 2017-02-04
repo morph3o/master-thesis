@@ -1,0 +1,11 @@
+@Override
+public void handle(int level, String path, File file) {
+  try {
+    JavaClassVisitor jcv = new JavaClassVisitor();
+    jcv.visit(JavaParser.parse(file), null);
+    jcv.getMethods().forEach(method -> methods.add(this.getMQLNotation(jcv.getClassObj().getNameAsString(), method.getNameAsString(), method.getParameters(), method.getType().toString())));
+    testClasses.addAll(jcv.getTestClasses());
+  } catch (IOException e) {
+    new RuntimeException(e);
+  }
+}

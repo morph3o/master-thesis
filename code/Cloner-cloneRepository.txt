@@ -1,0 +1,14 @@
+public int cloneRepository() throws IOException {
+  int exitVal = 0;
+  try {
+    String command = this.setCommand(repo, branch, folder);
+    Process p = Runtime.getRuntime().exec(command);
+    StreamGobbler errorGobbler = new StreamGobbler(p.getErrorStream(), "INFO");
+    errorGobbler.start();
+    exitVal = p.waitFor();
+    return exitVal;
+  } catch (InterruptedException e) {
+    e.printStackTrace();
+  }
+  return exitVal;
+}

@@ -5,10 +5,91 @@ In this work we present Simile, which is a tool that leverages the Continuous In
 
 Once a member of the team makes a commit and pushes to the remote Git server, our tool will be triggered by Jenkins. This tool will receives the repository URL where the project is being stored. Then it will clone the repository locally and will go through the source code in order to extract the different class names, method signatures and test classes of the source code. Once done it will make requests to SOCORA using the information extracted. SOCORA will response with all the components that are similar to the components extracted from the project. Simile will get this response and it will generate a report listing all the similar components to the components that are being developed by the team. This report will be sent by email to the members of team so they will know if there is already a component that can be reuse instead of developing it from scratch. Figure \ref{} describes the process of our approach.
 
-
-
 The main objective of Simile is to help the team to find similar components so they would be able to reuse them. Thus they would reduce time development and costs through reuse components that are already tested and ready to work.
 
+\section{Implementation}
+In this section we will detail how the prototype was developed and the technologies used. First we will start explaining the Simile service which is the starting point of the whole process about cloning the project, analyse code, search components and send result. Then we will continue with the  HTTP controller which receives the Git repository of the project to be analysed, the specific branch of the repository, and the email where the result will be sent. Then we will explain the Cloner object which is in charge of cloning the project locally. After that, we will explain how the tool analyses the code and extracts the interface signatures and test classes which will be used to make the requests to SOCORA. Next we will describe how we receive the result from SOCORA. Finally we will explain how we handle the result from the previous step and build the email that will be sent to user.
+
+\textbf{NOTE: The code snippet shown in the following subsections has been cleaned and it does not represent the source code. To see the source code with all the details, please refer to the appendix \ref{append:simile-code} or to the CD attached to this work.}
+
+\subsection{Simile}
+The Java class Simile.java [\ref{Simile.java}] is a Spring service which contains only one method, \emph{searchForComponents}. This methods receives three parameters, repo, branch, and folder. \emph{repo} represents the Git repository of the project to be analysed. \emph{branch} is the branch of the Git repository (optional). Finally \emph{folder} represents the name of the folder where the project will be cloned. Listing \ref{searchForComponents} represents the method.
+
+\lstinputlisting[
+  language=Java, numbers=left, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={Method searchForComponents of Simile.java},
+  captionpos=b,
+  label=searchForComponents
+]
+{code/Simile-searchForComponents.txt}
+
+First, we clone the project in the server (lines 3 - 5). Then we analyses the Java main code of the project cloned (lines 7 - 9) and the test classes (lines 11 - 13). When we analyse the code we extract interface signatures and test classes, we will explain how we do this in section \ref{code-analysis}. With the result of the previous step, we make the requests to SOCORA in order to get the similar components.
+
+It is important to notice that this method is asynchronous by the Java annotation \emph{@Async}. This allows us to run this method many times in parallel.
+
+\subsection{Cloner}
+The Java class Cloner.java [\ref{Cloner.java}] is in charged of cloning the project in a local directory. The listing \ref{cloneRepository} represents the methods cloneRepository.
+
+\lstinputlisting[
+  language=Java, numbers=left, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={Method cloneRepository of Cloner.java},
+  captionpos=b,
+  label=cloneRepository
+]
+{code/Cloner-cloneRepository.txt}
+
+This method runs the command \emph{git clone} with the parameters \emph{repo}, \emph{branch}, and \emph{folder}. The command is built by the private method \emph{setCommand}.
+
+\subsection{Interface signature and test classes extraction}
+\label{code-analysis}
+In this section we will explain how our prototype explores the project cloned , and how it extracts the interface signatures and the test classes from the code. 
+
+
+
+The Java class JavaClassHandler.java [\ref{JavaClassHandler.java}] is in charge of parse the Java classes of the project to which we will search similar components for. This class is an implementation of the interface \emph{FileHandler} [\ref{FileHandler.java}]. The method implemented is \emph{handle} (listing \ref{handle}).
+
+\lstinputlisting[
+  language=Java, numbers=left, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={Method handle of JavaClassHandler.java},
+  captionpos=b,
+  label=handle
+]
+{code/JavaClassHandler-handle.txt}
+
+This method accepts three parameters: \emph{level}, \emph{path}, and \emph{file}. \emph{level} represents the level of the directory. \emph{path} represents the path of the current directory or 
+
+\subsection{HTTP Controller}
+The Java class EntryController.java [\ref{EntryController.java}] is in charge of receiving the request from a customer with the Git repository and the branch of the project to be analysed, and the email where the result of the similar component will be sent. In the listing \ref{setupRepository} we can see the method setupRepository which represents the entry point which is a POST request with the three parameters described before. The parameter \emph{repo} is required and represent the Git repository of the project that will be analysed and to which similar components will be searched for. The parameter \emph{branch} represents the branch of the git repository, this parameter is optional. Finally, the parameter \emph{email} represents the email where the result of the similar components will be sent to.
+
+\lstinputlisting[
+  language=Java, numbers=left, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={Method setupRepository of EntryController.java},
+  captionpos=b,
+  label=setupRepository
+]
+{code/EntryController-setupRepository.txt}
+
+When a request is received by the controller, it firstly validates if the parameters are correct. If they are not valid, it will respond with HTTP status code 400 and a message describing the errors. Otherwise, it triggers asynchronously the method searchForComponents with the repository, the branch, and a random CUID \footnote{CUID: Collision-resistant ids - \url{https://github.com/graphcool/cuid-java} (accessed: 04.02.2017).} as a folder name of the service Simile. This service is in charge of starting the process of cloning the project, analyse the code, make the request to SOCORA, and to send the email with the result to the customer.
+\subsection{Cloner}
+\subsection{Mailer}
+
 \section{CI integration}
-Our prototype leverages the Continuous Integration process to improve the chances of component reuse. Whenever
+To integrate our prototype to a Continuous Integration process we decided to create a plugin. We decided to create our main prototype as independent as possible thus we do not depend on any CI tool. Therefore in this work to prove our approach we built a plugin for the CI server Jenkins. We decided to use Jenkins because is one of the most popular CI server for Java projects \footnote{\url{https://www.cloudbees.com/sites/default/files/2016-jenkins-community-survey-responses.pdf} (accessed: 04.02.2017)} and it is open-source.
+
+The Simile Jenkins plugin is simple. First when a user creates a job in Jenkins, he/she can add a post build step. There he/she select the Simile plugin. When it is done, a new section is added in the task configuration (figure \ref{}). There he/she should add the Git repository of the project, the branch (optional), and the email. Once done, whenever the job is triggered, the plugin will be triggered too. The plugin sends via HTTP POST request the repository, branch, and email to Simile.
+
+% ADD IMAGE OF JENKINS
+
+In the future if Simile needs to be integrated to another CI server, we just need to develop a simple plugin which sends the information needed to look for similar components.
 \section{SOCORA Integration}
+Our prototype uses SOCORA to get similar components. After extracting the interface signatures and test classes from a project, Simile make requests to SOCORA using this information. SOCORA then searches for similar components using Merobase and ranks the candidates using non-functional requirements. Once it is done, SOCORA sends the result to Simile. 
+
+Simile communicates with SOCORA by making HTTP requests. 
