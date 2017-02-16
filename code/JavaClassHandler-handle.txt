@@ -9,3 +9,9 @@ public void handle(int level, String path, File file) {
     new RuntimeException(e);
   }
 }
+
+private String getMQLNotation(String classname, String methodName, NodeList<Parameter> params, String returnType) {
+	List<String> paramTypes = new ArrayList<>();
+	params.forEach(param -> paramTypes.add(param.getType().toString()));
+	return String.format("%s(%s(%s):%s;)", classname, methodName, StringUtils.join(paramTypes, ','), returnType);
+}
