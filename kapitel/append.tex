@@ -2,6 +2,7 @@
 \label{append:simile-code}
 In this section we will expose the different Java classes of our prototype.
 
+\section{de.unimannheim.informatik.swt.simile}
 \lstinputlisting[
   language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
   basicstyle=\footnotesize,
@@ -10,8 +11,68 @@ In this section we will expose the different Java classes of our prototype.
   captionpos=b,
   label=Simile.java
 ]
-{code/Simile.java.txt}
+{code/main/Simile.java.txt}
 
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={ServletInitializer.java},
+  captionpos=b,
+  label=ServletInitializer.java
+]
+{code/main/ServletInitializer.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={SimileApplication.java},
+  captionpos=b,
+  label=SimileApplication.java
+]
+{code/main/SimileApplication.java.txt}
+\subsection{de.unimannheim.informatik.swt.simile.controllers}
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={EntryController.java},
+  captionpos=b,
+  label=EntryController.java
+]
+{code/controller/EntryController.java.txt}
+\subsection{de.unimannheim.informatik.swt.simile.model}
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={Candidate.java},
+  captionpos=b,
+  label=Candidate.java
+]
+{code/model/Candidate.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={Message.java},
+  captionpos=b,
+  label=Message.java
+]
+{code/model/Message.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={Metric.java},
+  captionpos=b,
+  label=Metric.java
+]
+{code/model/Metric.java.txt}
+\subsection{de.unimannheim.informatik.swt.simile.services}
 \lstinputlisting[
   language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
   basicstyle=\footnotesize,
@@ -20,37 +81,17 @@ In this section we will expose the different Java classes of our prototype.
   captionpos=b,
   label=Cloner.java
 ]
-{code/Cloner.java.txt}
+{code/services/Cloner.java.txt}
 
 \lstinputlisting[
   language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
   basicstyle=\footnotesize,
   numberstyle=\tiny,
-  caption={JavaClassHandler.java},
+  caption={DirectoryExplorer.java},
   captionpos=b,
-  label=JavaClassHandler.java
+  label=DirectoryExplorer.java
 ]
-{code/JavaClassHandler.java.txt}
-
-\lstinputlisting[
-  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
-  basicstyle=\footnotesize,
-  numberstyle=\tiny,
-  caption={FileHandler.java},
-  captionpos=b,
-  label=FileHandler.java
-]
-{code/FileHandler.java.txt}
-
-\lstinputlisting[
-  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
-  basicstyle=\footnotesize,
-  numberstyle=\tiny,
-  caption={SocoraRequester.java},
-  captionpos=b,
-  label=SocoraRequester.java
-]
-{code/SocoraRequester.java.txt}
+{code/services/DirectoryExplorer.java.txt}
 
 \lstinputlisting[
   language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
@@ -60,17 +101,97 @@ In this section we will expose the different Java classes of our prototype.
   captionpos=b,
   label=EmailSender.java
 ]
-{code/EmailSender.java.txt}
+{code/services/EmailSender.java.txt}
 
 \lstinputlisting[
   language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
   basicstyle=\footnotesize,
   numberstyle=\tiny,
-  caption={EntryController.java},
+  caption={FileHandler.java},
   captionpos=b,
-  label=EntryController.java
+  label=FileHandler.java
 ]
-{code/EntryController.java.txt}
+{code/services/FileHandler.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={Filter.java},
+  captionpos=b,
+  label=Filter.java
+]
+{code/services/Filter.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={JavaClassFilter.java},
+  captionpos=b,
+  label=JavaClassFilter.java
+]
+{code/services/JavaClassFilter.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={JavaClassHandler.java},
+  captionpos=b,
+  label=JavaClassHandler.java
+]
+{code/services/JavaClassHandler.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={JavaClassVisitor.java},
+  captionpos=b,
+  label=JavaClassVisitor.java
+]
+{code/services/JavaClassVisitor.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={JavaMethodVisitor.java},
+  captionpos=b,
+  label=JavaMethodVisitor.java
+]
+{code/services/JavaMethodVisitor.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={NodeIterator.java},
+  captionpos=b,
+  label=NodeIterator.java
+]
+{code/services/NodeIterator.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={SocoraRequester.java},
+  captionpos=b,
+  label=SocoraRequester.java
+]
+{code/services/SocoraRequester.java.txt}
+\subsection{de.unimannheim.informatik.swt.simile.util}
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={StreamGobbler.java},
+  captionpos=b,
+  label=StreamGobbler.java
+]
+{code/util/StreamGobbler.java.txt}
 
 \chapter{Installation of Simile}
 In this chapter we will show how to install the tools we used for implementing Simile. First we will start installing the CI Server Jenkins and explain how to configure it. Then, we will continue with installing Simile Jenkins plugin. After that we will explain how to configure Simile Jenkins plugin using the test project.

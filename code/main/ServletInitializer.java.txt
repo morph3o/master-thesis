@@ -1,0 +1,17 @@
+package de.unimannheim.informatik.swt.simile;
+
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * Implementation of SpringBootServletInitializer necessary to generate a deployable .war
+ * file.
+ */
+@Configuration
+public class ServletInitializer extends SpringBootServletInitializer {
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(SimileApplication.class);
+	}
+}

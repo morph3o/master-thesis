@@ -1,0 +1,75 @@
+package de.unimannheim.informatik.swt.simile;
+
+import com.google.common.base.Strings;
+import de.unimannheim.informatik.swt.simile.services.*;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+@Service
+public class Simile {
+
+	private static final Logger logger = LoggerFactory.getLogger(Simile.class);
+
+	private final SocoraRequester socoraRequester;
+
+	@Autowired
+	public Simile(SocoraRequester socoraRequester) {
+		this.socoraRequester = socoraRequester;
+	}
+
+	@Async
+	public void searchForComponents(String repo, String branch, String folder, String recipient) throws IOException, InterruptedException {
+		Cloner cloner = new Cloner(repo, branch, folder);
+
+		cloner.cloneRepository();
+
+		File maintDir = new File(String.format("%s/src/main", folder));
+		JavaClassHandler classes = new JavaClassHandler();
+		new DirectoryExplorer(classes, new JavaClassFilter()).explore(maintDir);
+
+		File testDir = new File(String.format("%s/src/test", folder));
+		JavaClassHandler testClasses = new JavaClassHandler();
+		new DirectoryExplorer(testClasses, new JavaClassFilter()).explore(testDir);
+
+		logger.info(String.format("Classes found in project: %s", classes.getClasses().size()));
+		logger.info(String.format("Test classes found in project: %s", testClasses.getTestClassesCode().size()));
+
+		this.makeRequestWithClasses(classes.getClassesMQLNotation(), recipient);
+		this.makeRequestWithTestClasses(testClasses.getTestClassesCode(), recipient);
+	}
+
+	private void makeRequestWithClasses(List<String> classes, String recipientEmail) {
+		logger.info("Interface-driven Search");
+		logger.info(Strings.repeat("=", "Interface-driven Search".length()));
+		classes.forEach(c -> {
+			try {
+				logger.info(String.format("Class to query: %s", c));
+				socoraRequester.searchComponent(c, SocoraRequester.INTERFACE_DRIVEN_SEARCH, recipientEmail);
+			} catch (Exception ex) {
+				logger.error(ExceptionUtils.getStackTrace(ex));
+			}
+		});
+	}
+
+	private void makeRequestWithTestClasses(List<String> testClasses, String recipientEmail) {
+		logger.info("Test-driven Search");
+		logger.info(Strings.repeat("=", "Test-driven Search".length()));
+		testClasses.forEach(tc -> {
+			try {
+				logger.info(String.format("Test Class to query: %s", tc));
+				socoraRequester.searchComponent(tc, SocoraRequester.TEST_DRIVEN_SEARCH, recipientEmail);
+			} catch (Exception ex) {
+				logger.error(ExceptionUtils.getStackTrace(ex));
+			}
+		});
+	}
+
+}

@@ -1,3 +1,198 @@
+\chapter{Simile - Code}
+\label{append:simile-code}
+In this section we will expose the different Java classes of our prototype.
+
+\section{de.unimannheim.informatik.swt.simile}
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={Simile.java},
+  captionpos=b,
+  label=Simile.java
+]
+{code/main/Simile.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={ServletInitializer.java},
+  captionpos=b,
+  label=ServletInitializer.java
+]
+{code/main/ServletInitializer.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={SimileApplication.java},
+  captionpos=b,
+  label=SimileApplication.java
+]
+{code/main/SimileApplication.java.txt}
+\subsection{de.unimannheim.informatik.swt.simile.controllers}
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={EntryController.java},
+  captionpos=b,
+  label=EntryController.java
+]
+{code/controller/EntryController.java.txt}
+\subsection{de.unimannheim.informatik.swt.simile.model}
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={Candidate.java},
+  captionpos=b,
+  label=Candidate.java
+]
+{code/model/Candidate.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={Message.java},
+  captionpos=b,
+  label=Message.java
+]
+{code/model/Message.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={Metric.java},
+  captionpos=b,
+  label=Metric.java
+]
+{code/model/Metric.java.txt}
+\subsection{de.unimannheim.informatik.swt.simile.services}
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={Cloner.java},
+  captionpos=b,
+  label=Cloner.java
+]
+{code/services/Cloner.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={DirectoryExplorer.java},
+  captionpos=b,
+  label=DirectoryExplorer.java
+]
+{code/services/DirectoryExplorer.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={EmailSender.java},
+  captionpos=b,
+  label=EmailSender.java
+]
+{code/services/EmailSender.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={FileHandler.java},
+  captionpos=b,
+  label=FileHandler.java
+]
+{code/services/FileHandler.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={Filter.java},
+  captionpos=b,
+  label=Filter.java
+]
+{code/services/Filter.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={JavaClassFilter.java},
+  captionpos=b,
+  label=JavaClassFilter.java
+]
+{code/services/JavaClassFilter.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={JavaClassHandler.java},
+  captionpos=b,
+  label=JavaClassHandler.java
+]
+{code/services/JavaClassHandler.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={JavaClassVisitor.java},
+  captionpos=b,
+  label=JavaClassVisitor.java
+]
+{code/services/JavaClassVisitor.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={JavaMethodVisitor.java},
+  captionpos=b,
+  label=JavaMethodVisitor.java
+]
+{code/services/JavaMethodVisitor.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={NodeIterator.java},
+  captionpos=b,
+  label=NodeIterator.java
+]
+{code/services/NodeIterator.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={SocoraRequester.java},
+  captionpos=b,
+  label=SocoraRequester.java
+]
+{code/services/SocoraRequester.java.txt}
+\subsection{de.unimannheim.informatik.swt.simile.util}
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={StreamGobbler.java},
+  captionpos=b,
+  label=StreamGobbler.java
+]
+{code/util/StreamGobbler.java.txt}
+
 \chapter{Installation of Simile}
 In this chapter we will show how to install the tools we used for implementing Simile. First we will start installing the CI Server Jenkins and explain how to configure it. Then, we will continue with installing Simile Jenkins plugin. After that we will explain how to configure Simile Jenkins plugin using the test project.
 
@@ -8,7 +203,7 @@ In this section we will explain how to install Jenkins CI server using Docker.
 For installing Jenkins, we will use Docker containers and in this subsection we will explain how to install it in different platform such as macOS and Linux.
 
 \subsubsection{Docker on macOS}
-For macOS we will use Docker for Mac tool. This is an integrated, easy-to-deploy environment for building, assembling, and shipping applications from a Mac. Moreover, it is a native Mac application architected from scratch, with a native user interface and auto-update capability, deeply integrated with OS X native virtualization, Hypervisor Framework, networking and file system, making it faster and more reliable than previous ways of getting Docker on a Mac \citep{Docker}.
+For macOS we will use Docker for Mac tool. This is an integrated, easy-to-deploy environment for building, assembling, and shipping applications from a Mac. Moreover, it is a native Mac application architected from scratch, with a native user interface and auto-update capability, deeply integrated with OS X native virtualization, Hypervisor Framework, networking and file system, making it faster and more reliable than previous ways of getting Docker on a Mac \cite{Docker}.
 
 First we will download the tool from the following link: \url{https://download.docker.com/mac/stable/Docker.dmg}.\\
 

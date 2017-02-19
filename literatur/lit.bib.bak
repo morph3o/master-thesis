@@ -143,7 +143,7 @@ year = {1996}
 
 @book{Mili2002,
 abstract = {1. Software reuse and software engineering -- 2. State of the art and the practice -- 3. Aspects of software reuse -- 4. Software reuse organizations -- 5. Support services -- 6. Institutionalizing reuse -- 7. Building reusable assets: an overview -- 8. Domain analysis -- 9. Programming paradigms and reusability -- 10. A pragmatic introduction to object orientation -- 11. Abstraction and parameterization techniques in object orientation -- 12. Composition techniques in object orientation -- 13. Application frameworks -- 14. Architectural frameworks -- 15. Application engineering -- 16. Component storage and retrieval -- 17. Reusable asset integration -- 18. Software reuse metrics -- 19. Software reuse cost estimation -- 20. Software reuse return on investments -- 21. Component-based software engineering (CBSE) -- 22. Product-line engineering (PLE) -- 23. COTS based development -- Appendices -- Bibliography -- Index.},
-author = {Mili, Hafedh.},
+author = {Mili, Hafedh},
 isbn = {0471398195},
 pages = {636},
 publisher = {Wiley},
@@ -156,8 +156,9 @@ author = {Fowler, Martin},
 keywords = {continuous integration},
 mendeley-tags = {continuous integration},
 title = {{Continuous Integration}},
-url = {http://martinfowler.com/articles/continuousIntegration.html},
+howpublished = "\url{http://martinfowler.com/articles/continuousIntegration.html}",
 urldate = {2016-09-11},
+note = "Accessed: 11.09.2016",
 year = {2006}
 }
 
@@ -232,9 +233,10 @@ author = {Fowler, Martin},
 keywords = {continuous integration},
 mendeley-tags = {continuous integration},
 title = {{Continuous Delivery}},
-url = {https://martinfowler.com/bliki/ContinuousDelivery.html},
+howpublished = "\url{https://martinfowler.com/bliki/ContinuousDelivery.html}",
 urldate = {2017-01-09},
-year = {2013}
+year = {2013},
+note = "Accessed: 09.01.2017"
 }
 
 @inproceedings{Chen2015,
@@ -506,17 +508,19 @@ year = {2013}
 @misc{lucene,
 author = {The Apache Software Foundation},
 title = {{Apache Lucene - Apache Lucene Core}},
-url = {https://lucene.apache.org/core/},
+howpublished = "\url{https://lucene.apache.org/core/}",
 urldate = {2017-01-12},
-year = {2017}
+year = {2017},
+note = "Accessed: 12.01.2017"
 }
 
 @misc{Horowitz2011,
 author = {Horowitz, Bradley},
 title = {{Official Google Blog: A fall sweep}},
-url = {https://googleblog.blogspot.cl/2011/10/fall-sweep.html},
+howpublished = "\url{https://googleblog.blogspot.cl/2011/10/fall-sweep.html}",
 urldate = {2017-01-12},
-year = {2011}
+year = {2011},
+note = "Accessed: 12.01.2017"
 }
 
 @article{Bauer2016,
@@ -584,8 +588,9 @@ year = {2009}
 @misc{Weis2014,
 author = {Weis, Kristina},
 title = {{GitHub CEO and Co-Founder Chris Wanstrath Keynoting Esri's DevSummit! | ArcGIS Blog}},
-url = {https://goo.gl/or7oIX},
+howpublished = "\url{https://goo.gl/or7oIX}",
 urldate = {2017-01-14},
+note = "Accessed: 14.01.2017",
 year = {2014}
 }
 
@@ -671,8 +676,9 @@ year = {2016}
 
 @misc{Docker,
 title = {{The Docker Platform}},
-url = {https://www.docker.com},
+howpublished = "\url{https://www.docker.com}",
 urldate = {2017-01-19},
+note = "Accessed: 19.01.2017",
 year = {2017},
 author = {Docker Inc.},
 }
@@ -691,11 +697,29 @@ author = {Docker Inc.},
    URL={https://www.ietf.org/rfc/rfc2045.txt}
    }
    
-@online{Fowler2014,
+@misc{Fowler2014,
 abstract = {The term "Microservice Architecture" has sprung up over the last few years to describe a particular way of designing software applications as suites of independently deployable services. While there is no precise definition of this architectural style, there are certain common characteristics around organization around business capability, automated deployment, intelligence in the endpoints, and decentralized control of languages and data.},
 author = {Fowler, Martin and Lewis, James},
 title = {{Microservices}},
-url = {https://martinfowler.com/articles/microservices.html},
+howpublished = "\url{https://martinfowler.com/articles/microservices.html}",
 urldate = {2017-02-02},
 year = {2014}
+}
+
+@misc{Leberknight2008,
+author = {Leberknight, Scott},
+title = {{Polyglot Persistence}},
+howpublished = "\url{http://www.sleberknight.com/blog/sleberkn/entry/polyglot_persistence}",
+urldate = {2017-02-03},
+note = "Accessed: 03.02.2017", 
+year = {2008}
+}
+
+@misc{Fowler2011,
+author = {Fowler, Martin},
+title = {{Polyglot Persistence}},
+howpublished = "\url{https://martinfowler.com/bliki/PolyglotPersistence.html}",
+urldate = {2017-02-03},
+note = "Accessed: 03.02.2017",
+year = {2011}
 }
