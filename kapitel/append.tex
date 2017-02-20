@@ -197,7 +197,7 @@ In this section we will expose the different Java classes of our prototype.
 In this chapter we will show how to install the tools we used for implementing Simile. First we will start installing the CI Server Jenkins and explain how to configure it. Then, we will continue with installing Simile Jenkins plugin. After that we will explain how to configure Simile Jenkins plugin using the test project.
 
 \section{Installation of Jenkins}
-In this section we will explain how to install Jenkins CI server using Docker.
+In this section we will explain how to install Jenkins CI server using Docker and Tomcat 9.
 
 \subsection{Docker}
 For installing Jenkins, we will use Docker containers and in this subsection we will explain how to install it in different platform such as macOS and Linux.
@@ -367,6 +367,58 @@ After the installation of plugins is done, click on \textit{Continue as admin} o
     \label{fig:jenkins-04}
 \end{figure}
 
+\subsection{Jenkins in Tomcat 9}
+\textbf{NOTE: The following steps are based on a UNIX system.}
+
+First, go to the following URL and download Tomcat 9: \url{http://tomcat.apache.org/download-90.cgi}.
+
+Once downloaded, unzip the file and modify the file \emph{tomcat-users.xml} which is under the folder \emph{conf} of where Tomcat was unzipped. Add the following two lines within \emph{<tomcat-users></tomcat-users>} to setup an admin user.
+
+\begin{minted}[linenos,
+               numbersep=5pt,
+               frame=lines,
+               framesep=2mm,
+               breakanywhere]{xml}
+<role rolename="manager-gui"/>
+<user username="admin" password="1234" roles="manager-gui"/>
+\end{minted}
+
+Now open a terminal and enter the following command to run Tomcat server.
+
+\begin{minted}[linenos,
+               numbersep=5pt,
+               frame=lines,
+               framesep=2mm,
+               breakanywhere]{bash}
+$ cd folder/of/tomcat
+$ cd bin
+$ sh catalina.sh start
+\end{minted}
+
+Then open the following URL and you should see something like Figure \ref{fig:tomcat-01}: \url{http://localhost:8080}
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=0.5\textwidth]{grafiken/tomcat-01}
+    \caption{Tomcat home page}
+    \label{fig:tomcat-01}
+\end{figure}
+
+To install Jenkins, we first need to download the \emph{.war} file. To do so go to the following URL: \url{http://mirrors.jenkins.io/war-stable/latest/jenkins.war}.
+
+Once downloaded, move the file into the folder \emph{webapps} which is into the folder where tomcat was installed. Then enter the following commands to restart tomcat.
+
+\begin{minted}[linenos,
+               numbersep=5pt,
+               frame=lines,
+               framesep=2mm,
+               breakanywhere]{bash}
+$ sh catalina.sh stop
+$ sh catalina.sh start
+\end{minted}
+
+If you go to \url{localhost:8080/jenkins} you should see the same page like Figure \ref{fig:jenkins-01}.
+
 \section{Simile Jenkins Plugin installation}
 To install Simile Jenkins plugin, we need to follow the following steps.
 
@@ -397,4 +449,7 @@ Then go to \textit{Advanced}, scroll down until \textit{Upload Plugin} section (
     \label{fig:jenkins-plugin-03}
 \end{figure}
 
-There click on choose file and select the hpi file \textit{simile-jenkins-plugin.hpi} provided with the CD.
+There click on choose file and select the hpi file \emph{simile-jenkins-plugin.hpi} provided with the CD.
+
+\section{Simile in Tomcat 9}
+To install Simile in Tomcat 9, we just need to copy the file \emph{simile.war}, provided with the CD, into the folder \emph{webapps} which into the folder where Tomcat was installed. Once done, we just need to restart tomcat.

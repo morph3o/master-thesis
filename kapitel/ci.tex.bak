@@ -1,11 +1,9 @@
 \section{Continuous Integration}
 \label{chap:ci}
-
 In this chapter we will explain what Continuous Integration (CI) means, we will describe the process steps, its benefits and challenges. Finally we will explain how CI can be leveraged in order to improve Software Reuse.
 
 \subsection{What is Continuous Integration?}
 \label{sec:ci-def}
-
 The term can be found in the context of micro-processes development in the work of \cite{Booch2007}. Then it was adopted by Kent Beck in his definition of Extreme Programming \cite{Beck1999}. However, it was Martin Fowler who was credited with establishing the current definitions of the practices. Fowler defines CI as following:
 
 CI is a software development practice where members of a team integrate their work frequently, usually each person integrates at least daily, thus leading to multiple integrations per day. Each integration is verified by an automates build (including test) to detect integration errors as quickly as possible. Many teams has found that this approach leads to significantly reduced integration problems and allows a team to develop cohesive software more rapid\cite{Fowler2006}.
@@ -55,7 +53,6 @@ The main difference between Git and the other VCSs is the way it thinks about it
 The git directory is the core of Git as it is where the metadata and object database for a project is stored. The working directory is a single checkout of one version of the project. Finally, the staging area is a file which is generally stored in the Git directory. This file contains information about what will go into the next commit.
 
 \paragraph{Github}
-
 Github\footnote{https://github.com/ (accessed: 13.01.2017)} is a web-based Git repository hosting service, which offers all the functionality of Git and its own features. It provides several collaboration tools such as wikis, bug tracking, feature requests, and task management as well as access control. Its development started in 2007 as a side project of P. J. Hyett and Chris Wanstrath \cite{Weis2014} and it was officially lunch on the 10th of April in 2008. Since then, Github has gain popularity through the community reaching more than 50 million projects hosted nowadays.
 
 \paragraph{Jenkins}

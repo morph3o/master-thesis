@@ -1,6 +1,6 @@
 \chapter{Simile}
 \label{chap:simile}
-In this chapter we present the our approach that seizes Continuous Integration process in order to recommend similar components that are being developed in a software project. The idea of integrating CI and Software reuse emerged with the following research question: \emph{How can code search engines be best married with CI?}. The idea was to find a way where a team could seize the continuous integration process in order to find similar components to the components they are developing. Thus they would be able to reuse instead of implementing them from scratch reducing development time and costs. As an attempt to answer the question we implemented a tool (proof of concept) called Simile. This tool analyses the source code and extract information needed to find similar components.
+In this chapter we present our approach that seizes Continuous Integration process in order to recommend similar components that are being developed in a software project. The idea of integrating CI and Software reuse emerged with the following research question: \emph{How can code search engines be best married with CI?}. The idea was to find a way where a team could seize the continuous integration process in order to find similar components to the components they are developing. Thus they would be able to reuse instead of implementing them from scratch reducing development time and costs. As an attempt to answer the question we implemented a tool (proof of concept) called Simile. This tool analyses the source code and extract information needed to find similar components.
 
 Following the usage scenario explained previously in section \ref{usage-scenario}, we will describe how our proposed approach works:
 
@@ -16,6 +16,32 @@ In the first step (figure \ref{fig:simile-01} - 1) the developer commits code to
 The main objective of Simile is to help the team to find similar components so they would be able to reuse them. Thus they would reduce time development and costs through reuse components that are already tested and ready to work.
 
 In the following sections we will explain in details how Simile was implemented. Then we will detail how we integrate Simile into Continuous Integration server (Jenkins). After that we will explain how we integrate Simile and SOCORA for searching for similar components.
+
+\section{Assumptions}
+Following the usage scenario presented in Chapter \ref{usage-scenario} we made the following assumptions for the implementation of out proof-of-concept.
+
+\begin{itemize}
+\item In a normal situation, the usage scenario presented in the previous Chapter would fail because when the CI server runs the test, it will fail. Therefore the CI server would not accept the code committed to the repository. However this can be avoided in the configuration of the CI server. For that reason for the implementation of our proof-of-concept, we assume that the CI server will accept the code even if the test fail.
+\end{itemize}
+
+\section{Design}
+Simile was formulated as microservice which  . was designed taking in account that there are several CI servers available. Although we used Jenkins as CI server for our prototype, Simile was designed as an agnostic tool. Figure \ref{fig:simile-design} depicts an overview of the design of our implementation.
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=0.9\textwidth]{grafiken/simile-design}
+    \caption{Overview of implementation's design}
+    \label{fig:simile-design}
+\end{figure}
+
+Despite the fact that the design is rather simple, this allow us to connect Simile to any CI server available in the market without changing the core. For instance, if in the future we would like to support other CI servers such as Teamcity, TravisCI or Buddy, we would just need to develop a simple plugin with the same features of the plugin developed for this thesis. Figure \ref{fig:simile-future} depicts this future scenario.
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=0.9\textwidth]{grafiken/simile-future}
+    \caption{Future scenario of Simile supporting several CI Servers}
+    \label{fig:simile-future}
+\end{figure}
 
 \section{Implementation}
 In this section we will detail how the prototype was developed and the technologies used. First we will start explaining the Simile service which is the starting point of the whole process about cloning the project, analyse code, search components and send result. Then we will continue with the  HTTP controller which receives the Git repository of the project to be analysed, the specific branch of the repository, and the email where the result will be sent. Then we will explain the Cloner object which is in charge of cloning the project locally. After that, we will explain how the tool analyses the code and extracts the interface signatures and test classes which will be used to make the requests to SOCORA. Next we will describe how we receive the result from SOCORA. Finally we will explain how we handle the result from the previous step and build the email that will be sent to user.

@@ -1,16 +1,44 @@
 \chapter{Usage Scenario}
 \label{usage-scenario}
-Before explaining the approach we will propose in the next chapter, we will explain a scenario that illustrates the opportunity found that motivated our approach to improve software reuse leveraging continuous integration. The following scenario is based on the usage scenario found in \cite{Kessel2016}.
+Before getting into the approach we will propose a usage scenario to strength and motivate our approach which will be presented in the next Chapter. The following scenario is based on the usage scenario found in \cite{Kessel2016}.
 
-Envisage the following scenario in which a development team is working or has code ownership of a web service application, and recognizes that she/he requires the ability to encode and decode information in the common Base64 format (e.g., the Base64 variant used in MIME transfer encoding \cite{rfc2045}). Also this team has adopted continuous integration, thus every member of the team is committing code at least once a day and the code committed is tested before it is accepted by the VCS. We will assume that the team is using Git as VCS, Jenkins as CI server, Java as main language and that the team has adopted TDD.
+First of all we will imagine a software project about Base64 with the following characteristics. The project has adopted Continuous Integration as we described in Section \ref{chap:ci}, using Git as Version Control System, Jenkins as CI Server, and Java as programming language. Moreover the software is developed following the Test-driven development process.
+
+Envisage the following scenario in which a development team is working or has code ownership of a web service application, and recognizes that she/he requires the ability to encode and decode information in the common Base64 format (e.g., the Base64 variant used in MIME transfer encoding \cite{rfc2045}).
+
+As the project is being developed using TDD, developers create a test that defines a function before it is implemented. For instance, if we follow the scenario, a member of the team will implement the method \emph{encode} which accept an array of bytes decoded in Base64 and it will return an array of chars which represents the input decoded. Moreover the method \emph{decode} that receives an array of chars and returns an array of bytes that represents the input encoded will need to be implemented too. However, as they are using TDD, this member must create a test of these methods. Listing \ref{Base64.java} represents the methods \emph{encode} and \emph{decode} and the listing \ref{Base64Test.java} represents the test class for these methods.
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={Base64.java},
+  captionpos=b,
+  label=Base64.java
+]
+{code/Base64.java.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  caption={Base64Test.java},
+  captionpos=b,
+  label=Base64Test.java
+]
+{code/Base64Test.java.txt}
+
+Additionally, as the team adopted CI, developers should commit often the changes to the Git server. This action triggers the CI server which checkouts the code and runs the unit tests available. Therefore going along with the example given above, the class \emph{Base64.java} and the test class \emph{Base64Test.java} should be committed to the repository.
 
 From this simple scenario emerge the following questions:
 
 \begin{description}[style=nextline]
 \item[How might the team realize that what they are working on has not been developed already?] \hfill \
 If we follow the example, the implementation of encode and decode in Base64 is very easy to find, however that does not mean that the team knows that at the moment they are developing. Therefore it would be very useful that an automatic tool analyzes the code and extracts the method signature so it would be able to make a code search for similar methods.
-\item[How might we seize continuous integration in order to improve software reuse?] \hfill \
-Continuous integration seems to be a very good opportunity for software reuse. According to CI workflow explained in \ref{sec:ci-def} every change made in the code should be committed and pushed to the VCS. This pushed code is tested by the CI server and accepted if it passes all the tests otherwise it is rejected. This is a good chance to extract method signatures and make the code search named previously.
+\item[How might we seize continuous integration in order to improve chances of reusing software?] \hfill \
+Continuous integration process seems to be a very good opportunity for software reuse. According to CI workflow explained in \ref{sec:ci-def} every change made in the code should be committed and pushed to the VCS. This pushed code is tested by the CI server and accepted if it passes all the tests otherwise it is rejected. This is a good chance to extract method signatures and make the code search named previously.
 \item[Would TDD be helpful?] \hfill \
 According to TDD process before implementing a method a failure test should be implemented before. If we assume that and that every code change is committed and pushed to the VCS, we could also extract the test classes to search for similar components.
 \end{description}
+
+In the following Chapter we will answer these questions and present our approach that improve that chances of reusing software by seizing the use of Continuous Integration.

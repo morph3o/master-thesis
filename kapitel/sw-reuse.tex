@@ -1,10 +1,11 @@
 \chapter{Foundations}
+\label{foundations}
 In this chapter we will explain the foundations needed to know to understand the work proposed in this document. First we explain what Software Reuse means, its benefits, challenges, code-search engines, component retrieval techniques, and ranking components. Then we talk about Continuous Integration, its benefits, challenges, and successful CI practices. Finally we describe Microservices and its characteristics.
 \section{Software Reuse}
 \label{chap:sw-reuse}
-Douglas McIlroy \cite{McIlroy1968} envisaged in the 1960s a software system composed of already existent components. Where you basically put different components, that already exist, together in order to form the system is being built. Although the IT industry has tried for many years to improve the speed and reduce cots of software development by reusing components, the McIlroy's vision is still the exception rather than the rule.
+Douglas McIlroy \cite{McIlroy1968} envisaged in the 1960s a software system composed of already existent components. Where you basically put different components, that already exist, together in order to form the system is being built. Although the IT industry has tried for many years to improve the speed and reduce costs of software development by reusing components, the McIlroy's vision is still the exception rather than the rule.
 
-Although the definition of software reuse seems trivial, it is possible to find several definitions in the literature. However, most of them are similar to the definition proposed by \cite{Krueger1992}:
+Despite the fact that it is possible to find several definitions of software reuse in the literature, most of them are similar to the definition proposed by Krueger \cite{Krueger1992}:
 
 \textit{"Software reuse is the process of creating software systems from existing software rather than building software systems from scratch"}
 
@@ -32,17 +33,17 @@ Software reuse emerges as a solution for the so called software development cris
 Software reuse has not failed to attract the attention of industry due to its alleged benefits. In the industry the need of reduction of redundancies, as well as costs reduction and quality improvements is perceived. Moreover, the vision of fostering innovation and market penetration due to shorter production cycles promised obvious strategic business advantages \cite{Bauer2016}. Research literature has reported benefits from successful adoption of software reuse:
 
 \begin{itemize}
-\item Lower cost and faster development:
-\item Higher quality:
-\item Standardized architecture:
-\item Risk reduction: 
+\item Lower cost and faster development
+\item Higher quality
+\item Standardized architecture
+\item Risk reduction
 \end{itemize}
 
 Unfortunately the adoption of suitable reuse strategy is pretty challenging as it takes place in a multifaceted environment and, thus, incorporates aspects ranging from technical to organizational at different level of abstractions \cite{Bauer2016}.
 
 \subsection{Challenges of Software Reuse}
 \label{sec:sw-challenges}
-Although software reuse brings many benefits, it has failed to take off. Find the right third-party software component to be reused based on a well-defined specification is one of the most challenging approaches because it requires a clear-cut matching of the potential reuse candidate and the given specification. Although there are several search tools available, most of them are still text-based and it neither reflect nor support the need to match the reuse candidates with the syntactic and semantic characteristics of a specification \cite{Hummel2013}. \cite{Hummel2013}, based on software retrieval literature, identified fours problems for implementing a sustainable reuse repository.
+Although software reuse brings many benefits, it has failed to take off. Find the right third-party software component to be reused based on a well-defined specification is one of the most challenging approaches because it requires a clear-cut matching of the potential reuse candidate and the given specification. Although there are several search tools available, most of them are still text-based and it neither reflect nor support the need to match the reuse candidates with the syntactic and semantic characteristics of a specification \cite{Hummel2013}. \citeauthor{Hummel2013}, based on software retrieval literature, identified fours problems for implementing a sustainable reuse repository.
 
 \begin{itemize}
 \item Repository problem \cite{Seacord1999}: This reuse repository should create and maintain a big enough software collection to provide promise search.
@@ -133,8 +134,9 @@ This approach for searching candidates is very promising because of popularity o
 In spite of the fact that this search method retrieves more relevant resources, it needs improvement in order to be applicable for the daily work of a developer. The amount of time taken from submitting the test case till receive the results is sometimes excessive, this is due to the fact that each candidate needs to be compiled and validated against the test case. Although this problem can be overcome by increasing the resources, it brings extra costs. 
 
 \subsection{Ranking components}
-\subsubsection{SOCORA}
+Retrieving components is not enough. The problem that emerge with retrieving components using code-search engines is when several candidates meet the functional requirements. Which of them is the best?. Normally engines sort the results by keyword or text matching thus the first component in the list is not necessary better than the last one. This is because factors such as ... are not being considered for ranking the components.
 
+\subsubsection{SOCORA}
 The ranking component approach presented in \cite{Kessel2016} works as follow. First, it establishes a partial ordering of candidates using non-dominated sets determined by non-dominated sorting without assuming any preferences of the user. Depending on the priorities assigned to each selected criterion, it then subrank each non-dominated set in a recursive way until all unique priorities and their corresponding subcriteria are applied to the current level of non-dominated sets, eventually resulting in nested subrankings. Note that in each step, when (new)non-dominated sets are determined by non-dominated sorting, the ranks of sets may change according to their partial ordering. In general, partial subranking are deliberately supported since the user is not required to assign specific priorities to all his/her selected criteria. The priorities are defined by simple integer values (highest value represent more priority than a lower value) with a default priority assignment of 1 for each selected criterion. If the user wants to assign a higher or lower priority to a selected criterion, he/she may increase or decrease the priority by 1 or even a larger number. Both unique and equal priority values may be assigned to selected criteria to establish either a partial or strict ordering. For each priority value, all corresponding criteria are selected to subrank each non-dominated set of non-distinguishable candidates. This process starts with the highest priority value and continues in descending order until the smallest priority value is reached \cite{Kessel2016}. The figure \ref{fig:socora-ex} is a schematic illustration of how the component ranking works.
 
 \begin{figure}[ht]
@@ -156,6 +158,3 @@ The prototype of the ranking component approach is integrated with the component
 \end{figure}
 
 In the first step the user's functional requirements are described as a JUnit test specification using a HTML5 web-based GUI. Here the user can specify a set of non-functional \textit{quality} criteria that he/she thinks to be important for his/her needs, also he/she optionally can provide relative priorities to partially order them. In the second step, the interface signatures in the JUnit test are extracted and a text-based search is performed in order to find suitable components. In the step 3, the result set of component from the second step are filtered by applying the JUnit test in turn, and those that do not match the filtering criteria are removed. Also, during the compilation and execution of the test, the metric selected by the user are evaluated. In the step 4, the information from the last step is used by the ranking algorithm to order the remaining components in the result set. In the step 5 the remaining components in the result set are displayed to the user. In the last step, the user can further analyze the component candidates by exploring the effects of different partial ordering (step 6a), explore different criteria (step 6b), and can group them in different way to shrink the result set (step 6c).
-
- 
-

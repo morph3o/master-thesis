@@ -22,6 +22,7 @@
 \usepackage[left=4cm,right=2.5cm,top=3.7cm,bottom=4cm]{geometry}
 \usepackage[english, ngerman]{babel} %Verwende deutsche und amerikanische Silbentrennung
 \usepackage[utf8]{inputenc} %damit k{\"o}nnen Umlaute ganz normal geschrieben werden. 
+\usepackage[numbers,square]{natbib}
 
 \usepackage{listings} %Fuer Codelistings
 \usepackage{subfigure} %f{\"u}r mehrteilige Grafiken
@@ -45,8 +46,8 @@
 % ftp://tug.ctan.org/tex-archive/macros/latex/contrib/hyperref/doc/manual.pdf
 \usepackage[
 a4paper=true, % a4
-pdftitle={The new title of this paper}, %title to display for pdfs
-pdfauthor={The Author}, %set author
+pdftitle={Leveraging Continuous Integration process to improve Software Reuse}, %title to display for pdfs
+pdfauthor={Piero A. Divasto Martínez}, %set author
 %dvipdfmx, % must be used if pdf is created from the dvi file rather than by running pdflatex. Otherwise links won't work
 colorlinks,% set link color for all links to black, i.e. invisible but working links
 citecolor=black,%
@@ -130,18 +131,22 @@ pdfpagelabels, %used with plainpages=false to make pdf readers show roman and ar
 \frontmatter      % vorspann, kapitel r{\"o}misch nummeriert
 \newgeometry{margin=3cm}
 \include{kapitel/titel}     % titelseite einbinden
-\tableofcontents            % inhaltsverzeichnis
 \restoregeometry
 \include{kapitel/abstract}  % abstract einbinden
+\tableofcontents            % inhaltsverzeichnis
 \listoffigures              % abbildungsverzeichnis
 \listoftables               % tabellenverzeichnis
 
-\clearpage %tell toc that there is a pagebreak after list of tables, however the hyperlink still points to the wrong page
+%\clearpage %tell toc that there is a pagebreak after list of tables, however the hyperlink still points to the wrong page
+
 \addcontentsline{toc}{chapter}{\nomname} %abkuerzungen ins inhaltsverzeichnis
 
+% Abbreviations
+\nomenclature{$CI$}{Continuous Integration}
+\nomenclature{$VCS$}{Version Control System}
+\nomenclature{$TDD$}{Test-driven Development}
+
 \Listofabbrev % liste der abkuerzungen erstellen
-
-
 
 \mainmatter       % hauptteil, kapitel lateinisch nummeriert
 %\include{kapitel/content}
@@ -167,7 +172,7 @@ pdfpagelabels, %used with plainpages=false to make pdf readers show roman and ar
 %\bibliographystyle{literatur/natdinCustomized} %DIN Style Literaturverzeichnis + Punkt hinter jeder Literaturangabe -> low level config fuer Zitate: natdin.cfg im Projektordner, comment out pagebackref
 %\bibliographystyle{literatur/natdinCustomizedEnglish} %DIN Style auf Englisch getrimmt mit Punkt hinter Literaturangabe -> low lovel config fuer Zitate: natdin.cfg im Projektordner, pagebackref kann damit nicht genutzt werden
 %\bibliographystyle{aer} % alternativ auch apalike, aer, apalike2... s.a. http://web.reed.edu/cis/Help/LaTeX/bibtexstyles.html
-\bibliographystyle{plain} % very nice bib style
+\bibliographystyle{plainnat} % very nice bib style
 %note on aer: does not like inbook entries
 %\bibliographystyle{natdin}
 
