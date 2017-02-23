@@ -23,7 +23,10 @@
 \usepackage[english, ngerman]{babel} %Verwende deutsche und amerikanische Silbentrennung
 \usepackage[utf8]{inputenc} %damit k{\"o}nnen Umlaute ganz normal geschrieben werden. 
 \usepackage[numbers,square]{natbib}
+\usepackage{amssymb}
+\usepackage{textcomp}
 
+\usepackage{csquotes}
 \usepackage{listings} %Fuer Codelistings
 \usepackage{subfigure} %f{\"u}r mehrteilige Grafiken
 \usepackage{epsfig}    %damit funktioniert das einbinden von grafiken {\"u}ber epsfig.
@@ -143,8 +146,13 @@ pdfpagelabels, %used with plainpages=false to make pdf readers show roman and ar
 
 % Abbreviations
 \nomenclature{$CI$}{Continuous Integration}
+\nomenclature{$CD$}{Continuous Delivery}
 \nomenclature{$VCS$}{Version Control System}
 \nomenclature{$TDD$}{Test-driven Development}
+\nomenclature{$VCP$}{Version Control Platform}
+\nomenclature{$CVS$}{Concurrent Versions System}
+\nomenclature{$SCM$}{Source Control Management}
+\nomenclature{$CC$}{Creative Commons}
 
 \Listofabbrev % liste der abkuerzungen erstellen
 
@@ -154,6 +162,7 @@ pdfpagelabels, %used with plainpages=false to make pdf readers show roman and ar
 \include{kapitel/introduction}
 \include{kapitel/sw-reuse}
 \include{kapitel/ci}
+\include{kapitel/tdd}
 \include{kapitel/microservices}
 \include{kapitel/usage-scenario}
 \include{kapitel/simile}

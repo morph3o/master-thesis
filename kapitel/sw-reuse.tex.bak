@@ -1,15 +1,17 @@
 \chapter{Foundations}
 \label{foundations}
-In this chapter we will explain the foundations needed to know to understand the work proposed in this document. First we explain what Software Reuse means, its benefits, challenges, code-search engines, component retrieval techniques, and ranking components. Then we talk about Continuous Integration, its benefits, challenges, and successful CI practices. Finally we describe Microservices and its characteristics.
+In this chapter we describe the foundations and concepts necessary to understand the work proposed in this thesis. First we explain about Software Reuse, its state-of-art, its benefits, challenges, code-search engines, component retrieval techniques, and ranking components. Then we talk about Continuous Integration, its benefits, challenges, and successful CI practices. We finalize this chapter by describing Microservices and its characteristics.
 \section{Software Reuse}
 \label{chap:sw-reuse}
-Douglas McIlroy \cite{McIlroy1968} envisaged in the 1960s a software system composed of already existent components. Where you basically put different components, that already exist, together in order to form the system is being built. Although the IT industry has tried for many years to improve the speed and reduce costs of software development by reusing components, the McIlroy's vision is still the exception rather than the rule.
+Douglas McIlroy \cite{McIlroy1968} envisaged in the 1960s a software system composed of already existent components. Where you basically put different components, that already exist, together in order to form the system is being built. One can depict this vision using LEGO where the system is a group of pieces put together, and each of those pieces is a component.
+
+Although the IT industry has tried for many years to improve the speed and reduce costs of software development by reusing components, the McIlroy's vision is still the exception rather than the rule.
 
 Despite the fact that it is possible to find several definitions of software reuse in the literature, most of them are similar to the definition proposed by Krueger \cite{Krueger1992}:
 
 \textit{"Software reuse is the process of creating software systems from existing software rather than building software systems from scratch"}
 
-Since we already have a formal definition of software reuse, the next question would be: What can be reused?. To this regard, the work of \cite{Frakes1996} defined a list \ref{reusable-list} of potentially reusable software artifacts:
+Since we already have a formal definition of software reuse, the next question would be: What can be reused?. To this regard, the work of \citeauthor{Frakes1996} defined a list (Table \ref{reusable-list}) of potentially reusable software artifacts, where you can find architectures, source code, requirements, etc.
 
 \begin{table}[]
 \centering
@@ -25,7 +27,7 @@ Since we already have a formal definition of software reuse, the next question w
 	\caption{Potentially reusable aspects of software projects according to \cite{Frakes1996}.}
 \end{table}
 
-However, reuse traditionally means the reuse of code fragments and components \cite{Mili2002}. When we talk about components, we mean any cohesive and compact unit of software functionality with a well defined interface \cite{Hummel2008}. Therefore a component can be simple classes or even web-services or Enterprise Beans.
+However, reuse traditionally means the reuse of code fragments and components \cite{Mili2002}. When we talk about components, we mean any cohesive and compact unit of software functionality with a well defined interface \cite{Hummel2008}. Therefore a component can be a simple classes or even a web-service or Enterprise Beans.
 
 Software reuse emerges as a solution for the so called software development crisis \cite{Kim1992}. Organizations face several problems in software development including increased costs, delayed schedules, unsatisfied requirements, and software professional shortage. Therefore, by reusing software components projects can reduce time-to-market, lower development costs, and increase software quality \cite{Frakes2005}.
 
@@ -43,7 +45,7 @@ Unfortunately the adoption of suitable reuse strategy is pretty challenging as i
 
 \subsection{Challenges of Software Reuse}
 \label{sec:sw-challenges}
-Although software reuse brings many benefits, it has failed to take off. Find the right third-party software component to be reused based on a well-defined specification is one of the most challenging approaches because it requires a clear-cut matching of the potential reuse candidate and the given specification. Although there are several search tools available, most of them are still text-based and it neither reflect nor support the need to match the reuse candidates with the syntactic and semantic characteristics of a specification \cite{Hummel2013}. \citeauthor{Hummel2013}, based on software retrieval literature, identified fours problems for implementing a sustainable reuse repository.
+Although software reuse brings many benefits, as we stated before, it has failed to take off. Find the right third-party software component to be reused based on a well-defined specification is one of the most challenging approaches due to the fact that it requires a clear-cut matching of the potential reuse candidate and the given specification. Although there are several search tools available, most of them are still text-based and it neither reflect nor support the need to match the reuse candidates with the syntactic and semantic characteristics of a specification \cite{Hummel2013}. \citeauthor{Hummel2013}, based on software retrieval literature, identified fours problems for implementing a sustainable reuse repository.
 
 \begin{itemize}
 \item Repository problem \cite{Seacord1999}: This reuse repository should create and maintain a big enough software collection to provide promise search.
@@ -60,7 +62,6 @@ Beside the technical problems described above, organizational challenges and hum
 \item Organization structure: Factors like competition, overlapping or unclear responsibilities, priority conflicts, and lack of coordination of reuse activities jeopardize the successful of reuse implementation. 
 \item Inertia: Some organizations usually assess their managers and developers based on the success of their isolated projects, which incentives local optimization which impact reuse in a company-wide scale. 
 \item Knowledge: If an organization plans to implement reuse practices, it needs clear position organization-wide and research into current methods and techniques for reuse.
-\item Measurement: 
 \item Management: As implementing reuse practices require changes in governance strategies, it causes additional overhead that tends to be underestimated in the initial planning, which put at risk successful of reuse.
 \item Economic: Implementation of reusability requires investment and long-term support from management to resolve restrictive resource constraints.
 \item Disincentives: The quality of the reusable component candidates is one of the strongest disincentives. Moreover the criteria applied to measure developers and managers have an impact on their motivation to take part into reuse.

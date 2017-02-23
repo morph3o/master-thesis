@@ -1,11 +1,26 @@
 \section{Microservices}
-
 Microservices is a software architecture is usually linked to Martin Fowler in its article \cite{Fowler2014}. It is an architectural styles that aim to develop applications as a suite of small services independently of each other. Each of this services runs in its process and they communicate with lightweight mechanisms (e.g. HTTP resource API). These services are built around business capabilities and independently deployed by fully automated deployment machinery. Also there is a bare minimum of centralized management of these services, which may be written in different programming languages and use different data storage technologies \cite{Fowler2014}.
 
-This architectural style emerges as a solution to the monolithic style due to its problems. An application built using monolithic architectural style is considered as a single unit with normally three main parts (figure \ref{}): a client-side user interface (i.e. HTML, CSS, JavaScript running on user's machine), a database and a server-side application. The latter is a monolith as it handles HTTP request, execute domain logic, retrieve and update data from the database, and populates and/or select the HTML views sent to the client-side. As it is a single logical executable, any changes made in the system, no matter the size of it, require a build and a deploy of the whole server-side application. It is hard to keep a good modular structure, making it harder to keep changes that must affect one module within that module. Also it is hard to scale as it is necessary to scale the entire application rather than parts of it requiring greater resources. These problems are causing frustrations on people that are using this style, specially nowadays when applications are deployed to the cloud, leading to the microservices architectural style.
+\begin{figure}[htb]
+	\centering
+    \includegraphics[width=0.2\textwidth]{grafiken/monolith-app}
+    \caption{Monolithic architectural style}
+    \label{fig:monolith}
+\end{figure}
+
+This architectural style emerges as a solution to the monolithic style due to its problems. An application built using monolithic architectural style is considered as a single unit with normally three main parts (Figure \ref{fig:monolith}): a client-side user interface (i.e. HTML, CSS, JavaScript running on user's machine), a database and a server-side application. The latter is a monolith as it handles HTTP request, execute domain logic, retrieve and update data from the database, and populates and/or select the HTML views sent to the client-side. As it is a single logical executable, any changes made in the system, no matter the size of it, require a build and a deploy of the whole server-side application. It is hard to keep a good modular structure, making it harder to keep changes that must affect one module within that module. Also it is hard to scale as it is necessary to scale the entire application rather than parts of it requiring greater resources. These problems are causing frustrations on people that are using this style, specially nowadays when applications are deployed to the cloud, leading to the microservices architectural style.
+
+Microservices architectural style proposes to split the software into independent services (Figure \ref{fig:microservices}). Splitting a software into services brings benefits such as services as components are independently deployable making it easy for changes, or services have more explicit component interfaces by using explicit remote call mechanisms. Moreover, this approach prefers letting each service manage its own database instead of using a central database for all the services. Applications developed with this style have meany benefits such as single responsibility, high scalability, easy to enhance, and ease of deployment. In the following subsection we will discuss about benefits, challenges and common characteristics that can be found in applications developed following microservices architectural style.
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=0.6\textwidth]{grafiken/microservices-app}
+    \caption{Microservices architectural style}
+    \label{fig:microservices}
+\end{figure}
 
 \subsection{Characteristics of a Microservice Architecture}
-In the work of Fowler and Lewis \cite{Fowler2014} described a list of common characteristic of applications built using microservice architectural style. It is important to point out that all the applications using this style must confirm every characteristic of this list.
+The work of Fowler and Lewis \cite{Fowler2014} describes a list of common characteristic of applications built using microservice architectural style. It is important to point out that all the applications using this style must confirm every characteristic of this list.
 
 \begin{description}[style=nextline]
 \item[Componentization via Services] \hfill \

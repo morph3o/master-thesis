@@ -8,6 +8,10 @@ Our prototype is able to provide high precision result that fully meet functiona
 
 Although Simile can provide high precision on the components retrieved, if these are not ranked accordingly the effort invested on reusing components would increase. We solve this problem by relying on SOCORA which is able to rank components using combination of non-functional properties such as performance or maintenance \cite{Kessel2016}.
 
+The future of Simile appear to be attractive due to the massive adoption of CI/CD. Continuous Integration/Delivery adoption rates is showing an unexpected increment. According to the research made by Perforce Software \cite{Perforce2015}, 65\% of companies have adopted CI/CD in some or all projects. Moreover, 40\% of open-source projects in Github have also adopted Continuous Integration \cite{Hilton2016}. This is a great opportunity for this tool to be used vastly by companies and open-source projects, helping them to reduce development costs and time.
+
+%%%%% CONS
+
 This approach also has some possible cons. If a team does not use TDD or any test, Simile would only be able to extract interface signatures from the code. Therefore the result retrieved would not be as precise as it would be using tests. This is due to the fact that the search would be based on keyword and text-matching techniques which do not necessarily meet functional requirements.
 
 Another cons is the high time it might takes to deliver a result. Test-driven search component is heavy-weight task because it requires to run tests to for each possible candidate. Although it has been improved by parallelization of test execution and optimizing the underlying code-search engine, it still takes a reasonable time for returning a result. This time can be even bigger depending on the complexity of the tests used for searching components.

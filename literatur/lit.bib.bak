@@ -722,3 +722,54 @@ urldate = {2017-02-03},
 note = "Accessed: 03.02.2017",
 year = {2011}
 }
+
+@book{Pilato2008,
+abstract = {2nd ed.},
+author = {Pilato, C. Michael. and Collins-Sussman, Ben. and Fitzpatrick, Brian W.},
+isbn = {9780596510336},
+pages = {404},
+publisher = {O'Reilly},
+title = {{Version control with subversion}},
+year = {2008}
+}
+
+@misc{Goff2015,
+author = {Goff-Dupont, Sarah},
+title = {{Why every development team needs continuous delivery}},
+howpublished = "http://blogs.atlassian.com/2015/10/why-continuous-delivery-for-every-development-team",
+urldate = {2017-02-21},
+note = "Accessed: 21.02.2017",
+year = {2015}
+}
+
+@misc{Perforce2015,
+author = {Perforce Software},
+title = {{Continuous Delivery: The New Normal for Software Development}},
+howpublished = "https://www.perforce.com/pdf/continuous-delivery-report.pdf",
+urldate = {2017-02-21},
+note = "Accessed: 21.02.2017",
+year = {2015}
+}
+
+@article{Hilton2016,
+abstract = {This work was partially funded through the NSF CCF-1439957 grant.},
+author = {Hilton, Michael and Tunnell, Timothy and Marinov, Darko and Dig, Danny and {Huang, Kai}, 1978- and Science, Oregon State University. School of Electrical Engineering and Computer},
+file = {:Users/morph3o/Mannheim/Thesis/Papers/Hilton et al. - 2016 - Usage, Costs, and Benefits of Continuous Integration in Open-Source Projects.pdf:pdf},
+keywords = {Automated software engineering,Automation,Continuous Integration,Development,Open source software,Software Engineering,continuous integration},
+mendeley-tags = {continuous integration},
+publisher = {Corvallis, OR : Oregon State University. School of Electrical Engineering and Computer Science},
+title = {{Usage, Costs, and Benefits of Continuous Integration in Open-Source Projects}},
+year = {2016}
+}
+
+@article{Mackall2006,
+abstract = {Large projects need scalable, performant, and robust software configuration management systems. If common revision control operations are not cheap, they present a large barrier to proper software engineering practice. This paper will investigate the theoretical limits on SCM performance, and examines how existing systems fall short of those ideals. I then describe the Revlog data storage scheme created for the Mercurial SCM. The Revlog scheme allows all common SCM operations to be performed in near-optimal time, while providing excellent compression and robustness. Finally, I look at how a full distributed SCM (Mercurial) is built on top of the Revlog scheme, some of the pitfalls we've surmounted in on-disk layout and I/O performance and the protocols used to efficiently communicate between repositories.},
+author = {Mackall, Matt},
+journal = {Linux Symposium},
+pages = {91--98},
+title = {{Towards a Better SCM: Revlog and Mercurial}},
+url = {https://mercurial.selenic.com/wiki/Presentations?action=AttachFile{\&}do=get{\&}target=ols-mercurial-paper.pdf},
+volume = {2},
+year = {2006}
+}
+

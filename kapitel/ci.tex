@@ -1,20 +1,27 @@
 \section{Continuous Integration}
 \label{chap:ci}
-In this chapter we will explain what Continuous Integration (CI) means, we will describe the process steps, its benefits and challenges. Finally we will explain how CI can be leveraged in order to improve Software Reuse.
+In this chapter we explain about what Continuous Integration (CI) means, we describe the process steps, its benefits, challenges, and good practices of CI.
 
 \subsection{What is Continuous Integration?}
 \label{sec:ci-def}
-The term can be found in the context of micro-processes development in the work of \cite{Booch2007}. Then it was adopted by Kent Beck in his definition of Extreme Programming \cite{Beck1999}. However, it was Martin Fowler who was credited with establishing the current definitions of the practices. Fowler defines CI as following:
+The term can be found in the context of micro-processes development in the work of \citeauthor{Booch2007}. Then it was adopted by Kent Beck in his definition of Extreme Programming \cite{Beck1999}. However, it was Martin Fowler who was credited with establishing the current definitions of this practice. Fowler defines CI as following:
 
-CI is a software development practice where members of a team integrate their work frequently, usually each person integrates at least daily, thus leading to multiple integrations per day. Each integration is verified by an automates build (including test) to detect integration errors as quickly as possible. Many teams has found that this approach leads to significantly reduced integration problems and allows a team to develop cohesive software more rapid\cite{Fowler2006}.
+Continuous Integration is a software development practice where members of a team integrate their work frequently, usually each person integrates at least daily, thus leading to multiple integrations per day. Each integration is verified by an automates build (including test) to detect integration errors as quickly as possible. Many teams has found that this approach leads to significantly reduced integration problems and allows a team to develop cohesive software more rapid\cite{Fowler2006}.
 
-Continuous Integration emerges as a solution for the painful moment of software integration. Although the process of integrating software is not a problem for a one-person project, when it increases in complexity it becomes more problematic. For example, in the old days, a software was divided in modules and each of them were developed independently, once they done, those modules were put together in one step at the end of the project. Doing that led to all sorts of software quality problems, which are costly and often lead to project delays \cite{Duvall2007}.
+CI emerges as a solution for the painful moment of software integration. Despite the fact that the process of integrating software is not a problem for a one-person project, when it increases in complexity it becomes more problematic. For instance, in the old days, a software was divided in modules and each of them were developed independently, once they done, those modules were put together in one step at the end of the project. Doing that led to all sorts of software quality problems, which are costly and often lead to project delays \cite{Duvall2007}.
 
-This step of module integration was a tense moment as errors and failures appeared and they were difficult to find and fix at that stage of the development. In this manner, instead of waiting till the end of modules development to integrate, CI proposes to integrate frequently, usually one person should integrate at least once a day.
+\begin{figure}[ht]
+	\centering
+    \includegraphics[width=\textwidth]{grafiken/stress}
+    \caption{Emotional cycle of manual delivery \cite{Goff2015}}
+    \label{fig:emotional}
+\end{figure}
 
-Therefore we can break up the CI workflow in the following steps \cite{Fowler2006}:
+Figure \ref{fig:emotional} describes the emotional cycle of a manual delivery process\cite{Goff2015} when the module integration is necessary. This step is tense moment as errors and failures appeared and they were difficult to find and fix at that stage of the development. In this manner, instead of waiting till the end of modules development to integrate, CI proposes to integrate frequently, usually one person should integrate at least once a day.
 
-\textbf{CI Workflow:}
+Therefore we can separte the CI workflow into the following steps \cite{Fowler2006}:
+
+\textbf{CI Workflow}
 
 \begin{itemize}
 \item Developers check out code into their private workspaces
@@ -25,19 +32,40 @@ Therefore we can break up the CI workflow in the following steps \cite{Fowler200
 \item The CI server assigns a build label to the version of the code it just built.
 \item The CI server informs the team of the outcome of the build.
 \item In case the build or test failed, the team fixes the issue at the earliest opportunity.
-\item Continue to continually integrate and test throughout the project.
+\item Continue to frequently integrate and test throughout the project.
 \end{itemize}
 
 This uncomplicated workflow helps the development team to focus on the current code change till it is verified and validated. Moreover, it provides continuous feedback on the quality of the code.
 
+An extension of Continuous Integration in Continuous Delivery (CD). CD is a software development discipline where you build software in such a way that the software can be released to production at any time \cite{Fowler2013}. Figure \ref{fig:cicdpipeline} describes an example of a typical CI/CD pipeline where one can see the relationship between this two disciplines.
+
+\begin{figure}[ht]
+	\centering
+    \includegraphics[width=\textwidth]{grafiken/cicd-pipeline}
+    \caption{Typical CI/CD pipeline \cite{Chacon2009}}
+    \label{fig:cicdpipeline}
+\end{figure}
+
 \subsubsection{CI Tools}
 
-Although the CI is tool agnostic, the selection of them depends on the project, framework in use, skill-set of the stakeholders and other factors. There are however two must-have tools of any CI system: (1) the version control system (VCS) and (2) the CI server.
+Although the CI is tool-agnostic, the selection of them depends on the project, framework in use, skill-set of the stakeholders and other factors. There are however two must-have tools of any CI system: (1) the Version Control System (VCS) and (2) the CI Server.
 
-The most popular VCS are Git, Mercurial and SVN. On top of them, we can find Version Control Platforms (VCP) such as Github, Gitlab or Bitbucket. In terms of CI servers, we can find Jenkins, Hudson, GoCD as open source projects; TravisCI, CircleCI, CodeShip and Team City as commercial tools.
+The most popular VCSs are SVN, Mercurial, and Git. On top of them, we can find Version Control Platforms (VCP) such as Bitbucket, Gitlab, and Github. In terms of CI servers, we can find Jenkins, Hudson, GoCD as open source projects; TravisCI, CircleCI, CodeShip and Team City as commercial tools.
 
 Therefore choosing the appropriate tools is about finding the balance between price, setup, configuration efforts, ease-of-use, integration capabilities between the selected tools, framework suitability and maintainability in respect to current code base.
 
+\textbf{Version Control Systems}
+
+\paragraph{SVN}
+Apache Subversion \footnote{https://subversion.apache.org/ (accessed: 13.01.2017)} is an open-source software versioning and revision control system, which is used to maintain current and historical versions of files such as source code, web pages, documents, etc. It appeared as an alternative to the Concurrent Versions System (CVS) \cite{Pilato2008}.
+
+One can visualize the SVN filesystem as \emph{two-dimensional}. Two coordinates are used to unambiguously address filesystem items: (1) path, and (2) revision.
+
+Each revision in a Subversion filesystem has its own root, which is used to access contents at that revision. Files are stored as links to the most recent change; thus a repository is rather compact. The system consumes storage space proportional to the number of changes made, not to the number of revisions. Moreover, the Subversion filesystem uses transactions to keep changes atomic. A transaction operates on a specified revision of the filesystem, not necessarily the latest. The transaction has its own root, on which changes are made. It is then either committed and becomes the latest revision, or is aborted. The transaction is actually a long-lived filesystem object; a client does not need to commit or abort a transaction itself, rather it can also begin a transaction, exit, and then can re-open the transaction and continue using it. Potentially, multiple clients can access the same transaction and work together on an atomic change, though no existing clients expose this capability \cite{Pilato2008}.
+\paragraph{Mercurial}
+Mercurial\footnote{https://www.mercurial-scm.org/ (accessed: 13.01.2017)} is a free, distributed source control management tool. It offers you the power to efficiently handle projects of any size while using an intuitive interface. It is easy to use and hard to break, making it ideal for anyone working with versioned files.
+
+Mercurial's major design goals include high performance and scalability, decentralized, fully distributed collaborative development, robust handling of both plain text and binary files, and advanced branching and merging capabilities, while remaining conceptually simple.[3] It includes an integrated web-interface. Mercurial has also taken steps to ease the transition for users of other version control systems, particularly Subversion \cite{Mackall2006}.
 \paragraph{Git}
 Within the several different VCSs available, Git is one of the most popular\footnote{https://rhodecode.com/insights/version-control-systems-2016 (accessed: 14.01.2017)}. Git emerges in 2005 as an alternative to BitKeeper\footnote{https://www.bitkeeper.com/ (accessed: 13.01.2017)} after the break of the relationship between the commercial company behind BitKeeper and  the community that developed the Linux kernel \cite{Chacon2009}.
 
@@ -52,17 +80,49 @@ The main difference between Git and the other VCSs is the way it thinks about it
 
 The git directory is the core of Git as it is where the metadata and object database for a project is stored. The working directory is a single checkout of one version of the project. Finally, the staging area is a file which is generally stored in the Git directory. This file contains information about what will go into the next commit.
 
-\paragraph{Github}
-Github\footnote{https://github.com/ (accessed: 13.01.2017)} is a web-based Git repository hosting service, which offers all the functionality of Git and its own features. It provides several collaboration tools such as wikis, bug tracking, feature requests, and task management as well as access control. Its development started in 2007 as a side project of P. J. Hyett and Chris Wanstrath \cite{Weis2014} and it was officially lunch on the 10th of April in 2008. Since then, Github has gain popularity through the community reaching more than 50 million projects hosted nowadays.
+\textbf{Version Control Platforms}
 
+\paragraph{Bitbucket}
+is a web-based hosting service for projects. It supports Mercurial and Git SCMs. Bitbucket\footnote{https://bitbucket.org (accessed: 21.02.2017)} offers both commercial plans and free accounts. It offers free accounts with an unlimited number of private repositories. Bitbucket is written in Python using the Django web framework. It started as an start-up by Jesper Nohr, but later it was acquired by Atlassian\footnote{https://www.atlassian.com/ (accessed: 21.02.2017)}.
+\paragraph{Gitlab}
+is an open-source web-based Git repository developed by GitLab Inc. The software was written mainly in Ruby by Dmitriy Zaporozhets and Valery Sizov. Although it offers, in general, the same features like Mercurial and Github, the main characteristics is that it allows you to deploy your own instance of GitLab in your own server.
+\paragraph{Github}
+is a web-based Git repository hosting service, which offers all the functionality of Git and its own features. It provides several collaboration tools such as wikis, bug tracking, feature requests, and task management as well as access control. Its development started in 2007 as a side project of P. J. Hyett and Chris Wanstrath \cite{Weis2014} and it was officially lunch on the 10th of April in 2008. Since then, Github\footnote{https://github.com/ (accessed: 13.01.2017)} has gain popularity through the community reaching more than 50 million projects hosted nowadays.\\
+
+\textbf{Continuous Integration Servers}
+
+\paragraph{Teamcity}
+is a Java-based build management and continuous integration server from JetBrains\footnote{https://www.jetbrains.com (accessed: 21.02.2017)}. TeamCity\footnote{https://www.jetbrains.com/teamcity/ (accessed: 21.02.2017)} is commercial software and licensed under a proprietary license. It offers several features such as VCS interoperability, cloud integrations, code quality tracking, continuous integration, user management, system maintenance, build history, and extensibility and customization. 
+\paragraph{TravisCI}
+is a hosted, distributed continuous integration and continuous delivery service used to build and test software projects hosted in GitHub. It offers a free open-source\footnote{https://travis-ci.org/ (accessed: 21.02.2017)} and an enterprise version\footnote{https://enterprise.travis-ci.com/ (accessed: 21.02.2017)}. Currently more than 300.000 projects use TravisCI (free version).
 \paragraph{Jenkins}
 Jenkins is an open source automation server developed in Java. It was originally founded in 2006 as \textit{Hudson}, however a disputed with Oracle the community behind Hudson decided to change the project name to Jenkins\footnote{http://archive.is/fl45 (accessed: 13.01.2017)}.
 
-Jenkins enables developers to reliable build, test, and deploy their software. Its extensible and plugin-based architecture has permitted to create a tons of plugins to adapt the CI server to a multitude of build, test, and deployment automation workloads. In 2015, Jenkins surpassed 100.000 known installation making it the most widely deployed automation server\footnote{https://jenkins.io/press/ (accessed: 13.01.2017)}. 
+Jenkins enables developers to reliable build, test, and deploy their software. Its extensible and plugin-based architecture has permitted to create a tons of plugins to adapt the CI server to a multitude of build, test, and deployment automation workloads. In 2015, Jenkins surpassed 100.000 known installation making it the most widely deployed automation server\footnote{https://jenkins.io/press/ (accessed: 13.01.2017)}.
+
+In Table \ref{ci-comparison} we can see a comparison of the three CI Servers described above.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+% \usepackage{graphicx}
+\begin{table}[]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|c|c|l|l|l|l|l|l|c|c|c|}
+\hline
+\multirow{2}{*}{CI Server}     & \multirow{2}{*}{Platform}          & \multicolumn{3}{c|}{\multirow{2}{*}{License}}                                           & \multicolumn{1}{c|}{\multirow{2}{*}{Builders}}                                                                             & \multicolumn{1}{c|}{\multirow{2}{*}{Integrations}}                                                                                               & \multicolumn{1}{c|}{\multirow{2}{*}{IDE Support}}                                                                             & \multicolumn{3}{c|}{SCM Support}     \\ \cline{9-11} 
+                               &                                    & \multicolumn{3}{c|}{}                                                                   & \multicolumn{1}{c|}{}                                                                                                      & \multicolumn{1}{c|}{}                                                                                                                            & \multicolumn{1}{c|}{}                                                                                                         & SVN        & Mercurial  & Git        \\ \hline
+Teamcity                       & Web Container                      & \multicolumn{3}{l|}{Propietary}                                                         & \begin{tabular}[c]{@{}l@{}}MSBuild, NAnt, \\Visual Studio,  \\Ant, Maven 2-3, \\Gradle, Rake, \\command-line\end{tabular} & \begin{tabular}[c]{@{}l@{}}Jira, Bugzilla, \\FindBugs,  \\PMD, dotCover, \\NCover\end{tabular}                                                & \begin{tabular}[c]{@{}l@{}}Eclipse, Visual Studio, \\ IntelliJ IDEA, WebStorm, \\ PhpStorm, RubyMine, \\ PyCharm\end{tabular} & \checkmark & \checkmark & \checkmark \\ \hline
+\multicolumn{1}{|l|}{TravisCI} & \multicolumn{1}{l|}{Hosted}        & \multicolumn{3}{l|}{MIT}                                                                & \begin{tabular}[c]{@{}l@{}}Ant, Maven, \\ Gradle\end{tabular}                                                              & Github, Heroku                                                                                                                                   & None                                                                                                                          & \texttimes & \texttimes & \checkmark \\ \hline
+\multicolumn{1}{|l|}{Jenkins}  & \multicolumn{1}{l|}{Web Container} & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}CC\\ and MIT\end{tabular}} & \begin{tabular}[c]{@{}l@{}}MSBuild, NAnt, \\Ant, Maven, \\Kundo, Gradle,\\shell scripts,  \\ command-line\end{tabular}   & \begin{tabular}[c]{@{}l@{}}Bugzilla, Google Code, \\ Jira, Bitbucket, \\ Redmine,  \\ FindBugs, \\ Checkstyle, PMD, \\ Mantis, Trac\end{tabular} & \begin{tabular}[c]{@{}l@{}}Eclipse, IntelliJ IDEA, \\ NetBeans\end{tabular}                                                   & \checkmark & \checkmark & \checkmark \\ \hline
+\end{tabular}%
+}
+\caption{Comparison of Continuous Integration servers}
+\label{ci-comparison}
+\end{table}
 
 \subsection{Benefits in adopting CI/CD}
 \label{ci-benefits}
-
 Several are the benefits that come with the adoption of Continuous Integration in a software project. In this section we will describe five areas that are improved after CI implementation \cite{Rejstrom2016}. It is important to point out that these benefits come along with other practices such as agile transformation \cite{Laanti2011} and lean software development \cite{Poppendieck2003}.
 
 \begin{itemize}
