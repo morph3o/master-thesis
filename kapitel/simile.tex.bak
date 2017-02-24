@@ -220,7 +220,7 @@ As a conclusion in Figure \ref{fig:sequence-diagram} we can appreciate how the o
     \label{fig:sequence-diagram}
 \end{figure}
 
-\section{Results}
+\section{Search Results}
 In this section we will evaluate the results obtain using Simile in our test-project. To test our proof-of-concept we used a project that implements the usage scenario we explain in Chapter \ref{usage-scenario}. First, we deployed Jenkins in a Tomcat 9 instance and we installed the Simile Jenkins Plugin. After that we created a task in Jenkins and we configured the plugin following the steps described in Section \ref{ci-integration}. Then we ran the task to get the candidates for component reuse. Finally we received the result and measured the number of candidates returned by SOCORA, non-functional requirements, and time taken to return the results.
 
 \subsection{Textual search}
@@ -230,16 +230,15 @@ For textual search, Simile takes the classes and the method it contains, and the
 \emph{Base64(encode(byte[]):char[];decode(char[]):byte[];)}
 \end{displayquote}
 
-This is used as a query to make the request to SOCORA for searching for components.
-
 By default the application used the following query parameters:
+
 \begin{itemize}
 \item Filters
 	\begin{itemize}
-	\item Hashcode clone
-	\item No abstract class
-	\item No interface
-	\item Latest version
+	\item Entry class hashcode clone\footnote{Filters out additional entry class hash clones}
+	\item No abstract class\footnote{Filters out abstract classes}
+	\item No interface\footnote{Filters out interfaces}
+	\item Latest version\footnote{Filters Maven-based components based on later versions}
 	\item Functional sufficiency
 	\end{itemize}
 \item Ranking Strategy
@@ -248,10 +247,112 @@ By default the application used the following query parameters:
 	\end{itemize}
 \item Ranking criteria
 	\begin{itemize}
-	\item Lucene score
+	\item Lucene score - objective: maximize
+	\end{itemize}
+\item Others
+	\begin{itemize}
+	\item Max number of results = 10
 	\end{itemize}
 \end{itemize}
+
+Using the MQL notation of the class and the parameters, Simile makes the request to SOCORA. The code can be found in class \emph{SocoraRequester.java} in method \emph{textualSearchComponent} (Listing \ref{SocoraRequester.java}, page \pageref{SocoraRequester.java}). 
+
+Table \ref{textual-result} details the result returned by SOCORA. The candidates are sorted by Lucene score, the higher the number more similar is the result to the query. Therefore the first candidate, org.apache.axiom.om.util.Base64\footnote{\url{http://grepcode.com/file/repo1.maven.org/maven2/org.apache.ws.commons.axiom/axiom-api/1.2.15/org/apache/axiom/util/base64/Base64Utils.java} (accessed: 21.02.2017)}, is more similar to the query than the last candidate, org.jboss.as.process.stdin.Base64\footnote{\url{https://github.com/wildfly/wildfly-core/blob/master/process-controller/src/main/java/org/jboss/as/process/stdin/Base64.java} (accessed: 21.02.2017)}. If we check the code of these candidates, we can see that the first one actually implements the two methods of the query using the same input but with different output. Whereas the last one implements the methods but with different inputs and outputs.
+
+\begin{table}[]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|l|cll|c|}
+\hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{Component}}                                                      & \multicolumn{1}{c|}{\multirow{2}{*}{FQ Name}}                    & \multicolumn{3}{c|}{\begin{tabular}[c]{@{}c@{}}Ranking \\ Criteria\end{tabular}} & \multirow{2}{*}{Version} \\ \cline{3-5}
+\multicolumn{1}{|c|}{}                                                                                & \multicolumn{1}{c|}{}                                            & \multicolumn{3}{c}{\begin{tabular}[c]{@{}c@{}}Lucene\\ Score\end{tabular}}       &                          \\ \hline
+\begin{tabular}[c]{@{}l@{}}Apache Tuscany SCA \\ Binding WS Runtime \\ Axis2 Aggregation\end{tabular} & org.apache.axiom.om.util.Base64                                  & \multicolumn{3}{c|}{9.73}                                                        & 2.0.1                    \\ \hline
+\begin{tabular}[c]{@{}l@{}}Apache ServiceMix \\ Bundles\end{tabular}                                  & org.apache.axiom.om.util.Base64                                  & \multicolumn{3}{c|}{9.73}                                                        & 1.2.13-1                 \\ \hline
+REST API SDK                                                                                          & com.paypal.base.codec.binary.Base64                              & \multicolumn{3}{c|}{9.61}                                                        & 1.3.0                    \\ \hline
+Ajax4JSF                                                                                              & org.ajax4jsf.framework.util.base64.Base64                        & \multicolumn{3}{c|}{8.97}                                                        & 1.0.6                    \\ \hline
+jose4j                                                                                                & org.jose4j.base64url.internal.apache.commons.codec.binary.Base64 & \multicolumn{3}{c|}{8.43}                                                        & 0.4.4                    \\ \hline
+Lib-Cross-Java JSE5                                                                                   & com.github.libxjava.io.Base64                                    & \multicolumn{3}{c|}{7.98}                                                        & 0.3                      \\ \hline
+Lib-Cross-Java CDC                                                                                    & com.github.libxjava.io.Base64                                    & \multicolumn{3}{c|}{7.98}                                                        & 0.3                      \\ \hline
+Lib-Cross-Java CLDC                                                                                   & com.github.libxjava.io.Base64                                    & \multicolumn{3}{c|}{7.98}                                                        & 0.3                      \\ \hline
+rfc-4648                                                                                              & com.googlecode.jinahya.rfc4648.Base64                            & \multicolumn{3}{c|}{7.96}                                                        & 1.0.2                    \\ \hline
+WildFly: Process Controller                                                                           & org.jboss.as.process.stdin.Base64                                & \multicolumn{3}{c|}{7.64}                                                        & 8.2.1.Final              \\ \hline
+\end{tabular}%
+}
+\caption{Textual search result}
+\label{textual-result}
+\end{table}
+
+The time taken from making the request to SOCORA to receive the result was 6.07 seconds\footnote{This time does not consider the time taken to receive the email with the result.}.
 \subsection{Test-driven search}
+For test-driven search, Simile takes the test classes that the project might have. Our test project contains only one test class, \emph{Base64Test.java} (Listing \ref{Base64Test.java}, page \pageref{Base64Test.java}), which contains one test and two auxiliary methods. This test is taken by Simile as is and it is used as query.
+
+By default the the query parameters for test-driven search are the following:
+
+\begin{itemize}
+\item Filters
+	\begin{itemize}
+	\item Entry class hashcode clone\footnote{Filters out additional entry class hash clones}
+	\item No abstract class\footnote{Filters out abstract classes}
+	\item No interface\footnote{Filters out interfaces}
+	\item Latest version\footnote{Filters Maven-based components based on later versions}
+	\item Functional sufficiency
+	\end{itemize}
+\item Ranking Strategy
+	\begin{itemize}
+	\item Hybrid non-dominated sorting
+	\end{itemize}
+\item Non-functional metrics
+	\begin{itemize}
+	\item Leanness default\footnote{Leanness based on instructions count (Needed Functionality/Necessary Functionality, [0, 1]. Default objective is to maximize} - objective: maximize
+	\item Throughput operations per second - objective: maximize
+	\item Cohesion LCOM3\footnote{LCOM3 cohesion (CK), scope entry class} - objective: minimize
+	\item Efferent Coupling\footnote{Efferent Coupling of Entry Class (How many other classes are used by this class?)} - objective: minimize
+	\end{itemize}
+\item Others
+	\begin{itemize}
+	\item Max number of results = 400
+	\end{itemize}
+\end{itemize}
+
+Using the test class and the query parameters, Simile makes the request to SOCORA. The code can be found in class \emph{SocoraRequester.java} in method \emph{testDrivenSearchComponent} (Listing \ref{SocoraRequester.java}, page \pageref{SocoraRequester.java}).
+
+Table \ref{test-drive-result} details the result given by SOCORA for our test class with the query parameters. All of these candidates meet the functional requirements, so all of them might be reused. The difference is in the metrics. Neither the first component of the list is the best nor the last one is the worst, that is defined by the user's requirements. For this reason we include the link to the SOCORA webpage where the user can visualize this result and sort them based on its requirements. For instance, for one user might be more important the leanness value rather than the other, thus he/she would be more interested on the components with highest leanness value.
+
+\begin{table}[]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|l|c|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{Component}}                                                                & \multicolumn{1}{c|}{\multirow{2}{*}{FQ Name}} & \multicolumn{3}{c|}{Metrics}                                                                                                                                                        & \multirow{2}{*}{Version}                                     \\ \cline{3-5}
+\multicolumn{1}{|c|}{}                                                                                          & \multicolumn{1}{c|}{}                         & \begin{tabular}[c]{@{}c@{}}Leanness\\ Default\end{tabular} & \begin{tabular}[c]{@{}c@{}}Efferent\\ Coupling\end{tabular} & \begin{tabular}[c]{@{}c@{}}Cohesion\\ LCOM3\end{tabular} &                                                              \\ \hline
+OW2 Util :: Base64                                                                                              & org.ow2.util.base64.Base64                    & 1                                                          & 6                                                           & 1.33                                                     & 1.0.37                                                       \\ \hline
+scalaj-http                                                                                                     & scalaj.http.Base64                            & 0.69                                                       & 15                                                          & 1.08                                                     & 2.0.0                                                        \\ \hline
+Interfaces                                                                                                      & org.imixs.workflow.webservices.Base64         & 0.55                                                       & 22                                                          & 1.13                                                     & 2.1.1                                                        \\ \hline
+jtstand-common                                                                                                  & org.jfree.xml.util.Base64                     & 0.56                                                       & 22                                                          & 1.13                                                     & 1.5.9                                                        \\ \hline
+Macaroons: Cookies                                                                                              & com.github.nitram509.jmacaroons.util.Base64   & 0.95                                                       & 6                                                           & 1.13                                                     & 0.3.1                                                        \\ \hline
+Core API                                                                                                        & org.imixs.workflow.util.Base64                & 0.55                                                       & 22                                                          & 1.13                                                     & 3.4.4                                                        \\ \hline
+jcommon                                                                                                         & org.jfree.xml.util.Base64                     & 0.56                                                       & 22                                                          & 1.13                                                     & 1.0.16                                                       \\ \hline
+TrAP Utils API                                                                                                  & com.ericsson.research.trap.utils.Base64       & 0.46                                                       & 16                                                          & 1.08                                                     & 1.4.1                                                        \\ \hline
+\begin{tabular}[c]{@{}l@{}}jbundle-thin-base-util-\\ base64 - base64 code\end{tabular}                          & org.jbundle.thin.base.util.base64.Base64      & 0.1                                                        & 9                                                           & 1.14                                                     & 1.0.9                                                        \\ \hline
+\begin{tabular}[c]{@{}l@{}}JASMINe :: Self \\ management :: Rules \\ :: Cluster :: JK \\ :: Common\end{tabular} & org.ow2.jasmine.rules.cluster.jk.Base64       & 1                                                          & 6                                                           & 1.33                                                     & 1.3.7                                                        \\ \hline
+JPush API Java Client                                                                                           & cn.jpush.api.utils.Base64                     & 1                                                          & 5                                                           & 1.33                                                     & 3.2.7                                                        \\ \hline
+Ganymed SSH2 for Java                                                                                           & com.trilead.ssh2.crypto.Base64                & 1                                                          & 5                                                           & 1.33                                                     & \begin{tabular}[c]{@{}c@{}}build212-\\ hudson-6\end{tabular} \\ \hline
+ganymed-ssh-2                                                                                                   & ch.ethz.ssh2.crypto.Base64                    & 1                                                          & 5                                                           & 1.33                                                     & 262                                                          \\ \hline
+\begin{tabular}[c]{@{}l@{}}Ganymed SSH2 \\ for Java\end{tabular}                                                & ch.ethz.ssh2.crypto.Base64                    & 1                                                          & 5                                                           & 1.33                                                     & \begin{tabular}[c]{@{}c@{}}build210-\\ hudson-1\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}JOnAS :: \\ Libraries :: Commons\end{tabular}                                        & org.objectweb.jonas.common.encoding.Base64    & 1                                                          & 6                                                           & 1.33                                                     & 5.0-M1                                                       \\ \hline
+jyal                                                                                                            & com.github.to2mbn.jyal.util.Base64            & 1                                                          & 4                                                           & 1.25                                                     & 1.3                                                          \\ \hline
+scrypt                                                                                                          & com.lambdaworks.codec.Base64                  & 0.98                                                       & 5                                                           & 1.17                                                     & 1.4.0                                                        \\ \hline
+codec                                                                                                           & com.lambdaworks.codec.Base64                  & 0.98                                                       & 5                                                           & 1.17                                                     & 1.0.0                                                        \\ \hline
+OW2 Utilities :: Base64                                                                                         & org.ow2.util.base64.Base64                    & 1                                                          & 6                                                           & 1.33                                                     & 2.0.0                                                        \\ \hline
+\end{tabular}%
+}
+\caption{Test-driven search result}
+\label{test-drive-result}
+\end{table}
+
+The time taken from making the request to SOCORA to receive the result was 45 minutes and 46.306 seconds (00:45:46.306)\footnote{This time does not consider the time taken to receive the email with the result.}.
+
+Although the time taken to return a result using test-driven search is quite high, this is not necessarily a complication. This is due to the fact that this search is made in the background and the developer can keep working until he/she receives the result by email.
 
 \section{Technology}
 In this final section of this chapter, we will describe the different technologies used to develop our proof-of-concept.

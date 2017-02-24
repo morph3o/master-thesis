@@ -107,26 +107,6 @@ In this section we will expose the different Java classes of our prototype.
   language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
   basicstyle=\footnotesize,
   numberstyle=\tiny,
-  caption={FileHandler.java},
-  captionpos=b,
-  label=FileHandler.java
-]
-{code/services/FileHandler.java.txt}
-
-\lstinputlisting[
-  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
-  basicstyle=\footnotesize,
-  numberstyle=\tiny,
-  caption={Filter.java},
-  captionpos=b,
-  label=Filter.java
-]
-{code/services/Filter.java.txt}
-
-\lstinputlisting[
-  language=Java, numbers=left, stepnumber=5, firstnumber=1, breaklines=true, 
-  basicstyle=\footnotesize,
-  numberstyle=\tiny,
   caption={JavaClassFilter.java},
   captionpos=b,
   label=JavaClassFilter.java
