@@ -773,3 +773,60 @@ volume = {2},
 year = {2006}
 }
 
+@book{Martin2002,
+abstract = {Teaches software developers and project managers how to get projects done on time, and on budget using the power of Agile Development. Uses real-world case studies to show how to of plan, test, refactor, and pair program using eXtreme programming. Contains a wealth of reusable C++ and Java code. Focuses on solving customer oriented systems problems using UML and Design Patterns.},
+author = {Martin, Robert C},
+booktitle = {Agile Software Development, Principles, Patterns, and Practices},
+doi = {10.1007/BF03250842},
+isbn = {0135974445},
+issn = {0937-6429},
+pages = {529},
+pmid = {15667577},
+title = {{Agile Software Development, Principles, Patterns, and Practices}},
+year = {2002}
+}
+
+@book{KennethPugh2011,
+abstract = {Praise for Lean-Agile Acceptance Test-Driven Development “ Lean-Agile Acceptance Test-Driven Developmenttells a tale about three fictive project stakeholders as they use agile techniques to plan and execute their project. The format works well for the book; this book is easy to read, easy to understand, and easy to apply.” -Johannes Brodwall, Chief Scientist, Steria Norway “Agile development, some say, is all about pairing, and, yes, I'm a believer in the power of pairing. After reading this book, however, I became a fan of the ‘triad'-the customer or business analyst + the developer + the tester, who work collaboratively on acceptance tests to drive software development. I've written some patterns for customer interaction and some patterns for testing and I like what Ken Pugh has chosen to share with his readers in this down-to-earth, easy-to-read book. It's a book full of stories, real case studies, and his own good experience. Wisdom worth reading!” -Linda Rising, Coauthor ofFearless Change: Patterns for Introducing New Ideas “The Agile Manifesto, Extreme Programming, User Stories, and Test-Driven Development have enabled tremendous gains in software development; however, they're not enough. The question now becomes ‘How can I ensure clear requirements, correct implementation, complete test coverage, and more importantly, customer satisfaction and acceptance?' The missing link is acceptance as defined by the customer in their own domain language. Lean-Agile Acceptance Test-Driven Developmentis the answer.” -Bob Bogetti, Lead Systems Designer, Baxter Healthcare “Ken Pugh's Lean-Agile Acceptance Test-Driven Developmentshows you how to integrate essential requirements thinking, user acceptance tests and sounds, and lean-agile practices, so you can deliver product requirements correctly and efficiently. Ken's book shows you how table-driven specification, intertwined with requirements modeling, drives out acceptance criteria. Lean-Agile Acceptance Test-Driven Developmentis an essential guide for lean-agile team members to define clear, unambiguous requirements while also validating needs with acceptance tests.” -Ellen Gottesdiener, EBG Consulting, www.ebgconsulting.com, Author ofRequirements by Collaboration andThe Software Requirements Memory Jogger “If you are serious about giving Agile Testing a chance and only have time to read one book, read this one.” -David Vydra, http://testdriven.com “This book provides clear, straightforward guidance on how to use business-facing tests to drive software development. I'm excited about the excellent information in this book. It's a great combination of the author's experiences, references to other experts and research, and an example project that covers many angles of ATDD. A wide range of readers will learn a lot that they can put to use, whether they work on projects that call themselves lean or agile or simply want to deliver the best possible software product.” -Lisa Crispin, Agile Tester, ePlan Services, Inc., Author ofAgile Testing Within the framework of Acceptance Test-Driven-Development (ATDD), customers, developers, and testers collaborate to create acceptance tests that thoroughly describe how software should work from the customer's viewpoint. By tightening the links between customers and agile teams, ATDD can significantly improve both software quality and developer productivity. This is the first start-to-finish, real-world guide to ATDD for every agile project participant. Leading agile consultant Ken Pugh begins with a dialogue among a customer, developer, and tester, explaining the “what, why, where, when, and how” of ATDD and illuminating the experience of participating in it. Next, Pugh presents a practical, complete reference to each facet of ATDD, from creating simple tests to evaluating their results. He concludes with five diverse case studies, each identifying a realistic set of problems and challenges with proven solutions. Coverage includes " How to develop software with fully testable requirements " How to simplify and componentize tests and use them to identify missing logic " How to test user interfaces, service implementations, and other tricky elements of a software system " How to identify requirements that are best handled outside software " How to present test results, evaluate them, and use them to assess a project's overall progress " How to build acceptance tests that are mutually beneficial for development organizations and customers " How to scale ATDD to large projects},
+author = {{Kenneth Pugh}},
+doi = {10.1145/1988997.1989006},
+file = {:Users/morph3o/Mannheim/Thesis/Papers/Pugh - Unknown - Acceptance Test-Driven Development Better Software through Collaboration.pdf:pdf},
+isbn = {0321714083},
+issn = {0163-5948},
+pages = {368},
+title = {{Lean-Agile Acceptance Test-Driven Development: Better Software Through Collaboration}},
+url = {http://books.google.com/books?id=dyAa{\_}gAACAAJ{\&}pgis=1},
+year = {2011}
+}
+
+@misc{Ambler2013,
+author = {Ambler, Scott},
+title = {{Introduction to Test Driven Development (TDD)}},
+url = {http://agiledata.org/essays/tdd.html},
+howpublished = "http://agiledata.org/essays/tdd.html",
+urldate = {2017-02-24},
+note = "Accessed: 21.02.2017",
+year = {2013}
+}
+
+@misc{Dinwiddie2009,
+author = {Dinwiddie, George},
+title = {{If you don’t automate acceptance tests?}},
+url = {http://blog.gdinwiddie.com/2009/06/17/if-you-dont-automate-acceptance-tests/},
+howpublished = "http://blog.gdinwiddie.com/2009/06/17/if-you-dont-automate-acceptance-tests/",
+urldate = {2017-02-24},
+note = "Accessed: 21.02.2017",
+year = {2009}
+}
+
+@book{Martin2006,
+abstract = {From Agile Software Development: Principles, Patterns and Practices I'm writing this foreword right after having shipped a major release of the Eclipse open source project. I'm still in recovery mode, and my mind is bleary. But one thing remains clearer than ever: that people, not processes, are the key to shipping a product. Our recipe for success is simple: work with individuals obsessed with shipping software, develop with lightweight processes that are tuned to each team, and adapt constantly. Double-clicking on developers from our teams reveals individuals who consider programming the focus of development. Not only do they write code; they digest it constantly to maintain an understanding of the system. Validating designs with code provides feedback that's crucial for getting confidence in a design. At the same time, our developers understand the importance of patterns, refactoring, testing, incremental delivery, frequent builds, and other best-practices of XP that have altered the way we view methodologies today. Skill in this style of development is a prerequisite for success in projects with high technical risk and changing requirements. Agile development is low-key on ceremony and project documentation, but it's intense when it comes to the day-to-day development practices that count. Putting these practices to work is the focus of this book. Robert is a longtime activist in the object-oriented community, with contributions to C++ practice, design patterns, and object-oriented design principles in general. He was an early and vocal advocate of XP and agile methods. This book builds on these contributions, covering the full spectrum of agile development practice. It's an ambitious effort. Robert makes it more so by demonstrating everything through case studies and lots of code, as befits agile practice. He explains programming and design by actually doing it. This book is crammed with sensible advice for software development. It's equally good whether you want to become an agile developer or improve the skills you already have. I was looking forward to this book, and I wasn't disappointed. Erich Gamma Object Technology International},
+author = {Martin, Robert C and Micah, M},
+isbn = {0-13-185725-8},
+keywords = {C{\#},Java,code,compu,object-oriented programming},
+number = {Robert C. Martin Series},
+pages = {768},
+publisher = {Prentice Hall},
+title = {{Agile Principles, Patterns, and Practices in C{\#}}},
+year = {2006}
+}

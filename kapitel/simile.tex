@@ -2,7 +2,7 @@
 \label{chap:simile}
 In this chapter we present our approach that seizes Continuous Integration process in order to recommend similar components that are being developed in a software project. The idea of integrating CI and Software reuse emerged with the following research question: \emph{How can code search engines be best married with CI?}. The idea was to find a way where a team could seize the continuous integration process in order to find similar components to the components they are developing. Thus they would be able to reuse instead of implementing them from scratch reducing development time and costs. As an attempt to answer the question we implemented a tool (proof of concept) called Simile. This tool analyses the source code and extract information needed to find similar components.
 
-Following the usage scenario explained previously in section \ref{usage-scenario}, we will describe how our proposed approach works:
+Following the usage scenario explained previously in section \ref{usage-scenario}, we will describe how our proposed approach works. In the first step (figure \ref{fig:simile-01} - 1) the developer commits code to its local VCS. Then when the developer decides to push changes to the remote repository, the CI server is triggered (figure \ref{fig:simile-01} - 2). In the next step (figure \ref{fig:simile-01} - 3), Simile will analyse the code and extract information such as interfaces signatures and test classes. This information will be sent to SOCORA (figure \ref{fig:simile-01} - 4) in order to find similar components. Then it will return a ranked list of similar components. Simile will receive this information and send this list to the developers by email (figure \ref{fig:simile-01} - 5).
 
 \begin{figure}[H]
 	\centering
@@ -10,8 +10,6 @@ Following the usage scenario explained previously in section \ref{usage-scenario
     \caption{Simile approach}
     \label{fig:simile-01}
 \end{figure}
-
-In the first step (figure \ref{fig:simile-01} - 1) the developer commits code to its local VCS. Then when the developer decides to push changes to the remote repository, the CI server is triggered (figure \ref{fig:simile-01} - 2). In the next step (figure \ref{fig:simile-01} - 3), Simile will analyse the code and extract information such as interfaces signatures and test classes. This information will be sent to SOCORA (figure \ref{fig:simile-01} - 4) in order to find similar components. Then it will return a ranked list of similar components. Simile will receive this information and send this list to the developers by email (figure \ref{fig:simile-01} - 5).
 
 The main objective of Simile is to help the team to find similar components so they would be able to reuse them. Thus they would reduce time development and costs through reuse components that are already tested and ready to work.
 
