@@ -1,0 +1,29 @@
+\begin{thenomenclature} 
+
+ \nomgroup{A}
+
+  \item [{$ATDD$}]\begingroup Acceptance TDD\nomeqref {0.0}
+		\nompageref{xi}
+  \item [{$BDD$}]\begingroup Behavior Driven Development\nomeqref {0.0}
+		\nompageref{xi}
+  \item [{$CC$}]\begingroup Creative Commons\nomeqref {0.0}
+		\nompageref{xi}
+  \item [{$CD$}]\begingroup Continuous Delivery\nomeqref {0.0}
+		\nompageref{xi}
+  \item [{$CI$}]\begingroup Continuous Integration\nomeqref {0.0}
+		\nompageref{xi}
+  \item [{$CVS$}]\begingroup Concurrent Versions System\nomeqref {0.0}
+		\nompageref{xi}
+  \item [{$JIT$}]\begingroup Just in time\nomeqref {0.0}\nompageref{xi}
+  \item [{$SCM$}]\begingroup Source Control Management\nomeqref {0.0}
+		\nompageref{xi}
+  \item [{$TDD$}]\begingroup Test-driven Development\nomeqref {0.0}
+		\nompageref{xi}
+  \item [{$TFD$}]\begingroup Test-first Development\nomeqref {0.0}
+		\nompageref{xi}
+  \item [{$VCP$}]\begingroup Version Control Platform\nomeqref {0.0}
+		\nompageref{xi}
+  \item [{$VCS$}]\begingroup Version Control System\nomeqref {0.0}
+		\nompageref{xi}
+
+\end{thenomenclature}

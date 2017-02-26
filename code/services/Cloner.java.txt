@@ -8,40 +8,40 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 public class Cloner {
-
-	@Getter
-	private final String repo;
-	@Getter
-	private final String branch;
-	@Getter
-	private final String folder;
+    @Getter
+    private final String repo;
+    @Getter
+    private final String branch;
+    @Getter
+    private final String folder;
 
 	/**
 	 * Executes the command <code>git clone</code> with the values of
 	 * repo, branch and folder. It clones the repository of specific branch (default master)
 	 * in a specified folder.
 	 * */
-	public int cloneRepository() throws IOException {
-		int exitVal = 0;
-		try {
-			String command = this.setCommand(repo, branch, folder);
-			Process p = Runtime.getRuntime().exec(command);
-			StreamGobbler errorGobbler = new StreamGobbler(p.getErrorStream(), "INFO");
-			errorGobbler.start();
-			exitVal = p.waitFor();
-			return exitVal;
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		return exitVal;
-	}
+    public int cloneRepository() throws IOException {
+        int exitVal = 0;
+        try {
+            String command = this.setCommand(repo, branch, folder);
+            Process p = Runtime.getRuntime().exec(command);
+            StreamGobbler errorGobbler = new StreamGobbler(p.getErrorStream(), "INFO");
+            errorGobbler.start();
+            exitVal = p.waitFor();
+            return exitVal;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return exitVal;
+    }
 
-	String setCommand(String repo, String branch, String folder) {
-		if(!branch.isEmpty()) {
-			return String.format("git clone %s --branch %s %s", repo, branch, folder);
-		} else {
-			return String.format("git clone %s %s", repo, folder);
-		}
-	}
-
+    String setCommand(String repo, String branch, String folder) {
+        if(!branch.isEmpty()) {
+            return String
+					.format("git clone %s --branch %s %s", repo, branch, folder);
+        } else {
+            return String
+					.format("git clone %s %s", repo, folder);
+        }
+    }
 }

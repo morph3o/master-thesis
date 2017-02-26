@@ -1,4 +1,8 @@
-private String processTemplateTestDrivenSearchResult(CandidateListResult result, QueryParams queryParams, String jobId) throws IOException, TemplateException {
+private String processTemplateTestDrivenSearchResult(
+	CandidateListResult result,
+	QueryParams queryParams,
+	String jobId) throws IOException, TemplateException {
+
 	Template emailTmp = freeMarker.getTemplate("testdrivenResultEmail.ftl");
 	StringWriter stringWriter = new StringWriter();
 	List<Candidate> candidates = this.extractSearchCandidates(result, queryParams);
@@ -12,10 +16,15 @@ private String processTemplateTestDrivenSearchResult(CandidateListResult result,
 	return stringWriter.toString();
 }
 
-private String processTemplateTextualSearchResult(String methodQueried, CandidateListResult result, QueryParams queryParams) throws IOException, TemplateException {
+private String processTemplateTextualSearchResult(
+	String methodQueried,
+	CandidateListResult result,
+	QueryParams queryParams) throws IOException, TemplateException {
+
 	Template emailTmp = freeMarker.getTemplate("interfaceResultEmail.ftl");
 	StringWriter stringWriter = new StringWriter();
-	List<Candidate> candidates = this.extractSearchCandidates(result, queryParams);
+	List<Candidate> candidates =
+		this.extractSearchCandidates(result, queryParams);
 	Map<String, Object> root = new HashMap<>();
 	root.put("query", methodQueried);
 	root.put("numMetrics", candidates.get(0).getMetrics().size());
@@ -26,15 +35,30 @@ private String processTemplateTextualSearchResult(String methodQueried, Candidat
 	return stringWriter.toString();
 }
 
-private List<Candidate> extractSearchCandidates(CandidateListResult result, QueryParams queryParams) {
+private List<Candidate> extractSearchCandidates(
+	CandidateListResult result,
+	QueryParams queryParams) {
+
 	List<Candidate> candidates = new ArrayList<>();
 	result.getCandidates().forEach(doc -> {
 		Candidate candidate = new Candidate();
-		candidate.setName(Optional.ofNullable(doc.getArtifactInfo().getName()).orElse(""));
-		candidate.setFqName(Optional.ofNullable(doc.getFQName()).orElse(""));
-		candidate.setMetrics(extractMetrics(doc.getMetrics(), queryParams.getRankingCriteria()));
-		candidate.setDescription(Optional.ofNullable(doc.getArtifactInfo().getDescription()).orElse(""));
-		candidate.setVersion(Optional.ofNullable(doc.getVersion()).orElse(""));
+		candidate.setName(
+			Optional.ofNullable(doc.getArtifactInfo().getName()).orElse("")
+		);
+		candidate.setFqName(
+			Optional.ofNullable(doc.getFQName()).orElse("")
+		);
+		candidate.setMetrics(
+			extractMetrics(doc.getMetrics(), queryParams.getRankingCriteria())
+		);
+		candidate.setDescription(
+			Optional.ofNullable(
+				doc.getArtifactInfo()
+				   .getDescription())
+				   .orElse("")
+		);
+		candidate.setVersion(
+			Optional.ofNullable(doc.getVersion()).orElse(""));
 		candidates.add(candidate);
 	});
 	return candidates;

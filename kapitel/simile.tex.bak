@@ -1,22 +1,22 @@
 \chapter{Simile}
 \label{chap:simile}
-In this chapter we present our approach that seizes Continuous Integration process in order to recommend similar components that are being developed in a software project. The idea of integrating CI and Software reuse emerged with the following research question: \emph{How can code search engines be best married with CI?}. The idea was to find a way where a team could seize the continuous integration process in order to find similar components to the components they are developing. Thus they would be able to reuse instead of implementing them from scratch reducing development time and costs. As an attempt to answer the question we implemented a tool (proof of concept) called Simile. This tool analyses the source code and extract information needed to find similar components.
+In this chapter we present our approach that seizes Continuous Integration process in order to recommend similar components to the one that are being developed in a software project. The idea of integrating CI and Software reuse emerged with the following research question: \emph{How can code search engines be best married with CI?}. The objective was to find a way where a team could seize the continuous integration process in order to find similar components to the components they are developing. Thus they would be able to reuse this component instead of implementing them from scratch reducing development time and costs. As an attempt to answer the question we implemented a tool (proof of concept) called Simile. This tool analyses the source code and extract information needed (e.g. interface signature) to find similar components.
 
-Following the usage scenario explained previously in section \ref{usage-scenario}, we will describe how our proposed approach works. In the first step (figure \ref{fig:simile-01} - 1) the developer commits code to its local VCS. Then when the developer decides to push changes to the remote repository, the CI server is triggered (figure \ref{fig:simile-01} - 2). In the next step (figure \ref{fig:simile-01} - 3), Simile will analyse the code and extract information such as interfaces signatures and test classes. This information will be sent to SOCORA (figure \ref{fig:simile-01} - 4) in order to find similar components. Then it will return a ranked list of similar components. Simile will receive this information and send this list to the developers by email (figure \ref{fig:simile-01} - 5).
+Following the usage scenario explained previously in Chapter \ref{usage-scenario}, we will describe how our proposed approach works. In the first step (figure \ref{fig:simile-01} - 1) the developer commits code to its local VCS. Then when the developer decides to push changes to the remote repository, the CI server is triggered (figure \ref{fig:simile-01} - 2). In the next step (figure \ref{fig:simile-01} - 3), Simile will analyse the code and extract information such as interfaces signatures and test classes. This information will be sent to SOCORA (figure \ref{fig:simile-01} - 4) in order to find similar components. Then it will return a ranked list of similar components. Simile will receive this information and send this result to the developers by email (figure \ref{fig:simile-01} - 5).
+
+The main objective of Simile is to help the team to find similar components so they would be able to reuse them instead of implementing them from the very beginning. Thus they would able to reduce time development and costs through reuse components that are already tested and ready to work.
+
+In the remainder of this Chapter we explain in details how Simile was designed and implemented. Then we detail how it is integrated into Continuous Integration server (Jenkins). After that we will explain how we integrate Simile and SOCORA for searching for similar components.
 
 \begin{figure}[H]
 	\centering
-    \includegraphics[width=0.8\textwidth]{grafiken/simile-approach}
+    \includegraphics[width=0.7\textwidth]{grafiken/simile-approach}
     \caption{Simile approach}
     \label{fig:simile-01}
 \end{figure}
 
-The main objective of Simile is to help the team to find similar components so they would be able to reuse them. Thus they would reduce time development and costs through reuse components that are already tested and ready to work.
-
-In the following sections we will explain in details how Simile was implemented. Then we will detail how we integrate Simile into Continuous Integration server (Jenkins). After that we will explain how we integrate Simile and SOCORA for searching for similar components.
-
 \section{Design}
-Simile was formulated as a microservice which was designed taking in account that there are several CI servers available. Although we used Jenkins as CI server for our prototype, Simile was designed as an agnostic tool. Figure \ref{fig:simile-design} depicts an overview of the design of our implementation.
+Simile was formulated as a microservice which was designed taking in account that there are several CI servers available in the market. Although we used Jenkins as CI server for our proof-of-concept, Simile was designed as an agnostic tool. Figure \ref{fig:simile-design} depicts an overview of the design of our implementation.
 
 \begin{figure}[H]
 	\centering
@@ -25,16 +25,9 @@ Simile was formulated as a microservice which was designed taking in account tha
     \label{fig:simile-design}
 \end{figure}
 
-Despite the fact that the design is rather simple, this allow us to connect Simile to any CI server available in the market without changing the core. For instance, if in the future we would like to support another CI servers such as Teamcity, TravisCI, or Buddy, we would just need to develop a simple plugin with the same features of the current plugin developed for this thesis. Figure \ref{fig:simile-future} depicts the hypothetical scenario described before.
+Despite the fact that the design is rather simple, this allows to connect Simile to any CI server available plugins without changing the core. For instance, if in the future we would like to support another CI servers such as Teamcity, TravisCI, or Buddy, we would just need to develop a simple plugin with the same features of the current plugin developed for this thesis.
 
-\begin{figure}[H]
-	\centering
-    \includegraphics[width=0.9\textwidth]{grafiken/simile-future}
-    \caption{Future scenario of Simile supporting several CI Servers}
-    \label{fig:simile-future}
-\end{figure}
-
-Figure \ref{fig:domain-model} represents the domain model of Simile. The main class is \emph{Simile}, which is a service in charge of starting the process of analyzing the code, make request to SOCORA, and send the email to recipient with the candidates. This class instantiates a \emph{Cloner} and a \emph{DirectoryExplorer} in the method \emph{searchForComponent}. The former class is in charge of cloning the project to be analyzed and the latter is in charge of analyzing the code of the cloned project. Then the service \emph{SocoraRequester} is in charge of taking the information generated by \emph{DirectoryExplorer} and make the request to SOCORA to search for components. This service, after getting the result from SOCORA, it sends an email with the candidates (represented by the class \emph{Candidate}) to the recipient. 
+Figure \ref{fig:domain-model} represents the domain model of Simile. The main class is \emph{Simile} (\ref{Simile.java}, page \pageref{Simile.java}), which is a service that is in charge of starting the process of analyzing the code, making the requests to SOCORA, and sending the email to the user with the result candidates. This class instantiates a \emph{Cloner} (\ref{Cloner.java}, page \pageref{Cloner.java}) and a \emph{DirectoryExplorer} (\ref{DirectoryExplorer.java}, page \pageref{DirectoryExplorer.java}) in the method \emph{searchForComponent}. The former class is in charge of cloning the project to be analyzed and the latter is in charge of analyzing the code of the cloned project. Then the service \emph{SocoraRequester} (\ref{SocoraRequester.java}, page \pageref{SocoraRequester.java}) is in charge of taking the information generated by \emph{DirectoryExplorer} and make the request to SOCORA to search for components. This service, after getting the result from SOCORA, it sends an email with the candidates (represented by the class \emph{Candidate}) to the recipient. 
 
 \begin{figure}[H]
 	\centering
@@ -44,7 +37,7 @@ Figure \ref{fig:domain-model} represents the domain model of Simile. The main cl
 \end{figure}
 
 \section{Implementation}
-In this section we will detail how the prototype was developed and the technologies used. First we will start explaining the Simile service which is the starting point of the whole process about cloning the project, analyse code, search components and send result. Then we will continue with the  HTTP controller which receives the Git repository of the project to be analysed, the specific branch of the repository, and the email where the result will be sent. Then we will explain the Cloner object which is in charge of cloning the project locally. After that, we will explain how the tool analyses the code and extracts the interface signatures and test classes which will be used to make the requests to SOCORA. Next we will describe how we receive the result from SOCORA. Finally we will explain how we handle the result from the previous step and build the email that will be sent to user.
+In this section we detail with further details how the prototype was implemented. We begin with explaining the \emph{Simile} service which is the starting point of the whole process about cloning the project, analyzing the code, searching for components and sending the result. Then we continue with the  HTTP controller which receives the Git repository of the project to be analyzed, the specific branch of the repository, and the email where the result with the similar components will be sent. Then we describe the \emph{Cloner} object which is in charge of cloning the project locally. After that, we will explain how the tool analyses the code and extracts the interface signatures and test classes which will be used to make the requests to SOCORA. Next we will describe how we receive the result from SOCORA. Finally we will explain how we handle the result from the previous step and build the email that will be sent to user.
 
 \textbf{NOTE: The code snippet shown in the following subsections has been cleaned and it does not represent the source code. To see the source code with all the details, please refer to the appendix \ref{append:simile-code} or to the CD attached to this work.}
 
@@ -57,6 +50,8 @@ The class Simile.java [\ref{Simile.java}] is a Spring service which contains onl
   numberstyle=\tiny,
   caption={Method searchForComponents of Simile.java},
   captionpos=b,
+  tabsize=2,
+  showstringspaces=false,
   label=searchForComponents
 ]
 {code/Simile-searchForComponents.txt}
@@ -75,6 +70,8 @@ The class Cloner.java [\ref{Cloner.java}] is in charged of cloning the project i
   numberstyle=\tiny,
   caption={Method cloneRepository of Cloner.java},
   captionpos=b,
+  tabsize=2,
+  showstringspaces=false,
   label=cloneRepository
 ]
 {code/Cloner-cloneRepository.txt}
@@ -93,6 +90,8 @@ After the project is cloned locally by the Cloner (\ref{simile:cloner}), Simile 
   numberstyle=\tiny,
   caption={Method handle of JavaClassHandler.java},
   captionpos=b,
+  tabsize=2,
+  showstringspaces=false,
   label=handler
 ]
 {code/JavaClassHandler-handle.txt}
@@ -105,6 +104,8 @@ In the class JavaClassVisitor.java we can see how Simile differentiate between a
   numberstyle=\tiny,
   caption={Implementation of methods \emph{visit} of VoidVisitorAdapter in JavaClassVisitor.java},
   captionpos=b,
+  tabsize=2,
+  showstringspaces=false,
   label=visit
 ]
 {code/JavaClassVisitor-visit.txt}
@@ -113,7 +114,60 @@ In the class JavaClassVisitor.java we can see how Simile differentiate between a
 \label{socora-integration}
 Our prototype uses SOCORA to search for components. After extracting the interface signatures and test classes from the project, Simile make requests to SOCORA using this information. SOCORA then searches for similar components using Merobase and ranks the candidates using non-functional requirements. Once it is done, SOCORA sends the result back to Simile.
 
-Simile communicates with SOCORA by making HTTP requests using the interface signatures and the test classes extracted. The following snippet of code show how Simile is making the request for SOCORA \ref{textualSearchComponent}.
+Simile communicates with SOCORA by making HTTP requests using the interface signatures and the test classes extracted. SOCORA support several query parameters such as filters and ranking criteria. Our tools supports some of them by default depending on the type of search. For textual search our prototype support the following query parameters:
+
+\begin{itemize}
+\item Filters
+	\begin{itemize}
+	\item Entry class hashcode clone: Filters out additional entry class hash clones
+	\item No abstract class: Filters out abstract classes
+	\item No interface: Filters out interfaces
+	\item Latest version: Filters Maven-based components based on later versions
+	\item Functional sufficiency
+	\end{itemize}
+\item Ranking Strategy
+	\begin{itemize}
+	\item Single objective
+	\end{itemize}
+\item Ranking criteria
+	\begin{itemize}
+	\item Lucene score - objective: maximize
+	\end{itemize}
+\item Others
+	\begin{itemize}
+	\item Max number of results = 10
+	\end{itemize}
+\end{itemize}
+
+For test-driven search Simile uses the following query parameters by default:
+
+\begin{itemize}
+\item Filters
+	\begin{itemize}
+	\item Entry class hashcode clone: Filters out additional entry class hash clones.
+	\item No abstract class: Filters out abstract classes.
+	\item No interface: Filters out interfaces.
+	\item Latest version: Filters Maven-based components based on later versions.
+	\item Functional sufficiency: Filters out components that do not meet functional requirements.
+	\end{itemize}
+\item Ranking Strategy
+	\begin{itemize}
+	\item Hybrid non-dominated sorting
+	\end{itemize}
+\item Non-functional metrics
+	\begin{itemize}
+	\item Leanness default: Leanness based on instructions count (Needed Functionality/Necessary Functionality, [0, 1] - objective: maximize
+	\item Throughput operations per second - objective: maximize.
+	\item Cohesion LCOM3: LCOM3 cohesion (CK), scope entry class - objective: minimize
+	\item Efferent Coupling: Efferent Coupling of Entry Class (How many other classes are used by this class?) - objective: minimize.
+	\end{itemize}
+\item Others
+	\begin{itemize}
+	\item Max number of results = 400
+	\end{itemize}
+\end{itemize}
+
+Listing \ref{textualSearchComponent} represents the implementation of textual search request and Listing \ref{testDrivenSearchComponent} represents the test-driven search request.
 
 \lstinputlisting[
   language=Java, numbers=left, firstnumber=1, breaklines=true, 
@@ -121,9 +175,24 @@ Simile communicates with SOCORA by making HTTP requests using the interface sign
   numberstyle=\tiny,
   caption={Method textualSearchComponent of SocoraRequester.java},
   captionpos=b,
+  tabsize=2,
+  showstringspaces=false,
   label=textualSearchComponent
 ]
 {code/SocoraRequester-textualSearchComponent.txt}
+
+\lstinputlisting[
+  language=Java, numbers=left, firstnumber=1, breaklines=true, 
+  basicstyle=\footnotesize,
+  numberstyle=\tiny,
+  showstringspaces=false,
+  caption={Method testDrivenSearchComponent of SocoraRequester.java},
+  captionpos=b,
+  tabsize=2,
+  showstringspaces=false,
+  label=testDrivenSearchComponent
+]
+{code/SocoraRequester-testDrivenSearch.txt}
 
 The class in charge of making the request to SOCORA is \emph{SocoraRequester.java}[\ref{SocoraRequester.java}]. The method \emph{searchComponent} receives two parameters, \emph{queries} which represents the interface signatures or the test classes, and \emph{searchType} which represents the type of search (i.e. test driven search, interface driven search or textual search (default)). The snippet of code \ref{searchComponent} represent the method \emph{searchComponent}.
 
@@ -133,6 +202,8 @@ The class in charge of making the request to SOCORA is \emph{SocoraRequester.jav
   numberstyle=\tiny,
   caption={Method searchComponent of SocoraRequester.java},
   captionpos=b,
+  tabsize=2,
+  showstringspaces=false,
   label=searchComponent
 ]
 {code/SocoraRequester-searchComponent.txt}
@@ -148,22 +219,24 @@ After making the requests to SOCORA \ref{socora-integration}, it will response w
   numberstyle=\tiny,
   caption={Methods \emph{processTemplateTextualSearchResult} and \emph{processTemplateTestDrivenSearchResult} of SocoraRequester.java},
   captionpos=b,
+  tabsize=2,
+  showstringspaces=false,
   label=resultInterpretation
 ]
 {code/SocoraRequester-responseInterpretation.txt}
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=0.9\textwidth]{grafiken/email-01}
+    \caption{Textual search result email}
+    \label{fig:email-01}
+\end{figure}
 
 After the email's body is generated by using the template and the java objects, it is sent to the recipient. The figures \ref{fig:email-01} and \ref{fig:email-02} show the email with the result of a textual search and a test-driven search respectively.
 
 \begin{figure}[H]
 	\centering
-    \includegraphics[width=0.8\textwidth]{grafiken/email-01}
-    \caption{Textual search result email}
-    \label{fig:email-01}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-    \includegraphics[width=0.8\textwidth]{grafiken/email-02}
+    \includegraphics[width=0.9\textwidth]{grafiken/email-02}
     \caption{Test-driven search result email}
     \label{fig:email-02}
 \end{figure}
@@ -179,6 +252,8 @@ The Java class EntryController.java [\ref{EntryController.java}] is in charge of
   numberstyle=\tiny,
   caption={Method setupRepository of EntryController.java},
   captionpos=b,
+  tabsize=2,
+  showstringspaces=false,
   label=setupRepository
 ]
 {code/EntryController-setupRepository.txt}
@@ -200,14 +275,14 @@ The Simile Jenkins plugin is simple. First when a user creates a job in Jenkins,
 
 To configure the endpoint where Simile is deployed, we just need to go to global settings and set the URL. Figure \ref{fig:simile-conf-02} depicts this option.
 
+In the future if Simile needs to be integrated to another CI server, we just need to develop a simple plugin which sends the information needed to look for similar components.
+
 \begin{figure}[H]
 	\centering
     \includegraphics[width=0.9\textwidth]{grafiken/simile-conf-02}
     \caption{Simile endpoint configuration in Jenkins global configuration}
     \label{fig:simile-conf-02}
 \end{figure}
-
-In the future if Simile needs to be integrated to another CI server, we just need to develop a simple plugin which sends the information needed to look for similar components.
 
 As a conclusion in Figure \ref{fig:sequence-diagram} we can appreciate how the objects interact with each other. The process begins with the method \emph{searchRepository} which contains the repository of the project, the branch and the email where the result will be sent. It triggers the method \emph{searchForComponent} of the service Simile asynchronously. Right after the project is cloned locally by Cloner object and it is explored by DirectoryExplorer object. After the classes, its methods, and test classes are extracted from the project, we get into two loops. In the first loop, for each Java class extracted Simile makes a request to SOCORA. The query is the class extracted defined in MQL notation. Once the result set is returned by SOCORA, Simile prepares the email with the candidates and sends them to the recipient.
  
@@ -233,10 +308,10 @@ By default the application used the following query parameters:
 \begin{itemize}
 \item Filters
 	\begin{itemize}
-	\item Entry class hashcode clone\footnote{Filters out additional entry class hash clones}
-	\item No abstract class\footnote{Filters out abstract classes}
-	\item No interface\footnote{Filters out interfaces}
-	\item Latest version\footnote{Filters Maven-based components based on later versions}
+	\item Entry class hashcode clone
+	\item No abstract class
+	\item No interface
+	\item Latest version
 	\item Functional sufficiency
 	\end{itemize}
 \item Ranking Strategy

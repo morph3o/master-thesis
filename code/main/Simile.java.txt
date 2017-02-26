@@ -16,60 +16,56 @@ import java.util.List;
 @Service
 public class Simile {
 
-	private static final Logger logger = LoggerFactory.getLogger(Simile.class);
+    private final SocoraRequester socoraRequester;
 
-	private final SocoraRequester socoraRequester;
+    @Autowired
+    public Simile(SocoraRequester socoraRequester) {
+            this.socoraRequester = socoraRequester;
+    }
 
-	@Autowired
-	public Simile(SocoraRequester socoraRequester) {
-		this.socoraRequester = socoraRequester;
-	}
+    @Async
+    public void searchForComponents(
+		String repo,
+		String branch,
+		String folder,
+		String recipient
+		) throws IOException, InterruptedException {
 
-	@Async
-	public void searchForComponents(String repo, String branch, String folder, String recipient) throws IOException, InterruptedException {
-		Cloner cloner = new Cloner(repo, branch, folder);
+		new Cloner(repo, branch, folder).cloneRepository();
 
-		cloner.cloneRepository();
+        JavaClassFilter javaClassFilter = new JavaClassFilter();
 
-		File maintDir = new File(String.format("%s/src/main", folder));
-		JavaClassHandler classes = new JavaClassHandler();
-		new DirectoryExplorer(classes, new JavaClassFilter()).explore(maintDir);
+        File maintDir = new File(String.format("%s/src/main", folder));
+        JavaClassHandler javaClassHandler = new JavaClassHandler();
+        new DirectoryExplorer(javaClassHandler, javaClassFilter).explore(maintDir);
 
-		File testDir = new File(String.format("%s/src/test", folder));
-		JavaClassHandler testClasses = new JavaClassHandler();
-		new DirectoryExplorer(testClasses, new JavaClassFilter()).explore(testDir);
+        File testDir = new File(String.format("%s/src/test", folder));
+        JavaClassHandler testClassHandler = new JavaClassHandler();
+        new DirectoryExplorer(testClassHandler, javaClassFilter).explore(testDir);
 
-		logger.info(String.format("Classes found in project: %s", classes.getClasses().size()));
-		logger.info(String.format("Test classes found in project: %s", testClasses.getTestClassesCode().size()));
+        this.makeRequestWithClasses(javaClassHandler.getClassesMQLNotation(), recipient);
+        this.makeRequestWithTestClasses(testClassHandler.getTestClassesCode(), recipient);
+    }
 
-		this.makeRequestWithClasses(classes.getClassesMQLNotation(), recipient);
-		this.makeRequestWithTestClasses(testClasses.getTestClassesCode(), recipient);
-	}
+    private void makeRequestWithClasses(List<String> classes, String recipientEmail) {
+        classes.forEach(c -> {
+            try {
+                socoraRequester
+					.searchComponent(c, SocoraRequester.INTERFACE_DRIVEN_SEARCH, recipientEmail);
+            } catch (Exception ex) {
+                logger.error(ExceptionUtils.getStackTrace(ex));
+            }
+        });
+    }
 
-	private void makeRequestWithClasses(List<String> classes, String recipientEmail) {
-		logger.info("Interface-driven Search");
-		logger.info(Strings.repeat("=", "Interface-driven Search".length()));
-		classes.forEach(c -> {
-			try {
-				logger.info(String.format("Class to query: %s", c));
-				socoraRequester.searchComponent(c, SocoraRequester.INTERFACE_DRIVEN_SEARCH, recipientEmail);
-			} catch (Exception ex) {
-				logger.error(ExceptionUtils.getStackTrace(ex));
-			}
-		});
-	}
-
-	private void makeRequestWithTestClasses(List<String> testClasses, String recipientEmail) {
-		logger.info("Test-driven Search");
-		logger.info(Strings.repeat("=", "Test-driven Search".length()));
-		testClasses.forEach(tc -> {
-			try {
-				logger.info(String.format("Test Class to query: %s", tc));
-				socoraRequester.searchComponent(tc, SocoraRequester.TEST_DRIVEN_SEARCH, recipientEmail);
-			} catch (Exception ex) {
-				logger.error(ExceptionUtils.getStackTrace(ex));
-			}
-		});
-	}
-
+    private void makeRequestWithTestClasses(List<String> testClasses, String recipientEmail) {
+        testClasses.forEach(tc -> {
+            try {
+                socoraRequester
+					.searchComponent(tc, SocoraRequester.TEST_DRIVEN_SEARCH, recipientEmail);
+            } catch (Exception ex) {
+                logger.error(ExceptionUtils.getStackTrace(ex));
+            }
+        });
+    }
 }

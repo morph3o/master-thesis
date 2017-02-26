@@ -18,62 +18,62 @@ import java.util.regex.Pattern;
 
 @RestController
 public class EntryController {
+    @Autowired
+    private Simile simile;
 
-	private static final Logger logger = LoggerFactory.getLogger(EntryController.class);
+    @RequestMapping(name = "/repository", method = RequestMethod.POST)
+    public ResponseEntity<?> setupRepository(
+        @RequestParam(name = "repo") String repo,
+        @RequestParam(name = "branch", defaultValue = "master", required = false) String branch,
+        @RequestParam(name = "email") String email
+        ) throws IOException, InterruptedException {
+        if(validateRequest(repo, email).isPresent()) {
+            return ResponseEntity.badRequest().body(validateRequest(repo, email).get());
+        } else {
+            simile.searchForComponents(repo, branch, Cuid.createCuid(), email);
+            return ResponseEntity.ok(new Message("Repository set successfully", 200));
+        }
+    }
 
-	@Autowired
-	private Simile simile;
+    private Optional<Message> validateRequest(String repo, String email) {
+        logger.debug("Validating required parameters in request");
+        StringBuilder str = new StringBuilder();
+        if(repo.isEmpty())
+            str.append("repo is required");
+        if(email.isEmpty())
+            str.append("email is required");
+        if(!this.isValidEmail(email))
+            str.append("email is not valid");
+        if(!this.isValidGithubWebURL(repo))
+            str.append("repo must be a valid Git Web URL (e.g. https://github.com/...)");
+        if(!str.toString().isEmpty())
+            return Optional.ofNullable(new Message(str.toString(), 400));
+        return Optional.empty();
+    }
 
-	@RequestMapping(name = "/repository", method = RequestMethod.POST)
-	public ResponseEntity<?> setupRepository(@RequestParam(name = "repo") String repo,
-											@RequestParam(name = "branch", defaultValue = "master", required = false) String branch,
-											@RequestParam(name = "email") String email) throws IOException, InterruptedException {
-		if(validateRequest(repo, email).isPresent()) {
-			logger.debug("The request is not valid. Request -> repo: %s - branch: %s - email: %s", repo, branch, email);
-			return ResponseEntity.badRequest().body(validateRequest(repo, email).get());
-		} else {
-			logger.debug("The request is valid. Request -> repo: %s - branch: %s - email: %s", repo, branch, email);
-			simile.searchForComponents(repo, branch, Cuid.createCuid(), email);
-			return ResponseEntity.ok(new Message("Repository set successfully", 200));
-		}
-	}
+    /**
+     * Validates if a Git repository url is a valid Git Web URL.
+     *
+     * @param gitRepo Git web URL to be validated.
+     * @return true if the git url is valid, otherwise false.
+     * */
+    private boolean isValidGithubWebURL(String gitRepo) {
+        final Pattern pattern = Pattern.compile("(http(s)?)(:(//)?)([\\w\\.@\\:/\\-~]+)(\\.git)?");
+        return pattern.matcher(gitRepo).matches();
+    }
 
-	private Optional<Message> validateRequest(String repo, String email) {
-		logger.debug("Validating required parameters in request");
-		StringBuilder str = new StringBuilder();
-		if(repo.isEmpty()) str.append("repo is required");
-		if(email.isEmpty()) str.append("email is required");
-		if(!this.isValidEmail(email)) str.append("email is not valid");
-		if(!this.isValidGithubWebURL(repo)) str.append("repo must be a valid Git Web URL (e.g. https://github.com/...)");
-		if(!str.toString().isEmpty()) {
-			return Optional.ofNullable(new Message(str.toString(), 400));
-		}
-		return Optional.empty();
-	}
-
-	/**
-	 * Validates if a Git repository url is a valid Git Web URL.
-	 *
-	 * @param gitRepo Git web URL to be validated.
-	 * @return true if the git url is valid, otherwise false.
-	 * */
-	private boolean isValidGithubWebURL(String gitRepo) {
-		logger.debug("isValidGithubWebURL: gitRepo = %s", gitRepo);
-		final Pattern pattern = Pattern.compile("(http(s)?)(:(//)?)([\\w\\.@\\:/\\-~]+)(\\.git)?");
-		return pattern.matcher(gitRepo).matches();
-	}
-
-	/**
-	 * Validates if an email address is valid.
-	 *
-	 * @see <a href="http://www.regexr.com/3c0ol">http://www.regexr.com/3c0ol</a>
-	 *
-	 * @param email email address to be validated.
-	 * @return true in case the email address is valid, otherwise false.
-	 * */
-	private boolean isValidEmail(String email) {
-		logger.debug("isValidEmail: email = %s", email);
-		final Pattern pattern = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
-		return pattern.matcher(email).matches();
-	}
+    /**
+     * Validates if an email address is valid.
+     *
+     * @see <a href="http://www.regexr.com/3c0ol">http://www.regexr.com/3c0ol</a>
+     *
+     * @param email email address to be validated.
+     * @return true in case the email address is valid, otherwise false.
+     * */
+    private boolean isValidEmail(String email) {
+        final Pattern pattern = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+" +
+            "(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" +
+            ".)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+        return pattern.matcher(email).matches();
+    }
 }

@@ -1,7 +1,0 @@
-package de.unimannheim.informatik.swt.simile.services;
-
-import java.io.File;
-
-public interface FileHandler {
-	void handle(int level, String path, File file);
-}

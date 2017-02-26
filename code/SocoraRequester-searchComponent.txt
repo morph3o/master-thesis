@@ -5,15 +5,19 @@ public static String KEYWORD_SEARCH = "KEYWORD_SEARCH";
 @Autowired
 private EmailSender emailSender;
 
-public void searchComponent(String query, String searchType) throws IOException, InterruptedException, SparkPostException {
+public void searchComponent(
+	String query,
+	String searchType,
+	String recipient) throws Exception {
+		
 	Validate.notBlank(query, "Query parameter is required and cannot be blank");
 	if (StringUtils.compare(searchType, INTERFACE_DRIVEN_SEARCH) == 0 ||
 		StringUtils.compare(searchType, KEYWORD_SEARCH) == 0 ||
 		StringUtils.isBlank(searchType)) {
-		this.textualSearchComponent(query);
+		this.textualSearchComponent(query, recipient);
 	} else if (StringUtils.compare(searchType, TEST_DRIVEN_SEARCH) == 0) {
-		this.testDrivenSearchComponent(query);
+		this.testDrivenSearchComponent(query, recipient);
 	} else {
-		this.textualSearchComponent(query);
+		this.textualSearchComponent(query, recipient);
 	}
 }

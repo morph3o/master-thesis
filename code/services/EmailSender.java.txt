@@ -25,7 +25,6 @@ public class EmailSender {
 	public void sendEmail(String toEmail, String subject, String body) {
 		try {
 			MimeMessage msg = new MimeMessage(getSession());
-			//set message headers
 			msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
 			msg.addHeader("format", "flowed");
 			msg.addHeader("Content-Transfer-Encoding", "8bit");
@@ -36,35 +35,33 @@ public class EmailSender {
 			msg.setText(body, "UTF-8", "html");
 			msg.setSentDate(new Date());
 
-			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
-			logger.info("Message is ready");
-			Transport.send(msg);
+			msg.setRecipients(
+				Message.RecipientType.TO,
+				InternetAddress.parse(toEmail, false)
+			);
 
-			logger.info("Email Sent Successfully!!");
+			Transport.send(msg);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	private Session getSession() {
-		final String fromEmail = "pdivasto@gmail.com"; //requires valid gmail id
-		final String password = "manK1nd1634;"; // correct password for gmail id
+		final String fromEmail = "some@email.com";
+		final String password = "password";
 
 		logger.debug("SSLEmail Start");
 		Properties props = new Properties();
-		props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host
-		props.put("mail.smtp.socketFactory.port", "465"); //SSL Port
-		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory"); //SSL Factory Class
-		props.put("mail.smtp.auth", "true"); //Enabling SMTP Authentication
-		props.put("mail.smtp.port", "465"); //SMTP Port
-
+		props.put("mail.smtp.host", "smtp.someserver.com");
+		props.put("mail.smtp.socketFactory.port", "465");
+		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.port", "465");
 		Authenticator auth = new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(fromEmail, password);
 			}
 		};
-
 		return Session.getDefaultInstance(props, auth);
 	}
-
 }

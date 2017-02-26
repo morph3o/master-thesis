@@ -1,9 +1,12 @@
 \section{Test-Driven Development}
 \label{sec:tdd}
 In this section we will explain Test-driven development (TDD). TDD combines test-first development where you write a test before you write just enough production code to fulfill that test, and refactoring. The primary goal of TDD is to think through your requirements or design before your write your functional code (implying that TDD is both an important agile requirements and agile design technique)\cite{Martin2002}. In the reminder of this section we will explain further the definition of TDD, and finally compare it against normal testing.
-
 \subsection{Definition}
 The steps of test-first development (TFD) are displayed in the activity diagram of Figure \ref{fig:tfd}. The first step is to quickly add a test. Then it is executed, often the complete test suite although one may decide to run only a subset for the sake of speed, to ensure that the new test fails. After that the developer updates the functional code to make it pass the tests. The fourth step is to run your tests again. If they fail he/she needs to update the functional code and retest. Once the tests pass, the next step is to start over. One may first need to refactor the code if needed, in that case we are turning TFD into TDD.
+
+TDD completely inverts traditional development. When a developer first goes to implement a new feature, the first question that he/she asks is whether the existing design is the best design possible that enables him/her to implement that functionality. If so, he/she proceeds via a TFD approach. If not, he/she refactors it locally to change the portion of the design affected by the new feature, enabling him/her to add that feature as easy as possible. As a result he/she will always be improving the quality of the design, thereby making it easier to work with in the future. Figure \ref{fig:tdd} describes the TDD lifecycle just described.
+
+Instead of writing functional code first and then writing testing code, if it is written at all, a developer instead writes test code before the functional code. Moreover, he/she does so in very small steps (i.e. one test and a small bit of proportional functional code at a time). A programmer taking a TDD approach refuses to write a new function until there is a test first that fails because that function is not present yet. In fact, they refuse to add even a single line of code until a test exists for it. Once the test is in place then they do the work required to ensure that the test suite now passes (i.e. new code may break several existing tests as well as the new one). Although it sounds simple, one needs a great discipline because it easy to forget it and write functional code without first writing a new test.
 
 \begin{figure}[H]
 	\centering
@@ -12,7 +15,9 @@ The steps of test-first development (TFD) are displayed in the activity diagram 
     \label{fig:tfd}
 \end{figure}
 
-TDD completely inverts traditional development. When a developer first goes to implement a new feature, the first question that he/she asks is whether the existing design is the best design possible that enables him/her to implement that functionality. If so, he/she proceeds via a TFD approach. If not, he/she refactors it locally to change the portion of the design affected by the new feature, enabling him/her to add that feature as easy as possible. As a result he/she will always be improving the quality of the design, thereby making it easier to work with in the future. Figure \ref{fig:tdd} describes the TDD lifecycle just described.
+There are two levels of TDD\cite{Ambler2013}:
+
+\paragraph{Acceptance TDD (ATDD)} is when you write a single acceptance test, and then just enough production functionality code to fulfill that test. The goal of ATDD is to specify detailed, executable requirements for your solution on a just in time (JIT) basis\cite{Ambler2013}. ATDD is also known as Behavior Driven Development (BDD).
 
 \begin{figure}[H]
 	\centering
@@ -21,26 +26,20 @@ TDD completely inverts traditional development. When a developer first goes to i
     \label{fig:tdd}
 \end{figure}
 
-Instead of writing functional code first and then writing testing code, if it is written at all, a developer instead writes test code before the functional code. Moreover, he/she does so in very small steps (i.e. one test and a small bit of proportional functional code at a time). A programmer taking a TDD approach refuses to write a new function until there is a test first that fails because that function is not present yet. In fact, they refuse to add even a single line of code until a test exists for it. Once the test is in place then they do the work required to ensure that the test suite now passes (i.e. new code may break several existing tests as well as the new one). Although it sounds simple, one needs a great discipline because it easy to forget it and write functional code without first writing a new test.
-
-There are two levels of TDD\cite{Ambler2013}:
-
-\paragraph{Acceptance TDD (ATDD)} is when you write a single acceptance test, and then just enough production functionality code to fulfill that test. The goal of ATDD is to specify detailed, executable requirements for your solution on a just in time (JIT) basis\cite{Ambler2013}. ATDD is also known as Behavior Driven Development (BDD).
-
 An acceptance test represents the user's point of view or the external view of the system. It inspects the externally visible effects such as specifying the correct output of a system given a particular input. For instance, an acceptance test can display how the state of an \emph{Order} changes from \emph{paid} to \emph{shipped}. Moreover, it can specify the interaction with interfaces of other systems. Furthermore, acceptance tests can suggest that operations normally hidden from direct testing (such as business rules) should be exposed for testing\cite{KennethPugh2011}.
 
 These tests are written by the customer, tester, and developer (also called \emph{three amigos}\cite{Dinwiddie2009}). The customer should create at least one test working with the developer and the tester. The last two then can create more tests and have them reviewed by the customer. The developer connects the tests to the system by writting short bits of code. The idea is that anyone can run the tests, manually or automatically. These tests are written in business domain terms which form a common language that is shared between the \emph{three amigos}\cite{KennethPugh2011}.
 
 \paragraph{Developer TDD} where you write a single developer test, sometimes called unit test, and then just enough production code to fulfill that test. The goal of developer TDD is to specify a detailed, executable design for your solution on a JIT basis. Developer TDD is often simply called TDD\cite{Ambler2013}.
 
-Figure \ref{fig:atdd-tdd} depicts how ATDD and developer TDD fit together. Preferably, it will write a single acceptance test written by the customer, developer and tester. Then run the test and if it passes, add another acceptance test, otherwise make a small change in the acceptance test and add a developer test. After adding the developer test, run it. If it passes, add another developer test, otherwise add enough code to make the test to pass. The developer test cycle ends when the functionality defined by the acceptance test is fulfilled. Then run the acceptance tests to check if all of them passes. The ATDD cycle will end when the development stops otherwise it continues.
-
 \begin{figure}[H]
 	\centering
-    \includegraphics[width=\textwidth]{grafiken/atdd-tdd}
+    \includegraphics[width=0.7\textwidth]{grafiken/atdd-tdd}
     \caption{Aceptance TDD and Developer TDD\cite{Ambler2013}}
     \label{fig:atdd-tdd}
 \end{figure}  
+
+Figure \ref{fig:atdd-tdd} depicts how ATDD and developer TDD fit together. Preferably, it will write a single acceptance test written by the customer, developer and tester. Then run the test and if it passes, add another acceptance test, otherwise make a small change in the acceptance test and add a developer test. After adding the developer test, run it. If it passes, add another developer test, otherwise add enough code to make the test to pass. The developer test cycle ends when the functionality defined by the acceptance test is fulfilled. Then run the acceptance tests to check if all of them passes. The ATDD cycle will end when the development stops otherwise it continues.
 
 \subsection{Why TDD?}
 TDD is a practice that has been promoted because it is far more productive than coding in larger steps\citep{Ambler2013}. Imagine a developer adds a functional code, compile, and test it. It is very likely that the test will be broken by defects that exists in the new code. Therefore, it is easier to find, and then fix, those defects if he/she has written two lines of code than hundreds. Therefore, the most important benefit acquired by applying TDD, is that it enables you to take small steps when developing a software.

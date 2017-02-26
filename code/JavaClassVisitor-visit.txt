@@ -1,15 +1,13 @@
 @Override
 public void visit(ClassOrInterfaceDeclaration n, Object arg) {
-    super.visit(n, arg);
-    this.classObj = n;
-    if(n.toString().contains("@Test")) {
-        testClasses.add(n.toString());
-    }
+	super.visit(n, arg);
+	this.classObj = n;
+	if(n.toString().contains("@Test"))
+		testClasses.add(n.toString());
 }
 
 @Override
 public void visit(MethodDeclaration n, Object arg) {
-    super.visit(n, arg);
-    logger.debug(String.format("L[%s] - %s", n.getBegin().get(), n.getDeclarationAsString()));
-    methods.add(n);
+	super.visit(n, arg);
+	methods.add(n);
 }

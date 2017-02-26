@@ -19,30 +19,31 @@ import java.util.concurrent.Executor;
 @EnableAsync
 public class SimileApplication extends AsyncConfigurerSupport {
 
-	private static final Logger logger = LoggerFactory.getLogger(SimileApplication.class);
+    public static void main(String[] args) {
+        SpringApplication.run(SimileApplication.class, args);
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(SimileApplication.class, args);
-	}
+    @Override
+    public Executor getAsyncExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(2);
+        executor.setMaxPoolSize(2);
+        executor.setQueueCapacity(500);
+        executor.setThreadNamePrefix("SIMILE-");
+        executor.initialize();
+        return executor;
+    }
 
-	@Override
-	public Executor getAsyncExecutor() {
-		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-		executor.setCorePoolSize(2);
-		executor.setMaxPoolSize(2);
-		executor.setQueueCapacity(500);
-		executor.setThreadNamePrefix("SIMILE-");
-		executor.initialize();
-		return executor;
-	}
-
-	@Bean
-	public Configuration freeMarkerConfiguration() throws IOException {
-		Configuration cfg = new Configuration(Configuration.VERSION_2_3_23);
-		cfg.setDirectoryForTemplateLoading(new File(getClass().getClassLoader().getResource("templates").getPath()));
-		cfg.setDefaultEncoding("UTF-8");
-		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-		cfg.setLogTemplateExceptions(false);
-		return cfg;
-	}
+    @Bean
+    public Configuration freeMarkerConfiguration() throws IOException {
+        Configuration cfg = new Configuration(Configuration.VERSION_2_3_23);
+        cfg.setDirectoryForTemplateLoading(
+			new File(getClass().getClassLoader()
+							   .getResource("templates")
+							   .getPath()));
+        cfg.setDefaultEncoding("UTF-8");
+        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+        cfg.setLogTemplateExceptions(false);
+        return cfg;
+    }
 }

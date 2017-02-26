@@ -29,8 +29,6 @@ public class SocoraRequester {
 	public static String INTERFACE_DRIVEN_SEARCH = "INTERFACE_DRIVEN_SEARCH";
 	public static String KEYWORD_SEARCH = "KEYWORD_SEARCH";
 
-	private static final Logger logger = LoggerFactory.getLogger(SocoraRequester.class);
-
 	private static String baseURI = "http://socora.merobase.com/socora";
 
 	private static String user = "socora";
@@ -45,7 +43,11 @@ public class SocoraRequester {
 		this.freeMarker = freeMarker;
 	}
 
-	public void searchComponent(String query, String searchType, String recipient) throws IOException, InterruptedException, TemplateException {
+	public void searchComponent(
+		String query,
+		String searchType,
+		String recipient) throws IOException, InterruptedException, TemplateException {
+
 		Validate.notBlank(query, "Query parameter is required and cannot be blank");
 		if (StringUtils.compare(searchType, INTERFACE_DRIVEN_SEARCH) == 0 ||
 			StringUtils.compare(searchType, KEYWORD_SEARCH) == 0 ||
@@ -64,21 +66,21 @@ public class SocoraRequester {
 	 * @param testClassSourceQuery which is sent to SOCORA to search for components.
 	 * @param recipient (email) where the result will be sent.
 	 * */
-	private void testDrivenSearchComponent(String testClassSourceQuery, String recipient) throws IOException, InterruptedException, TemplateException {
-		// Create client
-		CandidateSearchClient candidateSearchClient = new CandidateSearchClient(baseURI, auth(user, pass));
+	private void testDrivenSearchComponent(
+		String testClassSourceQuery,
+		String recipient) throws Exception {
 
-		// Search request
+		CandidateSearchClient candidateSearchClient =
+			new CandidateSearchClient(baseURI, auth(user, pass));
+
 		CandidateSearchRequest request = new CandidateSearchRequest();
 
-		// Maximum no. of candidates to retrieve
 		int maxResults = 400;
 
 		request.setInput(testClassSourceQuery);
 		QueryParams queryParams = new QueryParams();
 		queryParams.setRows(maxResults);
 
-		// inclusions
 		queryParams.setArtifactInformation(true);
 		queryParams.setContent(true);
 
@@ -95,21 +97,17 @@ public class SocoraRequester {
 
 		request.setTestDrivenSearch(Boolean.TRUE);
 
-		// set ranking criteria
 		queryParams.setRankingStrategy(Rankings.HYBRID_NON_DOMINATED_SORTING);
+
 		RankingCriterion fsCriterion = new RankingCriterion();
-		// FS dynamic
 		fsCriterion.setName("sf_instruction_leanness");
 		fsCriterion.setObjective(RankingCriterion.MAX);
-		// performance criterion
 		RankingCriterion performanceCriterion = new RankingCriterion();
 		performanceCriterion.setName("jmh_thrpt_score_mean");
 		performanceCriterion.setObjective(RankingCriterion.MAX);
-		// LCOM
 		RankingCriterion lcomCriterion = new RankingCriterion();
 		lcomCriterion.setName("entryClass_ckjm_ext_lcom3");
 		lcomCriterion.setObjective(RankingCriterion.MIN);
-		// Coupling
 		RankingCriterion couplingCriterion = new RankingCriterion();
 		couplingCriterion.setName("entryClass_ckjm_ext_ce");
 		couplingCriterion.setObjective(RankingCriterion.MIN);
@@ -123,37 +121,37 @@ public class SocoraRequester {
 
 		CandidateSearchResponse response = candidateSearchClient.search(request);
 
-		// JobId of the test-driven search, which is used to check the status of the job.
 		String jobId = response.getJobId();
 
-		// In order to retrieve the result, we need to check the status.
 		JobStatus jobStatus = null;
-		while (jobStatus == null || jobStatus.getStatusType() != JobStatusType.FINISHED) {
+		while (jobStatus == null ||
+			jobStatus.getStatusType() != JobStatusType.FINISHED) {
+
 			jobStatus = candidateSearchClient.getJobStatus(jobId);
-			logger.info("Status of jobId " + jobId + " is " + jobStatus.getStatusType().name());
 			Thread.sleep(30 * 1000L);
 		}
 
-		// Once the search is FINISHED, we retrieve the result with the candidates.
 		if(jobStatus.getStatusType() == JobStatusType.FINISHED)
 			getTestDrivenSearchResult(jobId, recipient, testClassSourceQuery);
 	}
 
 	/**
-	 * In charge of fetching the result of a job with given id, handle it and send the result to the recipient.
+	 * In charge of fetching the result of a job with given id,
+	 * handle it and send the result to the recipient.
 	 *
 	 * @param jobId of the job to fetch the result.
 	 * @param recipient (email) to where we will send the result.
 	 * */
-	private void getTestDrivenSearchResult(String jobId, String recipient, String testClassQueried) throws IOException, TemplateException {
-		// Create client
-		CandidateSearchClient candidateSearchClient = new CandidateSearchClient(baseURI, auth(user, pass));
+	private void getTestDrivenSearchResult(
+		String jobId,
+		String recipient,
+		String testClassQueried) throws IOException, TemplateException {
 
-		// Successful tds candidates
+		CandidateSearchClient candidateSearchClient =
+			new CandidateSearchClient(baseURI, auth(user, pass));
+
 		QueryParams queryParams = new QueryParams();
 		queryParams.setRows(2000);
-
-		// Inclusions
 		queryParams.setArtifactInformation(true);
 		queryParams.setContent(true);
 
@@ -166,21 +164,17 @@ public class SocoraRequester {
 			Filters.FUNCTIONAL_SUFFICIENCY_FILTER
 		));
 
-		// set ranking criteria
 		queryParams.setRankingStrategy(Rankings.HYBRID_NON_DOMINATED_SORTING);
+
 		RankingCriterion fsCriterion = new RankingCriterion();
-		// FS dynamic
 		fsCriterion.setName("sf_instruction_leanness");
 		fsCriterion.setObjective(RankingCriterion.MAX);
-		// performance criterion
 		RankingCriterion performanceCriterion = new RankingCriterion();
 		performanceCriterion.setName("jmh_thrpt_score_mean");
 		performanceCriterion.setObjective(RankingCriterion.MAX);
-		// LCOM
 		RankingCriterion lcomCriterion = new RankingCriterion();
 		lcomCriterion.setName("entryClass_ckjm_ext_lcom3");
 		lcomCriterion.setObjective(RankingCriterion.MIN);
-		// Coupling
 		RankingCriterion couplingCriterion = new RankingCriterion();
 		couplingCriterion.setName("entryClass_ckjm_ext_ce");
 		couplingCriterion.setObjective(RankingCriterion.MIN);
@@ -192,8 +186,8 @@ public class SocoraRequester {
 			couplingCriterion
 		));
 
-		// Getting Test-driven result.
-		CandidateSearchResponse response = candidateSearchClient.getResults(jobId, queryParams);
+		CandidateSearchResponse response =
+			candidateSearchClient.getResults(jobId, queryParams);
 
 		CandidateListResult result = response.getCandidates();
 
@@ -205,16 +199,19 @@ public class SocoraRequester {
 	}
 
 	/**
-	 * In charge of making the request to SOCORA using textual search. The result is sent to the recipient.
+	 * In charge of making the request to SOCORA using textual search.
+	 * The result is sent to the recipient.
 	 *
 	 * @param method in MQL format that will be sent to SOCORA.
 	 * @param recipient (email) to which the result will be sent.
 	 * */
-	private void textualSearchComponent(String method, String recipient) throws IOException, TemplateException {
-		// create client
-		CandidateSearchClient candidateSearchClient = new CandidateSearchClient(baseURI, auth(user, pass));
+	private void textualSearchComponent(
+		String method,
+		String recipient) throws IOException, TemplateException {
 
-		// search request
+		CandidateSearchClient candidateSearchClient =
+			new CandidateSearchClient(baseURI, auth(user, pass));
+
 		CandidateSearchRequest request = new CandidateSearchRequest();
 
 		int maxResults = 10;
@@ -223,7 +220,6 @@ public class SocoraRequester {
 		QueryParams queryParams = new QueryParams();
 		queryParams.setRows(maxResults);
 
-		// inclusions
 		queryParams.setArtifactInformation(true);
 		queryParams.setContent(true);
 
@@ -237,15 +233,11 @@ public class SocoraRequester {
 		));
 
 		request.setQueryParams(queryParams);
-		// no test-driven search
 		request.setTestDrivenSearch(Boolean.FALSE);
 
-		// set ranking
 		queryParams.setRankingStrategy(Rankings.SINGLE_OBJECTIVE);
 
-		// set ranking criteria
 		List<RankingCriterion> rankingCriteria = Collections.singletonList(
-			// textual score (Lucene/SolR)
 			RankingCriterionBuilder
 				.rankingCriterion()
 				.withName("luceneScore")
@@ -267,7 +259,8 @@ public class SocoraRequester {
 	}
 
 	/**
-	 * Processes the template using the candidates resulted from test-driven search.
+	 * Processes the template using the candidates resulted from
+	 * test-driven search.
 	 *
 	 * @param result from interface-driven search.
 	 * @param queryParams to show more data.
@@ -275,7 +268,11 @@ public class SocoraRequester {
 	 *
 	 * @return result in a human-readable format.
 	 * */
-	private String processTemplateTestDrivenSearchResult(CandidateListResult result, QueryParams queryParams, String jobId) throws IOException, TemplateException {
+	private String processTemplateTestDrivenSearchResult(
+		CandidateListResult result,
+		QueryParams queryParams,
+		String jobId) throws IOException, TemplateException {
+
 		Template emailTmp = freeMarker.getTemplate("testdrivenResultEmail.ftl");
 		StringWriter stringWriter = new StringWriter();
 		List<Candidate> candidates = this.extractSearchCandidates(result, queryParams);
@@ -290,7 +287,8 @@ public class SocoraRequester {
 	}
 
 	/**
-	 * Processes the template using the candidates resulted from interface-driven search.
+	 * Processes the template using the candidates resulted from
+	 * interface-driven search.
 	 *
 	 * @param methodQueried
 	 * @param result from interface-driven search.
@@ -298,10 +296,15 @@ public class SocoraRequester {
 	 *
 	 * @return result in a human-readable format.
 	 * */
-	private String processTemplateTextualSearchResult(String methodQueried, CandidateListResult result, QueryParams queryParams) throws IOException, TemplateException {
+	private String processTemplateTextualSearchResult(
+		String methodQueried,
+		CandidateListResult result,
+		QueryParams queryParams) throws IOException, TemplateException {
+
 		Template emailTmp = freeMarker.getTemplate("interfaceResultEmail.ftl");
 		StringWriter stringWriter = new StringWriter();
-		List<Candidate> candidates = this.extractSearchCandidates(result, queryParams);
+		List<Candidate> candidates =
+			this.extractSearchCandidates(result, queryParams);
 		Map<String, Object> root = new HashMap<>();
 		root.put("query", methodQueried);
 		root.put("numMetrics", candidates.get(0).getMetrics().size());
@@ -315,15 +318,23 @@ public class SocoraRequester {
 	/**
 	 * Transforms result into a human-readable format.
 	 * */
-	private List<Candidate> extractSearchCandidates(CandidateListResult result, QueryParams queryParams) {
+	private List<Candidate> extractSearchCandidates(
+		CandidateListResult result,
+		QueryParams queryParams) {
+
 		List<Candidate> candidates = new ArrayList<>();
 		result.getCandidates().forEach(doc -> {
 			Candidate candidate = new Candidate();
-			candidate.setName(Optional.ofNullable(doc.getArtifactInfo().getName()).orElse(""));
-			candidate.setFqName(Optional.ofNullable(doc.getFQName()).orElse(""));
-			candidate.setMetrics(extractMetrics(doc.getMetrics(), queryParams.getRankingCriteria()));
-			candidate.setDescription(Optional.ofNullable(doc.getArtifactInfo().getDescription()).orElse(""));
-			candidate.setVersion(Optional.ofNullable(doc.getVersion()).orElse(""));
+			candidate.setName(
+				Optional.ofNullable(doc.getArtifactInfo().getName()).orElse(""));
+			candidate.setFqName(
+				Optional.ofNullable(doc.getFQName()).orElse(""));
+			candidate.setMetrics(
+				extractMetrics(doc.getMetrics(), queryParams.getRankingCriteria()));
+			candidate.setDescription(
+				Optional.ofNullable(doc.getArtifactInfo().getDescription()).orElse(""));
+			candidate.setVersion(
+				Optional.ofNullable(doc.getVersion()).orElse(""));
 			candidates.add(candidate);
 		});
 		return candidates;
@@ -336,7 +347,9 @@ public class SocoraRequester {
 	 * @param email to which the result will be sent.
 	 * */
 	private void sendResult(String result, String email, String searchType) {
-		emailSender.sendEmail(email, String.format("Feedback from Simile - %s", searchType), result);
+		emailSender.sendEmail(
+			email,
+			String.format("Feedback from Simile - %s", searchType), result);
 	}
 
 	/**
@@ -354,8 +367,14 @@ public class SocoraRequester {
 	 * @return rank for given {@link } based on passed
 	 *         CandidateRankingStrategy
 	 */
-	private static int getRank(Map<String, Double> ranking, String candidateRankingStrategy, boolean partialOrder) {
-		Validate.notBlank(candidateRankingStrategy, "CandidateRankingStrategy ID cannot be blank");
+	private static int getRank(
+		Map<String, Double> ranking,
+		String candidateRankingStrategy,
+		boolean partialOrder) {
+
+		Validate.notBlank(
+			candidateRankingStrategy,
+			"CandidateRankingStrategy ID cannot be blank");
 
 		String key = candidateRankingStrategy;
 		if (partialOrder) {
@@ -373,7 +392,10 @@ public class SocoraRequester {
 		return auth;
 	}
 
-	private static List<Metric> extractMetrics(Map<String, Double> metrics, List<RankingCriterion> criteria) {
+	private static List<Metric> extractMetrics(
+		Map<String, Double> metrics,
+		List<RankingCriterion> criteria) {
+
 		List<Metric> metricList = new ArrayList<>();
 		for (String key : metrics.keySet()) {
 			for (RankingCriterion criterion : criteria) {
@@ -407,7 +429,8 @@ public class SocoraRequester {
 				metricTitle = "Efferent Coupling (entry class)";
 				break;
 			default:
-				throw new IllegalArgumentException(String.format("Metric %s is not valid", metricKey));
+				throw new IllegalArgumentException(
+					String.format("Metric %s is not valid", metricKey));
 		}
 		return metricTitle;
 	}
@@ -439,8 +462,14 @@ public class SocoraRequester {
 
 		@Override
 		public int compare(CandidateDocument o1, CandidateDocument o2) {
-			int rank1 = getRank(o1.getRanking(), candidateRankingStrategy, partialOrder);
-			int rank2 = getRank(o2.getRanking(), candidateRankingStrategy, partialOrder);
+			int rank1 = getRank(
+				o1.getRanking(),
+				candidateRankingStrategy,
+				partialOrder);
+			int rank2 = getRank(
+				o2.getRanking(),
+				candidateRankingStrategy,
+				partialOrder);
 
 			return Comparator.<Integer>naturalOrder().compare(rank1, rank2);
 		}

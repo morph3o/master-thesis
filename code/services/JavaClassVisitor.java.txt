@@ -12,8 +12,6 @@ import java.util.List;
 
 public class JavaClassVisitor extends VoidVisitorAdapter {
 
-	private static final Logger logger = LoggerFactory.getLogger(JavaClassVisitor.class);
-
 	@Getter
 	private ClassOrInterfaceDeclaration classObj;
 	@Getter
@@ -42,8 +40,6 @@ public class JavaClassVisitor extends VoidVisitorAdapter {
 	@Override
 	public void visit(MethodDeclaration n, Object arg) {
 		super.visit(n, arg);
-		logger.debug(String.format("L[%s] - %s", n.getBegin().get(), n.getDeclarationAsString()));
 		methods.add(n);
 	}
-
 }
