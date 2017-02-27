@@ -11,7 +11,7 @@ In the remainder of this Chapter we explain in details how Simile was designed a
 \begin{figure}[H]
 	\centering
     \includegraphics[width=0.7\textwidth]{grafiken/simile-approach}
-    \caption{Simile approach}
+    \caption{Simile Approach}
     \label{fig:simile-01}
 \end{figure}
 
@@ -21,7 +21,7 @@ Simile was formulated as a microservice which was designed taking in account tha
 \begin{figure}[H]
 	\centering
     \includegraphics[width=0.9\textwidth]{grafiken/simile-design}
-    \caption{Overview of implementation's design}
+    \caption{Overview of Implementation's Design}
     \label{fig:simile-design}
 \end{figure}
 
@@ -32,7 +32,7 @@ Figure \ref{fig:domain-model} represents the domain model of Simile. The main cl
 \begin{figure}[H]
 	\centering
     \includegraphics[width=\textwidth]{grafiken/domain-model}
-    \caption{Domain model}
+    \caption{Domain Model}
     \label{fig:domain-model}
 \end{figure}
 
@@ -41,7 +41,7 @@ The sequence diagram presented in Figure \ref{fig:sequence-diagram-a} represents
 \begin{figure}[H]
 	\centering
     \includegraphics[width=\textwidth]{grafiken/sequence-diagram-a}
-    \caption{Sequence diagram}
+    \caption{Sequence Diagram}
     \label{fig:sequence-diagram-a}
 \end{figure}
 
@@ -87,7 +87,7 @@ The class Cloner.java (\ref{Cloner.java}, page \pageref{Cloner.java}) is in char
 
 This method runs the command \emph{git clone} with the parameters \emph{repo}, \emph{branch}, and \emph{folder}. The command is built by the private method \emph{setCommand}. After executing the command, the project is cloned locally under the folder with given \emph{folder} name.
 
-\subsection{Interface signature and test class extraction}
+\subsection{Interface Signature and Test Class Extraction}
 \label{simile:code-analysis}
 After the project is cloned locally by the \emph{Cloner} (\ref{Cloner.java}, page \pageref{Cloner.java}), Simile goes through the code and extracts the interface signatures of each class, and the test classes. The signatures extracted are transformed into Merobase Query Language (MQL) notation, and the test classes are extracted as is. Listing \ref{handler} shows how the interface signatures are extracted and transformed into MQL. For extracting test classes the principle is the same, the difference is that we differentiate a Test class from another Java file if it contains the annotation \emph{@Test} at least once.
 
@@ -95,7 +95,7 @@ After the project is cloned locally by the \emph{Cloner} (\ref{Cloner.java}, pag
   language=Java, numbers=left, firstnumber=1, breaklines=true, 
   basicstyle=\footnotesize,
   numberstyle=\tiny,
-  caption={Method handle of JavaClassHandler.java},
+  caption={Method \emph{handle} of JavaClassHandler.java},
   captionpos=b,
   tabsize=2,
   showstringspaces=false,
@@ -103,13 +103,13 @@ After the project is cloned locally by the \emph{Cloner} (\ref{Cloner.java}, pag
 ]
 {code/JavaClassHandler-handle.txt}
 
-In the class JavaClassVisitor.java we can see how Simile differentiate between a normal Java class and a test class. It implements the methods \emph{visit} for a \emph{ClassOrInterfaceDeclaration} and for a \emph{MethodDeclaration} object of the abstract class VoidVisitorAdapter. The listing \ref{visit} show the implementation of these methods.
+In the class JavaClassVisitor.java we can see how Simile differentiate between a normal Java class and a test class. It implements the methods \emph{visit} for a \emph{ClassOrInterfaceDeclaration} and for a \emph{MethodDeclaration} object of the abstract class \emph{VoidVisitorAdapter}. The listing \ref{visit} show the implementation of these methods.
 
 \lstinputlisting[
   language=Java, numbers=left, firstnumber=1, breaklines=true, 
   basicstyle=\footnotesize,
   numberstyle=\tiny,
-  caption={Implementation of methods \emph{visit} of VoidVisitorAdapter in JavaClassVisitor.java},
+  caption={Implementation of methods \emph{visit} of \emph{VoidVisitorAdapter} in JavaClassVisitor.java},
   captionpos=b,
   tabsize=2,
   showstringspaces=false,
@@ -180,7 +180,7 @@ Listing \ref{textualSearchComponent} represents the implementation of interface-
   language=Java, numbers=left, firstnumber=1, breaklines=true, 
   basicstyle=\footnotesize,
   numberstyle=\tiny,
-  caption={Method textualSearchComponent of SocoraRequester.java},
+  caption={Method \emph{textualSearchComponent} of SocoraRequester.java},
   captionpos=b,
   tabsize=2,
   showstringspaces=false,
@@ -193,7 +193,7 @@ Listing \ref{textualSearchComponent} represents the implementation of interface-
   basicstyle=\footnotesize,
   numberstyle=\tiny,
   showstringspaces=false,
-  caption={Method testDrivenSearchComponent of SocoraRequester.java},
+  caption={Method \emph{testDrivenSearchComponent} of SocoraRequester.java},
   captionpos=b,
   tabsize=2,
   showstringspaces=false,
@@ -207,7 +207,7 @@ The class in charge of making the request to SOCORA is \emph{SocoraRequester.jav
   language=Java, numbers=left, firstnumber=1, breaklines=true, 
   basicstyle=\footnotesize,
   numberstyle=\tiny,
-  caption={Method searchComponent of SocoraRequester.java},
+  caption={Method \emph{searchComponent} of SocoraRequester.java},
   captionpos=b,
   tabsize=2,
   showstringspaces=false,
@@ -217,7 +217,7 @@ The class in charge of making the request to SOCORA is \emph{SocoraRequester.jav
 
 When SOCORA responses with the list of components found they are sent by email to developers. This action is done in the methods \emph{textualSearchComponent} or \emph{testDrivenSearchComponent} (depending on the search type), using the service \emph{EmailSender} (\ref{EmailSender.java}, page \pageref{EmailSender.java}).
 
-\subsection{Email result}
+\subsection{Email Result}
 After making the requests to SOCORA, it will response with the similar components found. Simile receives the list of candidates, it extracts the candidates from the response, constructs the email, and sends it to the user. For interface-driven and keyword search results, the method \emph{processTemplateTextualSearchResult} is in charge of interpreting the result and process the email's template before it is sent. For test-driven results, the method \emph{processTemplateTestDrivenSearchResult} is in charge of interpreting the result and process the email's template before it is sent. Listing \ref{resultInterpretation} show this methods.
 
 \lstinputlisting[
@@ -234,8 +234,8 @@ After making the requests to SOCORA, it will response with the similar component
 
 \begin{figure}[H]
 	\centering
-    \includegraphics[width=0.9\textwidth]{grafiken/email-01}
-    \caption{Textual search result email}
+    \includegraphics[width=\textwidth]{grafiken/email-01}
+    \caption{Interface-driven Search Result Email}
     \label{fig:email-01}
 \end{figure}
 
@@ -244,7 +244,7 @@ After the email's body is generated by using the template and the java objects, 
 \begin{figure}[H]
 	\centering
     \includegraphics[width=0.9\textwidth]{grafiken/email-02}
-    \caption{Test-driven search result email}
+    \caption{Test-driven Search Result Email}
     \label{fig:email-02}
 \end{figure}
 
@@ -257,7 +257,7 @@ The Java class \emph{EntryController.java} (\ref{EntryController.java}, page \pa
   language=Java, numbers=left, firstnumber=1, breaklines=true, 
   basicstyle=\footnotesize,
   numberstyle=\tiny,
-  caption={Method setupRepository of EntryController.java},
+  caption={Method \emph{setupRepository} of EntryController.java},
   captionpos=b,
   tabsize=2,
   showstringspaces=false,
@@ -272,11 +272,11 @@ As a conclusion of this section about the implementation of Simile, in Figure \r
 \begin{figure}[H]
 	\centering
     \includegraphics[width=\textwidth]{grafiken/sequence-diagram}
-    \caption{Sequence diagram}
+    \caption{Sequence Diagram}
     \label{fig:sequence-diagram}
 \end{figure}
 
-\section{CI integration}
+\section{CI Integration}
 \label{ci-integration}
 To integrate our prototype to a Continuous Integration process we decided to create a plugin. We decided to create our main prototype as independent as possible thus we do not depend on any CI tool. Therefore in this work to prove our approach we built a plugin for the CI server Jenkins. We decided to use Jenkins because is one of the most popular CI server for Java projects \footnote{\url{https://www.cloudbees.com/sites/default/files/2016-jenkins-community-survey-responses.pdf} (accessed: 04.02.2017)} and it is open-source.
 
@@ -285,7 +285,7 @@ The Simile Jenkins plugin is simple. First when a user creates a job in Jenkins,
 \begin{figure}[H]
 	\centering
     \includegraphics[width=0.9\textwidth]{grafiken/simile-conf-01}
-    \caption{Simile Jenkins plugin configuration in Jenkins task}
+    \caption{Simile Jenkins Plugin Configuration in Jenkins Task}
     \label{fig:simile-conf-01}
 \end{figure}
 
@@ -296,15 +296,15 @@ In the future if Simile needs to be integrated to another CI server, we just nee
 \begin{figure}[H]
 	\centering
     \includegraphics[width=0.9\textwidth]{grafiken/simile-conf-02}
-    \caption{Simile endpoint configuration in Jenkins global configuration}
+    \caption{Simile Endpoint Configuration in Jenkins Global Configuration}
     \label{fig:simile-conf-02}
 \end{figure}
 
 \section{Search Results}
 In this section we will evaluate the results obtain using Simile in our test-project. To test our proof-of-concept we used a project that implements the usage scenario we explain in Chapter \ref{usage-scenario}. First, we deployed Jenkins in a Tomcat 9 instance and we installed the Simile Jenkins Plugin. After that we created a task in Jenkins and we configured the plugin following the steps described in Section \ref{ci-integration}. Then we ran the task to get the candidates for component reuse. Finally we received the result and measured the number of candidates returned by SOCORA, non-functional requirements, and time taken to return the results.
 
-\subsection{Textual search}
-For textual search, Simile takes the classes and the method it contains, and then transform them into MQL notation. Our test project has only one class \emph{Base64.java} (Listing \ref{Base64.java}, page \pageref{Base64.java}) which contains two methods: \emph{encode} and \emph{decode}. The MQL notation of this class is the following:
+\subsection{Interface-driven Search}
+For interface-driven search, Simile takes the classes and the method it contains, and then transform them into MQL notation. Our test project has only one class \emph{Base64.java} (Listing \ref{Base64.java}, page \pageref{Base64.java}) which contains two methods: \emph{encode} and \emph{decode}. The MQL notation of this class is the following:
 
 \begin{displayquote}
 \emph{Base64(encode(byte[]):char[];decode(char[]):byte[];)}
@@ -358,12 +358,12 @@ rfc-4648                                                                        
 WildFly: Process Controller                                                                           & org.jboss.as.process.stdin.Base64                                & \multicolumn{3}{c|}{7.64}                                                        & 8.2.1.Final              \\ \hline
 \end{tabular}%
 }
-\caption{Textual search result}
+\caption{Interface-driven Search Result}
 \label{textual-result}
 \end{table}
 
 The time taken from making the request to SOCORA to receive the result was 6.07 seconds\footnote{This time does not consider the time taken to receive the email with the result.}.
-\subsection{Test-driven search}
+\subsection{Test-driven Search}
 For test-driven search, Simile takes the test classes that the project might have. Our test project contains only one test class, \emph{Base64Test.java} (Listing \ref{Base64Test.java}, page \pageref{Base64Test.java}), which contains one test and two auxiliary methods. This test is taken by Simile as is and it is used as query.
 
 By default the the query parameters for test-driven search are the following:
@@ -426,7 +426,7 @@ codec                                                                           
 OW2 Utilities :: Base64                                                                                         & org.ow2.util.base64.Base64                    & 1                                                          & 6                                                           & 1.33                                                     & 2.0.0                                                        \\ \hline
 \end{tabular}%
 }
-\caption{Test-driven search result}
+\caption{Test-driven Search Result}
 \label{test-drive-result}
 \end{table}
 

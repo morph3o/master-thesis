@@ -25,6 +25,8 @@
 \usepackage[numbers,square]{natbib}
 \usepackage{amssymb}
 \usepackage{textcomp}
+\usepackage[strings]{underscore}
+
 
 \usepackage{csquotes}
 \usepackage{listings} %Fuer Codelistings

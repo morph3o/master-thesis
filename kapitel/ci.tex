@@ -1,6 +1,6 @@
 \section{Continuous Integration}
 \label{chap:ci}
-In this chapter we explain what Continuous Integration (CI) contains, and additionally describe the process steps, its benefits, challenges, and good practices of CI.
+In this chapter we explain what Continuous Integration (CI) contains, and additionally describe the process steps, its benefits, and challenges during the implementation of this practice.
 
 \subsection{What is Continuous Integration?}
 \label{sec:ci-def}
@@ -13,7 +13,7 @@ CI emerges as a solution for the painful moment of software integration. While t
 \begin{figure}[ht]
 	\centering
     \includegraphics[width=0.8\textwidth]{grafiken/stress}
-    \caption{Emotional cycle of manual delivery \cite{Goff2015}}
+    \caption{Emotional Cycle of Manual Delivery \cite{Goff2015}}
     \label{fig:emotional}
 \end{figure}
 
@@ -44,7 +44,7 @@ An extension of Continuous Integration is Continuous Delivery (CD). CD is a soft
 \begin{figure}[ht]
 	\centering
     \includegraphics[width=\textwidth]{grafiken/cicd-pipeline-update}
-    \caption{Typical CI/CD pipeline \cite{Chacon2009}}
+    \caption{Typical CI/CD Pipeline \cite{Chacon2009}}
     \label{fig:cicdpipeline}
 \end{figure}
 
@@ -76,7 +76,7 @@ The main difference between Git and the other VCSs is the way it thinks about it
 \begin{figure}[ht]
 	\centering
     \includegraphics[width=\textwidth]{grafiken/git-states}
-    \caption{The three main states of Git \cite{Chacon2009}}
+    \caption{The Three Main States of Git \cite{Chacon2009}}
     \label{fig:git-sates}
 \end{figure}
 
@@ -91,7 +91,7 @@ is an open-source web-based Git repository developed by GitLab Inc. The software
 \paragraph{Github}
 is a web-based Git repository hosting service, which offers all the functionality of Git plus its own features. It provides several collaboration tools such as wikis, bug tracking, feature requests, and task management as well as access control. Its development started in 2007 as a side project of P. J. Hyett and Chris Wanstrath \cite{Weis2014} and it was officially launch on April 10th, 2008. Since then, Github\footnote{https://github.com/ (accessed: 13.01.2017)} has gained popularity through the community reaching more than 50 million projects being hosted nowadays.\\
 
-\textbf{Continuous Integration Servers}
+\textbf{\underline{Continuous Integration Servers}}
 
 \paragraph{Teamcity}
 is a Java-based build management and continuous integration server from JetBrains\footnote{https://www.jetbrains.com (accessed: 21.02.2017)}. TeamCity\footnote{https://www.jetbrains.com/teamcity/ (accessed: 21.02.2017)} is commercial software and licensed under a proprietary license. It offers several features such as VCS interoperability, cloud integrations, code quality tracking, continuous integration, user management, system maintenance, build history, and extensibility and customization. 
@@ -119,51 +119,33 @@ Teamcity                       & Web Container                      & \multicolu
 \multicolumn{1}{|l|}{Jenkins}  & \multicolumn{1}{l|}{Web Container} & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}CC\\ and MIT\end{tabular}} & \begin{tabular}[c]{@{}l@{}}MSBuild, NAnt, \\Ant, Maven, \\Kundo, Gradle,\\shell scripts,  \\ command-line\end{tabular}   & \begin{tabular}[c]{@{}l@{}}Bugzilla, Google Code, \\ Jira, Bitbucket, \\ Redmine,  \\ FindBugs, \\ Checkstyle, PMD, \\ Mantis, Trac\end{tabular} & \begin{tabular}[c]{@{}l@{}}Eclipse, IntelliJ IDEA, \\ NetBeans\end{tabular}                                                   & \checkmark & \checkmark & \checkmark \\ \hline
 \end{tabular}%
 }
-\caption{Comparison of Continuous Integration servers}
+\caption{Comparison of Continuous Integration Servers}
 \label{ci-comparison}
 \end{table}
 
-\subsection{Benefits in adopting CI/CD}
+\subsection{Benefits of Adopting CI/CD}
 \label{ci-benefits}
-Several are the benefits that come with the adoption of Continuous Integration in a software project. In this section we will describe five areas that are improved after CI implementation \cite{Rejstrom2016}. It is important to point out that these benefits come along with other practices such as agile transformation \cite{Laanti2011} and lean software development \cite{Poppendieck2003}.
+Several benefits come with the adoption of Continuous Integration in a software project. In this section we describe five areas that are improved after CI implementation \cite{Rejstrom2016}. It is important to point out that these benefits come along with other practices such as agile transformation \cite{Laanti2011} and lean software development \cite{Poppendieck2003}.
 
 \begin{itemize}
-\item Shorter time-to-market: Many benefits come with the adoption of frequent releases. With fast and frequent releases is possible to get feedback quickly from customer and market, thus the organization gets better understanding of their needs expectations \cite{Neely2013}. With that is possible to focus on the most relevant features. Another benefit of delivering frequently is waste reduction as features can be deployed as soon as they are done \cite{Leppanen2015}. Furthermore, with frequent releases is possible to experiment with new features easily and with low impact \cite{Neely2013}.
-\item Rapid feedback: With frequent releases is possible to show progress to customers and by that get feedback quickly. With that the development team can focus on important features instead of waste time in features that are not relevant for the customers or the market.
-\item Improved software quality: Researches have reported a decreased in the number of open bugs and production incidents after adopting CI practices \cite{Mantyla2015} and the link between software quality improvement and the heavy reliance on automated test combined with smaller more manageable releases \cite{Leppanen2015}.
-\item Improved release reliability: In the work of \cite{Neely2013} was proved that a working deployment pipeline along with intensive automated testing and fast rollback mechanism possitively affects release reliability and quality. With small and frequent releases fewer things can go wrong in a release according to \cite{Fowler2013}. In fact, reduction in the stress of developers and other stakeholder have been found by adopting CI \cite{Neely2013} \cite{Chen2015}.
-\item Improved developer productivity: By automating deployment process, environment configuration and other non-value adding tasks, significant time saving for developers have been observed \cite{Rodriguez2016}. Also, in the work of \cite{Humble2010} was observed that although the setup cost of a deployment pipeline can be high, after it is setup developers can focus on value adding software development works.
+\item \textbf{Shorter time-to-market}: With fast and frequent releases it is possible to receive feedback quickly from the customer and the market. Consequently the organization gets a better understanding of the needed expectations \cite{Neely2013}. This way it is possible to focus on the most relevant features. Another benefit of delivering frequently is waste reduction as features can be deployed as soon as they are done \cite{Leppanen2015}. Furthermore, with frequent releases one can experiment with new features easily and that with low impact \cite{Neely2013}.
+\item \textbf{Rapid feedback}: Through frequent releases it is possible to always show the customers the most recent progress and therefore get to feedback quickly. This way the development team can focus on important features instead of wasting time in features that are not relevant for the customers nor the market.
+\item \textbf{Improved software quality}: Researchers have reported a decrease in the number of open bugs and production incidents \cite{Mantyla2015} and the link between software quality improvement and the heavy reliance on automated test combined with smaller more manageable releases \cite{Leppanen2015} after adopting CI practices.
+\item \textbf{Improved release reliability}: \citet{Neely2013} has proven that a working deployment pipeline along with intensive automated testing and fast rollback mechanism affects release reliability and quality possitively. according to \citet{Fowler2013} with small and frequent releases fewer things can go wrong in a release. In fact, stress reduction of the developers and other stakeholder have been found by adopting CI \cite{Neely2013} \cite{Chen2015}.
+\item \textbf{Improved developer productivity}: By automating deployment process, environment configuration and other non-value adding tasks, significant time saving for developers have been observed \cite{Rodriguez2016}. Also, in the work of \cite{Humble2010} was observed that although the setup cost of a deployment pipeline can be high, once it is setup developers can focus on value adding software development works.
 \end{itemize}
 
-\subsection{Challenges in adopting CI/CD}
+\subsection{Challenges of Adopting CI/CD}
 \label{ci-challenges}
 
-Adopting CI can be very beneficial for a software project as described above, however we can face some challenges that can jeopardize the successful implementation of it. According to the literature, there are seven common challenges in the implementation of a CI:
+As described above adopting CI can be very beneficial for a software project, however there are certain challenges which can jeopardize the successful implementation of it. According to the literature, there are seven common challenges to be dealt with during the implementation of a CI:
 
 \begin{itemize}
-\item Change resistance: Transforming the development of a project towards continuous integration practices requires investment and involvement from the entire organization \cite{Rodriguez2016}. Therefore any transformation in how an organization works, will receive a resistance on both a personal level and decision level within the organization.
-\item External constraint: As a software project is part of a context, external constraint may appear. Normally customer preferences and domain imposed restrictions are sources of constraints. For example in highly restricted domains, legal regulations may require extensive testing before new version can be allowed to enter production \cite{Rodriguez2016}.
-\item QA effort: The automated tests suit needs to be exhaustive enough in order to ensure the quality of what is being built. Thus it can lead to increase QA efforts due to difficulties in managing the test automation infrastructure \cite{Rodriguez2016}.
-\item Legacy code: Normally legacy software has not been design for being automatically tested and may cause integration failures which may inhibit the continuous deployment process. The ownership of legacy code might belong to another company or team which shift the testing responsibility and this might delay the deployment process.
-\item Complex software: If the complex if the software project is high, then setting up the CI workflow is more challenging \cite{Leppanen2015}.
-\item Environment management: Keeping all the environments used in development, testing and production sync and similar can be challenging. This is due to the fact that differences in the environment configuration can lead to undetected issues appear in production. Therefore is essential to have a good configuration management that provisions environments automatically \cite{Leppanen2015}.
-\item Manual testing: Although automated tests are very beneficial, some aspects of software need to be manually tested such as security issues, performance and UX/UI. Therefore 	heavy manual testing can impact the overall speed and smoothness of the process \cite{Leppanen2015}.
+\item \textbf{Change resistance}: Transforming the development of a project towards continuous integration practices requires investment and involvement from the entire organization \cite{Rodriguez2016}. Therefore any transformation within an organization will be met with a certain amount of resistance on both a personal level and decision level.
+\item \textbf{External constraint}: As a software project is part of a context, external constraint may emerge. Normally, customer preferences and domain imposed restrictions are sources of constraints. Legal regulations for instance may require extensive testing before new version can be allowed to enter production in highly restricted domains\cite{Rodriguez2016}.
+\item \textbf{QA effort}: The automated tests suit needs to be exhaustive enough in order to ensure the quality of what is being built. Thus it can lead to an increase in QA efforts due to difficulties managing the test automation infrastructure \cite{Rodriguez2016}.
+\item \textbf{Legacy code}: Normally legacy software has not been designed for being automatically tested and may cause integration failures which may inhibit the continuous deployment process. The ownership of legacy code might belong to another company or team which shift the testing responsibilities which might delay the deployment process.
+\item \textbf{Complex software}: If the complexity of the software project is high, then setting up the CI workflow is more challenging \cite{Leppanen2015}.
+\item \textbf{Environment management}: Keeping all the environments used in development, testing and production syncronized and similar can be challenging. This is due to the fact that differences in the environment configuration can leave undetected issues to appear during production. Therefore it is essential to have a good configuration management which provisions environments automatically \cite{Leppanen2015}.
+\item \textbf{Manual testing}: Although automated tests are very beneficial, some aspects of software need to be manually tested such as security issues, performance and UX/UI. Therefore 	heavy manual testing can impact the overall speed and smoothness of the process \cite{Leppanen2015}.
 \end{itemize}
-
-\subsection{Successful CI practices}
-\label{ci-successful-pract}
-
-In order to reduce the risks in adopting CI practices, eight principles, based on several literature reviews, were defined in \cite{Rejstrom2016} which should guide the CI implementation within organizations. These principles are generic solutions which can be adapted in most cases.
-
-\begin{itemize}
-\item Automate the build: The task that triggers the whole pipeline is the commit. After each commit, the next step should be build the binaries. The executable that result of the build, should go through the pipeline until it gets validated, verified and deployment ready.
-\item Make your build self-testing: 
-\item Every commit should build on an integration machine
-\item Keep the build fast
-\item Keep the build green
-\item Test in a clone of the production environment
-\item Everyone can see what is happening
-\item Automate deployment
-\end{itemize}
-
-These 8 principles should guide the CI/CD implementation within organizations. The principles have been stablished as best practices through the validation of these concepts through several literature reviews [\cite{Rodriguez2016}; \cite{Mantyla2015}; \cite{Stahl2014}]. They can be viewed almost as a design pattern for adopting CI/CD, offering a generic solution adaptable to most cases.

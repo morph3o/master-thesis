@@ -24,7 +24,7 @@ Since we already have a formal definition of software reuse, the next question w
 		4. designs                            & 9. requirements          \\ \hline
 		5. documentation                      & 10. test cases           \\ \hline
 	\end{tabular}
-	\caption{Potentially reusable aspects of software projects according to \cite{Frakes1996}.}
+	\caption{Potentially Reusable Aspects of Software Projects According to \cite{Frakes1996}.}
 \end{table}
 
 However, reuse traditionally means the reuse of code fragments and components \cite{Mili2002}. When we talk about components, we mean any cohesive and compact unit of software functionality with a well defined interface \cite{Hummel2008}. Therefore a component can be a simple class or even a web-service.
@@ -69,7 +69,7 @@ Although the two first challenges have been address over the last years, the las
 
 As an attempt to solve the last three technical challenges, \citet{Hummel2013} proposed test-driven reuse. There they found that well formulated test cases reveal enough syntactical information and semantics of a desired component that they can be used as a query for software searches effectively\cite{Hummel2013}. Moreover, test-driven search guarantees results of very high precision considering that the test is regarded as the definitive description of what functionality is required\citep{Beck2003,Hummel2013,Kessel2016}.
 
-\subsection{Code-search engines}
+\subsection{Code-search Engines}
 Code-search engines are the heart of the new generations of reuse support tools. For example, Code Conjurer \cite{Hummel2008} uses Merobase component search engine, CodeGenie relies on Sourcerer \cite{Lemos2007} and ParseWeb that works over Google Code Search \footnote{Shutdown January, 15 2012 \cite{Horowitz2011}} \cite{Thummalapenta2007}. Nevertheless there are more code-search engines available in the market:
 
 \begin{itemize}
@@ -96,21 +96,21 @@ The current implementation of Merobase, which we used in our prototype, has been
 
 On the other hand, the current implementation is populated with software components extracted from Maven projects mainly from the Maven Central Repository\footnote{https://repo1.maven.org/maven2/ (accessed: 15.01.2017)}. 
 
-\subsection{Component retrieval techniques}
+\subsection{Component Retrieval Techniques}
 As we stated in the Subsection \ref{sec:sw-challenges}, several problems of software reuse have been already addressed. Now one of the biggest problems is how to choose the so-called \emph{best component}. To do so, several component retrieval techniques have been proposed. \citet{Mili1998} divided the component retrieval techniques in six independent groups:
 
 \begin{itemize}
-\item \textbf{Information retrieval methods} are basically the methods of information retrieval used for retrieving candidates by applying textual analysis to software assets. This group has high recall and medium precision.
-\item \textbf{Descriptive methods} add additional textual description of assets such as keyword or facet definition, to the textual analysis. These are high precision and high recall.
-\item \textbf{Operational semantic methods} use sampling of assets to retrieve candidates. They have very high precision and high recall.
-\item \textbf{Denotational semantic methods} use signature methods for retrieving candidates. The have very high precision and high recall.
-\item \textbf{Structural methods} deal with the structure of the components to retrieve candidates. This group has very high precision and recall.
-\item \textbf{Topological methods} are an approach to minimize the distance between query and reusable candidates. It is difficult to estimate or define recall and precision for these methods \cite{Mili1998}. As they rely on a \textit{measurable} retrieval techniques, they can be considered as an approach for ranking the candidate components of a query rather than a retrieval technique \cite{Hummel2007}.
+\item \textbf{Information retrieval methods}: They are basically the methods of information retrieval used for retrieving candidates by applying textual analysis to software assets. This group has high recall and medium precision.
+\item \textbf{Descriptive methods}: The add additional textual description of assets such as keyword or facet definition, to the textual analysis. These are high precision and high recall.
+\item \textbf{Operational semantic methods}: They use sampling of assets to retrieve candidates. They have very high precision and high recall.
+\item \textbf{Denotational semantic methods}: The use signature methods for retrieving candidates. The have very high precision and high recall.
+\item \textbf{Structural methods}: They deal with the structure of the components to retrieve candidates. This group has very high precision and recall.
+\item \textbf{Topological methods}: They are an approach to minimize the distance between query and reusable candidates. It is difficult to estimate or define recall and precision for these methods \cite{Mili1998}. As they rely on a \textit{measurable} retrieval techniques, they can be considered as an approach for ranking the candidate components of a query rather than a retrieval technique \cite{Hummel2007}.
 \end{itemize}
 
 In the work of \citet{Hummel2007} several retrieval techniques were compared. They compared signature matching, text-based, name-based and interface-driven. These techniques were tested using the Merobase search engine. As a result of this comparison is that in terms of precision the best technique turned out to be interface-driven. Another technique that was presented in \cite{Hummel2004}, is test-driven search. This technique uses test cases as a vehicle to retrieve the component candidates that fit better the requirements of the user. It promises to improve the precision of the searches in comparison with other techniques explained before.
 
-\subsubsection{Test-driven search}
+\subsubsection{Test-driven Search}
 Simple techniques for component retrieval such as keyword-driven search or signature-driven search may lead to tons of candidates out of which just a small group might be interesting for the user, in spite of the results that fulfill the search criteria. This is due to the fact that not all of them fulfill the functional properties of the desire artifact. This is were test-driven search comes to light. 
 
 Test-driven reuse approach was first introduced in \cite{Hummel2004}. It is a technique that emerges as a solution to the problem of retrieving numerous irrelevant component candidates due to large amount of component in a repository. This technique in particular deals with the usability and retrieval problems we explained before. It relies on test cases written by the developer (step a), it then extracts the different interfaces defined in the test case (step b), then it makes the search of reuse candidate (step c). Then it run the tests and \textit{cleans} the result set of candidates that do not pass the tests (step d and e). Finally it shows the cleaned result set to the user (step f). This is the test-driven reuse cycle which can be seen in the figure \ref{fig:test-driven-cycle}.
@@ -118,7 +118,7 @@ Test-driven reuse approach was first introduced in \cite{Hummel2004}. It is a te
 \begin{figure}[ht]
 	\centering
     \includegraphics[width=\textwidth]{grafiken/test-driven-cycle}
-    \caption{The test-driven reuse \textit{cycle} extracted from \cite{Hummel2013}}
+    \caption{The Test-driven Reuse \textit{cycle} (extracted from \cite{Hummel2013})}
     \label{fig:test-driven-cycle}
 \end{figure}
 
@@ -128,7 +128,7 @@ This approach for searching candidates is very promising because of the populari
 
 In spite of the fact that this search method retrieves more relevant resources, it needs improvements in order to be applicable for the daily work of a developer. The amount of time taken from submitting the test case until receiving the results is sometimes excessive, this is due to the fact that each candidate needs to be compiled and validated against the test case. Although this problem can be overcome by increasing the resources, it brings extra costs. 
 
-\subsection{Ranking components}
+\subsection{Ranking Components}
 Retrieving components is not enough. The problem that emerges with retrieving components using code-search engines comes up when several candidates meet the functional requirements. Which of them is the best?. Normally engines sort the results by keyword or text matching therefore the first component in the list will not necessarily be better than the last one. This is because factors such as performance efficiency, maintainability, and performance efficiency are not being considered for ranking the components.
 
 Several ranking component approaches have been proposed. \citet{Inoue2005} presented \emph{ComponentRank} which is a variation of Google's PageRank algorithm that has been adapted to software components. Therefore it ranks components based on use-relations, thus as more often a component is used more relevant it becomes. Satsy\cite{Stolee2016} presents a new semantic ranking algorithm that basically computes the degree of match between the code query and retrieved code. Reiss' S6\cite{Reiss2009} combines a semantic code search for components assembled from AST\footnote{Abstract Syntax Tree} with the ability to rank them in a single-criterion approach using size-based metrics measured using static code analysis. \citet{Kessel2016} presented SOCORA which is a component ranking method based on non-dominated sorting that ranks candidates using multiple, non-functional (i.e. quality, performance) criteria indicated by software metrics based only on information about their relative importance\cite{Kessel2016}.
@@ -138,13 +138,14 @@ Several ranking component approaches have been proposed. \citet{Inoue2005} prese
 \begin{figure}[ht]
 	\centering
     \includegraphics[width=\textwidth]{grafiken/socoraExample}
-    \caption{Schematic illustration of SOCORA ranking approach \cite{Kessel2016}}
+    \caption{Schematic Illustration of SOCORA Ranking Approach \cite{Kessel2016}}
     \label{fig:socora-ex}
 \end{figure}
 
 The ranking component approach presented in \cite{Kessel2016} works as follow. First, it establishes a partial ordering of candidates using non-dominated sets determined by non-dominated sorting without assuming any preferences of the user. Depending on the priorities assigned to each selected criterion, it then subrank each non-dominated set in a recursive way until all unique priorities and their corresponding subcriteria are applied to the current level of non-dominated sets, eventually resulting in nested subrankings. Note that in each step, when (new)non-dominated sets are determined by non-dominated sorting, the ranks of sets may change according to their partial ordering. In general, partial subrankings are deliberately supported since the user is not required to assign specific priorities to all his/her selected criteria. The priorities are defined by simple integer values (highest value represent more priority than a lower value) with a default priority assignment of 1 for each selected criterion. If the user wants to assign a higher or lower priority to a selected criterion, he/she may increase or decrease the priority by 1 or even a larger number. Both unique and equal priority values may be assigned to selected criteria to establish either a partial or a strict ordering. For each priority value, all corresponding criteria is selected to subrank each non-dominated set of non-distinguishable candidates. This process starts with the highest priority value and continues in descending order until the smallest priority value is reached \cite{Kessel2016}. The figure \ref{fig:socora-ex} is a schematic illustration of how the component ranking works.
 
-\paragraph{Merobase integration}
+\textbf{\underline{Merobase Integration}}
+
 The prototype of the ranking component approach is integrated with the component search engine Merobase to retrieve the candidates. The figure \ref{fig:socora-merobase} shows how SOCORA\footnote{SOCORA prototype http://socora.merobase.com (accessed: 13.01.2017)} is integrated with Merobase.
 
 In the first step the user's functional requirements are described as a JUnit test specification using a HTML5 web-based GUI. Here the user can specify a set of non-functional \textit{quality} criteria that he/she thinks to be important for his/her needs, also he/she can optionally provide relative priorities to order them partially. In the second step, the interface signatures in the JUnit test are extracted and a text-based search is performed in order to find suitable components. In the step 3, the result set of component from the second step are filtered by applying the JUnit test in turn, and those that do not match the filtering criteria are removed. Also, during the compilation and execution of the test, the metric selected by the user are evaluated. In the step 4, the information from the last step is used by the ranking algorithm to order the remaining components in the result set. In step 5 the remaining components in the result set are displayed to the user. In the last step, the user can further analyze the component candidates by exploring the effects of different partial ordering (step 6a), explore different criteria (step 6b), and can group them in different way to shrink the result set (step 6c).
@@ -152,6 +153,6 @@ In the first step the user's functional requirements are described as a JUnit te
 \begin{figure}[hb]
 	\centering
     \includegraphics[width=0.9\textwidth]{grafiken/socora-merobase}
-    \caption{SOCORA and Merobase integration (extracted from \cite{Kessel2016})}
+    \caption{SOCORA and Merobase Integration (extracted from \cite{Kessel2016})}
     \label{fig:socora-merobase}
 \end{figure}

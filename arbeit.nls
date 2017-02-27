@@ -3,27 +3,28 @@
  \nomgroup{A}
 
   \item [{$ATDD$}]\begingroup Acceptance TDD\nomeqref {0.0}
-		\nompageref{xi}
+		\nompageref{xiii}
   \item [{$BDD$}]\begingroup Behavior Driven Development\nomeqref {0.0}
-		\nompageref{xi}
+		\nompageref{xiii}
   \item [{$CC$}]\begingroup Creative Commons\nomeqref {0.0}
-		\nompageref{xi}
+		\nompageref{xiii}
   \item [{$CD$}]\begingroup Continuous Delivery\nomeqref {0.0}
-		\nompageref{xi}
+		\nompageref{xiii}
   \item [{$CI$}]\begingroup Continuous Integration\nomeqref {0.0}
-		\nompageref{xi}
+		\nompageref{xiii}
   \item [{$CVS$}]\begingroup Concurrent Versions System\nomeqref {0.0}
-		\nompageref{xi}
-  \item [{$JIT$}]\begingroup Just in time\nomeqref {0.0}\nompageref{xi}
+		\nompageref{xiii}
+  \item [{$JIT$}]\begingroup Just in time\nomeqref {0.0}
+		\nompageref{xiii}
   \item [{$SCM$}]\begingroup Source Control Management\nomeqref {0.0}
-		\nompageref{xi}
+		\nompageref{xiii}
   \item [{$TDD$}]\begingroup Test-driven Development\nomeqref {0.0}
-		\nompageref{xi}
+		\nompageref{xiii}
   \item [{$TFD$}]\begingroup Test-first Development\nomeqref {0.0}
-		\nompageref{xi}
+		\nompageref{xiii}
   \item [{$VCP$}]\begingroup Version Control Platform\nomeqref {0.0}
-		\nompageref{xi}
+		\nompageref{xiii}
   \item [{$VCS$}]\begingroup Version Control System\nomeqref {0.0}
-		\nompageref{xi}
+		\nompageref{xiii}
 
 \end{thenomenclature}
