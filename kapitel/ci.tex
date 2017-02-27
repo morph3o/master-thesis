@@ -1,14 +1,14 @@
 \section{Continuous Integration}
 \label{chap:ci}
-In this chapter we explain about what Continuous Integration (CI) means, we describe the process steps, its benefits, challenges, and good practices of CI.
+In this chapter we explain what Continuous Integration (CI) contains, and additionally describe the process steps, its benefits, challenges, and good practices of CI.
 
 \subsection{What is Continuous Integration?}
 \label{sec:ci-def}
-The term can be found in the context of micro-processes development in the work of \citeauthor{Booch2007}. Then it was adopted by Kent Beck in his definition of Extreme Programming \cite{Beck1999}. However, it was Martin Fowler who was credited with establishing the current definitions of this practice. Fowler defines CI as following:
+The term can be found in the context of micro-processes development in the work of \citeauthor{Booch2007}. Then it was adopted by Kent Beck in his definition of Extreme Programming \cite{Beck1999}. However, it was Martin Fowler who was credited with establishing the current definitions of this practice. Fowler defines CI as following \cite{Fowler2006}:
 
-Continuous Integration is a software development practice where members of a team integrate their work frequently, usually each person integrates at least daily, thus leading to multiple integrations per day. Each integration is verified by an automates build (including test) to detect integration errors as quickly as possible. Many teams has found that this approach leads to significantly reduced integration problems and allows a team to develop cohesive software more rapid\cite{Fowler2006}.
+\blockquote{Continuous Integration is a software development practice where members of a team integrate their work frequently, usually each person integrates at least once a day, thus leading to multiple integrations per day. Each integration is verified by an automates build (including test) to detect integration errors as quickly as possible. Many teams have found that this approach leads to significantly reduced integration problems and allows a team to develop cohesive software more rapidly.}
 
-CI emerges as a solution for the painful moment of software integration. Despite the fact that the process of integrating software is not a problem for a one-person project, when it increases in complexity it becomes more problematic. For instance, in the old days, a software was divided in modules and each of them were developed independently, once they done, those modules were put together in one step at the end of the project. Doing that led to all sorts of software quality problems, which are costly and often lead to project delays \cite{Duvall2007}.
+CI emerges as a solution for the painful moment of software integration. While the process of integrating software is not a problem for a one-person project, once it increases in complexity it becomes more problematic. For instance, in the old days, a software was divided into modules and each of them were developed independently. Once they were done, these modules were put together in just one step at the end of the project. This led to all sorts of software quality problems, which are costly to maintain and often lead to project delays \cite{Duvall2007}.
 
 \begin{figure}[ht]
 	\centering
@@ -17,61 +17,61 @@ CI emerges as a solution for the painful moment of software integration. Despite
     \label{fig:emotional}
 \end{figure}
 
-Figure \ref{fig:emotional} describes the emotional cycle of a manual delivery process\cite{Goff2015} when the module integration is necessary. This step is tense moment as errors and failures appeared and they were difficult to find and fix at that stage of the development. In this manner, instead of waiting till the end of modules development to integrate, CI proposes to integrate frequently, usually one person should integrate at least once a day.
+Figure \ref{fig:emotional} describes the emotional cycle of a manual delivery process\cite{Goff2015} when the module integration is necessary. This step is a tense moment as errors and failures appeared which are difficult to find and fix at that stage of the development. In this manner, instead of waiting till the very end of modules development to integrate, CI proposes to frequently integrate, ideally one person should integrate at least once a day.
 \\
 \\
 \\
-Therefore we can separte the CI workflow into the following steps \cite{Fowler2006}:
+Therefore we can separate the CI workflow into the following steps \cite{Fowler2006}:
 
 \textbf{CI Workflow}
 
 \begin{itemize}
 \item Developers check out code into their private workspaces
-\item When done, commit the changes to the repository
+\item Once done, they commit the changes to the repository
 \item The CI server monitors the repository and checks out changes when they occur.
 \item The CI server builds the system and runs unit and integration tests.
 \item The CI server releases deployable artifacts for testing.
 \item The CI server assigns a build label to the version of the code it just built.
 \item The CI server informs the team of the outcome of the build.
-\item In case the build or test failed, the team fixes the issue at the earliest opportunity.
+\item In case the build or test fails, the team fixes the issue at the earliest opportunity.
 \item Continue to frequently integrate and test throughout the project.
 \end{itemize}
 
 This uncomplicated workflow helps the development team to focus on the current code change till it is verified and validated. Moreover, it provides continuous feedback on the quality of the code.
 
-An extension of Continuous Integration in Continuous Delivery (CD). CD is a software development discipline where you build software in such a way that the software can be released to production at any time \cite{Fowler2013}. Figure \ref{fig:cicdpipeline} describes an example of a typical CI/CD pipeline where one can see the relationship between this two disciplines.
+An extension of Continuous Integration is Continuous Delivery (CD). CD is a software development discipline which enables building software in such a way that it can be released to production at any time \cite{Fowler2013}. Figure \ref{fig:cicdpipeline} describes an example of a typical CI/CD pipeline where the relationship between these two disciplines become clear.
 
 \begin{figure}[ht]
 	\centering
-    \includegraphics[width=\textwidth]{grafiken/cicd-pipeline}
+    \includegraphics[width=\textwidth]{grafiken/cicd-pipeline-update}
     \caption{Typical CI/CD pipeline \cite{Chacon2009}}
     \label{fig:cicdpipeline}
 \end{figure}
 
-\subsubsection{CI Tools}
+\subsubsection*{CI Tools}
 
-Although the CI is tool-agnostic, the selection of them depends on the project, framework in use, skill-set of the stakeholders and other factors. There are however two must-have tools of any CI system: (1) the Version Control System (VCS) and (2) the CI Server.
+Although the CI is tool-agnostic, their selection depends on the project, framework in use, skill-set of the stakeholders and among other factors. There are however two must-have tools of any CI system: (1) the Version Control System (VCS) and (2) the CI Server.
 
 The most popular VCSs are SVN, Mercurial, and Git. On top of them, we can find Version Control Platforms (VCP) such as Bitbucket, Gitlab, and Github. In terms of CI servers, we can find Jenkins, Hudson, GoCD as open source projects; TravisCI, CircleCI, CodeShip and Team City as commercial tools.
 
 Therefore choosing the appropriate tools is about finding the balance between price, setup, configuration efforts, ease-of-use, integration capabilities between the selected tools, framework suitability and maintainability in respect to current code base.
 \newpage
-\textbf{Version Control Systems}
+\textbf{\underline{Version Control Systems}}
 
 \paragraph{SVN}
-Apache Subversion \footnote{https://subversion.apache.org/ (accessed: 13.01.2017)} is an open-source software versioning and revision control system, which is used to maintain current and historical versions of files such as source code, web pages, documents, etc. It appeared as an alternative to the Concurrent Versions System (CVS) \cite{Pilato2008}.
+is an open-source software versioning and revision control system\footnote{https://subversion.apache.org/ (accessed: 13.01.2017)}, which is used to maintain current and historical versions of files such as source code, web pages, documents, etc. It appeared as an alternative to the Concurrent Versions System (CVS) \cite{Pilato2008}.
 
 One can visualize the SVN filesystem as \emph{two-dimensional}. Two coordinates are used to unambiguously address filesystem items: (1) path, and (2) revision.
 
-Each revision in a Subversion filesystem has its own root, which is used to access contents at that revision. Files are stored as links to the most recent change; thus a repository is rather compact. The system consumes storage space proportional to the number of changes made, not to the number of revisions. Moreover, the Subversion filesystem uses transactions to keep changes atomic. A transaction operates on a specified revision of the filesystem, not necessarily the latest. The transaction has its own root, on which changes are made. It is then either committed and becomes the latest revision, or is aborted. The transaction is actually a long-lived filesystem object; a client does not need to commit or abort a transaction itself, rather it can also begin a transaction, exit, and then can re-open the transaction and continue using it. Potentially, multiple clients can access the same transaction and work together on an atomic change, though no existing clients expose this capability \cite{Pilato2008}.
+Each revision in a Subversion filesystem has its own root, which is used to access contents at that revision. Files are stored as links to the most recent change; thus a repository is rather compact. The system consumes storage space proportional to the number of changes made, not to the number of revisions. Moreover, the Subversion filesystem uses transactions to keep changes atomic. A transaction operates on a specified revision of the filesystem, not necessarily the latest. The transaction has its own root, where changes are made. It is then either committed and becomes the latest revision, or it is aborted. The transaction is actually a long-lived filesystem object; a client does not need to commit or abort a transaction itself, rather it can also begin a transaction, exit it, and then can re-open the transaction and continue using it. Potentially, multiple clients can access the same transaction and work together on an atomic change, though no existing clients expose this capability \cite{Pilato2008}.
 \paragraph{Mercurial}
-Mercurial\footnote{https://www.mercurial-scm.org/ (accessed: 13.01.2017)} is a free, distributed source control management tool. It offers you the power to efficiently handle projects of any size while using an intuitive interface. It is easy to use and hard to break, making it ideal for anyone working with versioned files.
+is a free, distributed source control management tool\footnote{https://www.mercurial-scm.org/ (accessed: 13.01.2017)}. It offers you the power to efficiently handle projects of any size while providing an intuitive interface. It is easy to use and hard to break, making it ideal for anyone working with versioned files.
 
-Mercurial's major design goals include high performance and scalability, decentralized, fully distributed collaborative development, robust handling of both plain text and binary files, and advanced branching and merging capabilities, while remaining conceptually simple.[3] It includes an integrated web-interface. Mercurial has also taken steps to ease the transition for users of other version control systems, particularly Subversion \cite{Mackall2006}.
+Mercurial's major design goals include high performance and scalability, decentralized, fully distributed collaborative development, robust handling of both plain text and binary files, and advanced branching and merging capabilities, while simultaneusly remaining conceptually simple.[3] It includes an integrated web-interface. Mercurial has also taken steps to ease the transition for users of other version control systems, particularly Subversion \cite{Mackall2006}.
 \paragraph{Git}
-Within the several different VCSs available, Git is one of the most popular\footnote{https://rhodecode.com/insights/version-control-systems-2016 (accessed: 14.01.2017)}. Git emerges in 2005 as an alternative to BitKeeper\footnote{https://www.bitkeeper.com/ (accessed: 13.01.2017)} after the break of the relationship between the commercial company behind BitKeeper and  the community that developed the Linux kernel \cite{Chacon2009}.
+Within the several different VCSs available, Git is among the most popular\footnote{https://rhodecode.com/insights/version-control-systems-2016 (accessed: 14.01.2017)}. Git emerges in 2005 as an alternative to BitKeeper\footnote{https://www.bitkeeper.com/ (accessed: 13.01.2017)} after the break of the relationship between the commercial company behind BitKeeper and  the community that developed the Linux kernel \cite{Chacon2009}.
 
-The main difference between Git and the other VCSs is the way it thinks about its data. Other VCSs such as Subversion, CVS, Perforce, and so on, think of the information they keep as a set of files and the changes made to each file over time. On the other hand, Git thinks its data like a set of snapshots of a miniature file system. Therefore, every time a user commits, or save the state of the project, Git basically takes a picture of what all the files look like at that moment and store a reference to that snapshot. In addition, Git has three main states where the files can reside in: committed, modified, and staged. Committed means that the data is stored in the local database. Modified means that the file was modified but it has not been committed yet. And staged means that the modified file has been marked to go into the next commit \cite{Chacon2009}. The figure \ref{fig:git-sates} depicts these three states.
+The main difference between Git and the other VCSs is the way it thinks about its data. Other VCSs such as Subversion, CVS, Perforce, and so on, think of the information they keep as a set of files and the changes made to each file over time. On the other hand, Git thinks of its data like a set of snapshots of a miniature file system. Therefore, every time a user commits or saves the state of the project, Git basically takes a picture of what all the files look like at that moment and store a reference to that snapshot. In addition, Git has three main states in which files can reside in: committed, modified, and staged. Committed means that the data is stored in the local database. Modified means that the file was modified but it has not been committed yet. And staged means that the modified file has been marked to go into the next commit \cite{Chacon2009}. The figure \ref{fig:git-sates} depicts these three states.
 
 \begin{figure}[ht]
 	\centering
@@ -82,25 +82,25 @@ The main difference between Git and the other VCSs is the way it thinks about it
 
 The git directory is the core of Git as it is where the metadata and object database for a project is stored. The working directory is a single checkout of one version of the project. Finally, the staging area is a file which is generally stored in the Git directory. This file contains information about what will go into the next commit.
 
-\textbf{Version Control Platforms}
+\textbf{\underline{Version Control Platforms}}
 
 \paragraph{Bitbucket}
-is a web-based hosting service for projects. It supports Mercurial and Git SCMs. Bitbucket\footnote{https://bitbucket.org (accessed: 21.02.2017)} offers both commercial plans and free accounts. It offers free accounts with an unlimited number of private repositories. Bitbucket is written in Python using the Django web framework. It started as an start-up by Jesper Nohr, but later it was acquired by Atlassian\footnote{https://www.atlassian.com/ (accessed: 21.02.2017)}.
+is a web-based hosting service for projects. It supports Mercurial and Git SCMs. Bitbucket\footnote{https://bitbucket.org (accessed: 21.02.2017)} offers both commercial plans and free accounts. It offers free accounts with an unlimited number of private repositories. Bitbucket is written in Python using the Django web framework. It started as an start-up by Jesper Nohr, but was later acquired by Atlassian\footnote{https://www.atlassian.com/ (accessed: 21.02.2017)}.
 \paragraph{Gitlab}
-is an open-source web-based Git repository developed by GitLab Inc. The software was written mainly in Ruby by Dmitriy Zaporozhets and Valery Sizov. Although it offers, in general, the same features like Mercurial and Github, the main characteristics is that it allows you to deploy your own instance of GitLab in your own server.
+is an open-source web-based Git repository developed by GitLab Inc. The software was written mainly in Ruby by Dmitriy Zaporozhets and Valery Sizov. Although it offers generally the same features as Mercurial and Github, the main characteristics is that it allows you to deploy your own instance of GitLab in your own server.
 \paragraph{Github}
-is a web-based Git repository hosting service, which offers all the functionality of Git and its own features. It provides several collaboration tools such as wikis, bug tracking, feature requests, and task management as well as access control. Its development started in 2007 as a side project of P. J. Hyett and Chris Wanstrath \cite{Weis2014} and it was officially lunch on the 10th of April in 2008. Since then, Github\footnote{https://github.com/ (accessed: 13.01.2017)} has gain popularity through the community reaching more than 50 million projects hosted nowadays.\\
+is a web-based Git repository hosting service, which offers all the functionality of Git plus its own features. It provides several collaboration tools such as wikis, bug tracking, feature requests, and task management as well as access control. Its development started in 2007 as a side project of P. J. Hyett and Chris Wanstrath \cite{Weis2014} and it was officially launch on April 10th, 2008. Since then, Github\footnote{https://github.com/ (accessed: 13.01.2017)} has gained popularity through the community reaching more than 50 million projects being hosted nowadays.\\
 
 \textbf{Continuous Integration Servers}
 
 \paragraph{Teamcity}
 is a Java-based build management and continuous integration server from JetBrains\footnote{https://www.jetbrains.com (accessed: 21.02.2017)}. TeamCity\footnote{https://www.jetbrains.com/teamcity/ (accessed: 21.02.2017)} is commercial software and licensed under a proprietary license. It offers several features such as VCS interoperability, cloud integrations, code quality tracking, continuous integration, user management, system maintenance, build history, and extensibility and customization. 
 \paragraph{TravisCI}
-is a hosted, distributed continuous integration and continuous delivery service used to build and test software projects hosted in GitHub. It offers a free open-source\footnote{https://travis-ci.org/ (accessed: 21.02.2017)} and an enterprise version\footnote{https://enterprise.travis-ci.com/ (accessed: 21.02.2017)}. Currently more than 300.000 projects use TravisCI (free version).
+is a hosted, distributed continuous integration and continuous delivery service used to build and test software projects hosted in GitHub. It offers a free open-source\footnote{https://travis-ci.org/ (accessed: 21.02.2017)} as well as an enterprise version\footnote{https://enterprise.travis-ci.com/ (accessed: 21.02.2017)}. Currently more than 300.000 projects use TravisCI (free version).
 \paragraph{Jenkins}
-Jenkins is an open source automation server developed in Java. It was originally founded in 2006 as \textit{Hudson}, however a disputed with Oracle the community behind Hudson decided to change the project name to Jenkins\footnote{http://archive.is/fl45 (accessed: 13.01.2017)}.
+Jenkins is an open source automation server developed in Java. It was originally founded in 2006 as \textit{Hudson}, however a disputed with Oracle the community behind Hudson decided to change the project name to \emph{Jenkins}\footnote{http://archive.is/fl45 (accessed: 13.01.2017)}.
 
-Jenkins enables developers to reliable build, test, and deploy their software. Its extensible and plugin-based architecture has permitted to create a tons of plugins to adapt the CI server to a multitude of build, test, and deployment automation workloads. In 2015, Jenkins surpassed 100.000 known installation making it the most widely deployed automation server\footnote{https://jenkins.io/press/ (accessed: 13.01.2017)}.
+Jenkins enables developers to reliable build, test, and deploy their software. Its extensible and plugin-based architecture has permitted to create numerous plugins to adapt the CI server to a multitude of build, test, and deployment automation workloads. In 2015, Jenkins surpassed 100.000 known installation making it the most widely deployed automation server\footnote{https://jenkins.io/press/ (accessed: 13.01.2017)}.
 
 In Table \ref{ci-comparison} we can see a comparison of the three CI Servers described above.
 

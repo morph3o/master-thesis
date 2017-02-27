@@ -36,10 +36,19 @@ Figure \ref{fig:domain-model} represents the domain model of Simile. The main cl
     \label{fig:domain-model}
 \end{figure}
 
+The sequence diagram presented in Figure \ref{fig:sequence-diagram-a} represents how prototype works. The process begins with the method \emph{searchRepository} which contains the repository of the project, the branch and the email where the result will be sent. It triggers the method \emph{searchForComponent} of the service Simile asynchronously. Right after the project is cloned locally by Cloner object and it is explored by DirectoryExplorer object. After the classes, its methods, and test classes are extracted from the project, we get into two loops. In the first loop, for each Java class extracted Simile makes a request to SOCORA. The query is the class extracted defined in MQL notation. Once the result set is returned by SOCORA, Simile prepares the email with the candidates and sends them to the recipient.
+
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=\textwidth]{grafiken/sequence-diagram-a}
+    \caption{Sequence diagram}
+    \label{fig:sequence-diagram-a}
+\end{figure}
+
 \section{Implementation}
 In this section we detail with further details how the prototype was implemented. We begin with explaining the \emph{Simile} service which is the starting point of the whole process about cloning the project, analyzing the code, searching for components and sending the result. Then we continue with the  HTTP controller which receives the Git repository of the project to be analyzed, the specific branch of the repository, and the email where the result with the similar components will be sent. Then we describe the \emph{Cloner} object which is in charge of cloning the project locally. After that, we will explain how the tool analyses the code and extracts the interface signatures and test classes which will be used to make the requests to SOCORA. Next we will describe how we receive the result from SOCORA. Finally we will explain how we handle the result from the previous step and build the email that will be sent to user.
 
-\textbf{NOTE: The code snippet shown in the following subsections has been cleaned and it does not represent the source code. To see the source code with all the details, please refer to the appendix \ref{append:simile-code} in page \pageref{append:simile-code}.
+\textbf{NOTE: The code snippet shown in the following subsections has been cleaned and it does not represent the source code. To see the source code with all the details, please refer to the appendix \ref{append:simile-code} in page \pageref{append:simile-code}}.
 
 \subsection{Simile}
 The class Simile.java (\ref{Simile.java}, page \pageref{Simile.java}) is a Spring service which contains only one method, \emph{searchForComponents}. This methods receives four parameters: \emph{repo}, \emph{branch}, \emph{folder}, and \emph{recipient}. \emph{repo} represents the Git repository of the project to be analysed. \emph{branch} is the branch of the Git repository (optional). \emph{folder} represents the name of the folder where the project will be cloned. Finally \emph{recipient} is the email where Simile will send the result. Listing \ref{searchForComponents} represents the method.
@@ -56,13 +65,13 @@ The class Simile.java (\ref{Simile.java}, page \pageref{Simile.java}) is a Sprin
 ]
 {code/Simile-searchForComponents.txt}
 
-First, it clones the project in the server by calling the method \emph{cloneRepository} of Cloner [\ref{Cloner.java}]. Then it analyses the Java main code of the project cloned and the test classes. When it analyses the code it extracts the interface signatures and the test classes, we explain how it does this process in section \ref{code-analysis}. With the result of the previous step, we make the requests to SOCORA to search for similar components.
+First, this method is in charge of cloning the project by calling the method \emph{cloneRepository} of \emph{Cloner} (\ref{Cloner.java}, page \pageref{Cloner.java}). Then it analyses the code under the folder \emph{src/main} of the project cloned and the test classes under the folder \emph{src/test}. When it analyses the code, it extracts the interface signatures and the test classes. We explain how it does this process with further details in Section \ref{code-analysis}. With the information acquired from the previous step, Simile makes the requests to SOCORA to search for similar components.
 
 It is important to notice that this method is asynchronous by the Java annotation \emph{@Async}. This allows us to run this method many times in parallel (configured in SimileApplication.java \ref{SimileApplication.java}).
 
 \subsection{Cloner}
 \label{simile:cloner}
-The class Cloner.java [\ref{Cloner.java}] is in charged of cloning the project in a local directory. The listing \ref{cloneRepository} represents the method \emph{cloneRepository}.
+The class Cloner.java (\ref{Cloner.java}, page \pageref{Cloner.java}) is in charge of cloning the project in a local directory. The listing \ref{cloneRepository} represents the method \emph{cloneRepository}.
 
 \lstinputlisting[
   language=Java, numbers=left, firstnumber=1, breaklines=true, 
@@ -76,13 +85,11 @@ The class Cloner.java [\ref{Cloner.java}] is in charged of cloning the project i
 ]
 {code/Cloner-cloneRepository.txt}
 
-This method runs the command \emph{git clone} with the parameters \emph{repo}, \emph{branch}, and \emph{folder}. The command is built by the private method \emph{setCommand}. After running the command, the project is cloned locally under the folder with given \emph{folder} name.
+This method runs the command \emph{git clone} with the parameters \emph{repo}, \emph{branch}, and \emph{folder}. The command is built by the private method \emph{setCommand}. After executing the command, the project is cloned locally under the folder with given \emph{folder} name.
 
 \subsection{Interface signature and test class extraction}
 \label{simile:code-analysis}
-In this section we will explain how Simile explores the project cloned and extracts the interface signatures and test classes that will be sent to SOCORA to search for similar components.
-
-After the project is cloned locally by the Cloner (\ref{simile:cloner}), Simile goes through the code and extract interface signatures of each class, and test classes. The signatures extracted are transformed into Merobase Query Language (MQL) notation, and the test classes are extracted as is. The snipped code \ref{handler} shows how the interface signatures are extracted and transformed into MQL. For extracting test classes the principle is the same, the difference is that we differentiate a Test class from another Java file if it contains the annotation \emph{@Test}.
+After the project is cloned locally by the \emph{Cloner} (\ref{Cloner.java}, page \pageref{Cloner.java}), Simile goes through the code and extracts the interface signatures of each class, and the test classes. The signatures extracted are transformed into Merobase Query Language (MQL) notation, and the test classes are extracted as is. Listing \ref{handler} shows how the interface signatures are extracted and transformed into MQL. For extracting test classes the principle is the same, the difference is that we differentiate a Test class from another Java file if it contains the annotation \emph{@Test} at least once.
 
 \lstinputlisting[
   language=Java, numbers=left, firstnumber=1, breaklines=true, 
@@ -112,9 +119,9 @@ In the class JavaClassVisitor.java we can see how Simile differentiate between a
 
 \subsection{SOCORA Integration}
 \label{socora-integration}
-Our prototype uses SOCORA to search for components. After extracting the interface signatures and test classes from the project, Simile make requests to SOCORA using this information. SOCORA then searches for similar components using Merobase and ranks the candidates using non-functional requirements. Once it is done, SOCORA sends the result back to Simile.
+Our prototype relies on SOCORA to search for components. After extracting the interface signatures and the test classes from the project, Simile make requests to SOCORA using this information. SOCORA then searches for similar components using Merobase as code-search engine and ranks the candidates using non-functional requirements. Once it is done, SOCORA sends the result back to Simile.
 
-Simile communicates with SOCORA by making HTTP requests using the interface signatures and the test classes extracted. SOCORA support several query parameters such as filters and ranking criteria. Our tools supports some of them by default depending on the type of search. For textual search our prototype support the following query parameters:
+Simile communicates with SOCORA by making an HTTP request using the interface signatures and the test classes extracted. SOCORA support several query parameters such as filters and ranking criteria. Our tools supports some of them by default depending on the type of search. For interface-driven and keyword searching our prototype support the following query parameters:
 
 \begin{itemize}
 \item Filters
@@ -139,7 +146,7 @@ Simile communicates with SOCORA by making HTTP requests using the interface sign
 	\end{itemize}
 \end{itemize}
 
-For test-driven search Simile uses the following query parameters by default:
+For test-driven searching Simile uses the following query parameters by default:
 
 \begin{itemize}
 \item Filters
@@ -167,7 +174,7 @@ For test-driven search Simile uses the following query parameters by default:
 	\end{itemize}
 \end{itemize}
 
-Listing \ref{textualSearchComponent} represents the implementation of textual search request and Listing \ref{testDrivenSearchComponent} represents the test-driven search request.
+Listing \ref{textualSearchComponent} represents the implementation of interface-driven and keyword search request and Listing \ref{testDrivenSearchComponent} represents the test-driven search request.
 
 \lstinputlisting[
   language=Java, numbers=left, firstnumber=1, breaklines=true, 
@@ -194,7 +201,7 @@ Listing \ref{textualSearchComponent} represents the implementation of textual se
 ]
 {code/SocoraRequester-testDrivenSearch.txt}
 
-The class in charge of making the request to SOCORA is \emph{SocoraRequester.java}[\ref{SocoraRequester.java}]. The method \emph{searchComponent} receives two parameters, \emph{queries} which represents the interface signatures or the test classes, and \emph{searchType} which represents the type of search (i.e. test driven search, interface driven search or textual search (default)). The snippet of code \ref{searchComponent} represent the method \emph{searchComponent}.
+The class in charge of making the request to SOCORA is \emph{SocoraRequester.java} (\ref{SocoraRequester.java}, page \pageref{SocoraRequester.java}). The method \emph{searchComponent} receives three parameters, \emph{queries} which represents an interface signature, keyword or test class, \emph{searchType} which represents the type of search (i.e. test driven search, interface driven search or keyword search (default)), and \emph{recipient} which is the email where the result will be sent. Listing \ref{searchComponent} represent this method.
 
 \lstinputlisting[
   language=Java, numbers=left, firstnumber=1, breaklines=true, 
@@ -208,10 +215,10 @@ The class in charge of making the request to SOCORA is \emph{SocoraRequester.jav
 ]
 {code/SocoraRequester-searchComponent.txt}
 
-When SOCORA responses with the list of components found they are sent by email to developers. This action is done in the methods \emph{textualSearchComponent} or \emph{testDrivenSearchComponent} using the service EmailSender [\ref{EmailSender.java}].
+When SOCORA responses with the list of components found they are sent by email to developers. This action is done in the methods \emph{textualSearchComponent} or \emph{testDrivenSearchComponent} (depending on the search type), using the service \emph{EmailSender} (\ref{EmailSender.java}, page \pageref{EmailSender.java}).
 
 \subsection{Email result}
-After making the requests to SOCORA \ref{socora-integration}, it will response with the candidate components found. Simile receives the list of candidates, it extracts the candidates from the response, builds the email, and sends it to the recipient. For textual search results, the method \emph{processTemplateTextualSearchResult} is in charge of interpreting the result and process the email's template before it is sent. For test-driven results, the method \emph{processTemplateTestDrivenSearchResult} is in charge of interpreting the result and process the email's template before it is sent. The listing \ref{resultInterpretation} show this method.
+After making the requests to SOCORA, it will response with the similar components found. Simile receives the list of candidates, it extracts the candidates from the response, constructs the email, and sends it to the user. For interface-driven and keyword search results, the method \emph{processTemplateTextualSearchResult} is in charge of interpreting the result and process the email's template before it is sent. For test-driven results, the method \emph{processTemplateTestDrivenSearchResult} is in charge of interpreting the result and process the email's template before it is sent. Listing \ref{resultInterpretation} show this methods.
 
 \lstinputlisting[
   language=Java, numbers=left, firstnumber=1, breaklines=true, 
@@ -244,7 +251,7 @@ After the email's body is generated by using the template and the java objects, 
 Depending on the type of search, the email will have some differences. The text driven search result contains a the query sent to SOCORA and a table with the candidates found. For test-driven search result, the email contains the job id of the search, the link to SOCORA to see more details of the result and the list of candidates found.
 
 \subsection{HTTP Controller}
-The Java class EntryController.java [\ref{EntryController.java}] is in charge of receiving the request from a customer with the Git repository and the branch of the project to be analysed, and the email where the result of the similar component will be sent. In the listing \ref{setupRepository} we can see the method \emph{setupRepository} which represents the entry point which is a POST request with the three parameters described before. The parameter \emph{repo} is required and represent the Git repository of the project that will be analysed and to which similar components will be searched for. The parameter \emph{branch} represents the branch of the git repository, this parameter is optional. Finally, the parameter \emph{email} represents the email where the result of the similar components will be sent to.
+The Java class \emph{EntryController.java} (\ref{EntryController.java}, page \pageref{EntryController.java}) is in charge of receiving the request from a user with the Git repository and the branch of the project to be analyzed, and the email where the result of the similar components will be sent. Listing \ref{setupRepository} details the method \emph{setupRepository} which represents the entry point which is a POST request with the three parameters described before. The parameter \emph{repo} is required and represent the Git repository of the project that will be analysed and to which similar components will be searched for. The parameter \emph{branch} represents the branch of the git repository, this parameter is optional. Finally, the parameter \emph{email} represents the email where the result of the similar components will be sent to.
 
 \lstinputlisting[
   language=Java, numbers=left, firstnumber=1, breaklines=true, 
@@ -258,7 +265,16 @@ The Java class EntryController.java [\ref{EntryController.java}] is in charge of
 ]
 {code/EntryController-setupRepository.txt}
 
-When a request is received by the controller, it firstly validates if the parameters are correct. If they are not valid, it will respond with HTTP status code 400 and a message describing the errors. Otherwise, it triggers asynchronously the method searchForComponents with the repository, the branch, and a random CUID as a folder name of the service Simile. This service is in charge of starting the process of cloning the project, analyse the code, make the request to SOCORA, and to send the email with the result to the customer.
+When a request is received by the controller, it firstly validates if the parameters are correct. If they are not valid, it will respond with HTTP status code 400 and a message describing the error. Otherwise, it triggers asynchronously the method \emph{searchForComponents} with the repository, the branch, and a random CUID as a folder name of the service \emph{Simile}.
+
+As a conclusion of this section about the implementation of Simile, in Figure \ref{fig:sequence-diagram} one can appreciate how the objects interact with each other. The process begins with an HTTP POST request from an external entity. Although in our implementation this entity is the Jenkins plugin we present in the next Section, it can be anything that is able to make an HTTP POST request with the information needed. This request triggers the method \emph{searchRepository} which contains the repository of the project, the branch and the email where the result will be sent. It triggers the method \emph{searchForComponent} of the service Simile asynchronously. Right after the project is cloned locally by Cloner object and it is explored by DirectoryExplorer object. After the classes, its methods, and test classes are extracted from the project, we get into two loops. In the first loop, for each Java class extracted Simile makes a request to SOCORA. The query is the class extracted defined in MQL notation. Once the result set is returned by SOCORA, Simile prepares the email with the candidates and sends them to the recipient.
+ 
+\begin{figure}[H]
+	\centering
+    \includegraphics[width=\textwidth]{grafiken/sequence-diagram}
+    \caption{Sequence diagram}
+    \label{fig:sequence-diagram}
+\end{figure}
 
 \section{CI integration}
 \label{ci-integration}
@@ -282,15 +298,6 @@ In the future if Simile needs to be integrated to another CI server, we just nee
     \includegraphics[width=0.9\textwidth]{grafiken/simile-conf-02}
     \caption{Simile endpoint configuration in Jenkins global configuration}
     \label{fig:simile-conf-02}
-\end{figure}
-
-As a conclusion in Figure \ref{fig:sequence-diagram} we can appreciate how the objects interact with each other. The process begins with the method \emph{searchRepository} which contains the repository of the project, the branch and the email where the result will be sent. It triggers the method \emph{searchForComponent} of the service Simile asynchronously. Right after the project is cloned locally by Cloner object and it is explored by DirectoryExplorer object. After the classes, its methods, and test classes are extracted from the project, we get into two loops. In the first loop, for each Java class extracted Simile makes a request to SOCORA. The query is the class extracted defined in MQL notation. Once the result set is returned by SOCORA, Simile prepares the email with the candidates and sends them to the recipient.
- 
-\begin{figure}[H]
-	\centering
-    \includegraphics[width=\textwidth]{grafiken/sequence-diagram}
-    \caption{Sequence diagram}
-    \label{fig:sequence-diagram}
 \end{figure}
 
 \section{Search Results}
